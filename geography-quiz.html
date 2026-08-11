@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌍 Geography Quiz — Azzam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-pip@1.1.0/leaflet-pip.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    /* ===== RESET & VARIABEL (sama dengan artikel) ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0C0C0E;
+      --surface: #141416;
+      --border:  #222226;
+      --accent:  #6EE7B7;
+      --accent2: #818CF8;
+      --text:    #E4E4E7;
+      --muted:   #71717A;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ===== NAVBAR (sama dengan artikel) ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 6vw;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(12,12,14,.7);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .nav-back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    /* ===== PAGE HERO (sama dengan artikel) ===== */
+    .page-hero {
+      padding: 8rem 6vw 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .page-tag span {
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      display: block;
+    }
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: .75rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      max-width: 50ch;
+      font-weight: 300;
+      font-size: 1.05rem;
+    }
+
+    /* ===== KONTEN ===== */
+    .content-wrap {
+      padding: 2rem 6vw 4rem;
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 0.8rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .stats-bar .left { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .stats-bar .left span { color: var(--muted); font-size: 0.9rem; }
+    .stats-bar .left strong { color: var(--text); }
+    .stats-bar .score { color: var(--accent); font-weight: 700; }
+    .stats-bar .timer { color: #fbbf24; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .stats-bar .timer.warning { color: #f87171; }
+
+    /* ===== PETA ===== */
+    #map {
+      width: 100%;
+      height: 480px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #1a1a24;
+      margin-bottom: 1rem;
+    }
+    .leaflet-control-zoom { display: none; }
+    .leaflet-tile { filter: brightness(0.7) saturate(0.6); }
+
+    /* ===== FEEDBACK ===== */
+    .feedback-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 0.8rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      min-height: 4rem;
+    }
+    .feedback-msg {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .feedback-msg.correct { color: var(--accent); }
+    .feedback-msg.wrong { color: #f87171; }
+    .feedback-msg.info { color: var(--muted); }
+
+    .btn-restart {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 1.8rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-restart:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ===== RESULT ===== */
+    .result-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .result-overlay.show { display: flex; }
+    .result-icon { font-size: 4rem; margin-bottom: 0.5rem; }
+    .result-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .result-title .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .result-desc { color: var(--muted); font-size: 1rem; margin-bottom: 1.5rem; }
+
+    .game-area.hide { display: none; }
+
+    /* ===== FOOTER (sama dengan artikel) ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .8rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    footer a:hover { color: var(--accent); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      .page-hero { padding: 7rem 1.5rem 2rem; }
+      .content-wrap { padding: 1.5rem 1.5rem 3rem; }
+      #map { height: 320px; }
+      .stats-bar { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav>
+  <a href="index.html" class="nav-logo">AHM.</a>
+  <a href="index.html" class="nav-back">← Kembali ke Portfolio</a>
+</nav>
+
+<!-- ===== PAGE HERO ===== -->
+<div class="page-hero">
+  <p class="page-tag"><span></span> Game Edukasi</p>
+  <h1>🌍 Geography Quiz</h1>
+  <p>Temukan 195 negara di peta dunia! Klik lokasi negara yang disebutkan secara acak. Asah pengetahuan geografimu!</p>
+</div>
+
+<!-- ===== KONTEN ===== -->
+<div class="content-wrap">
+  <!-- STATS -->
+  <div class="stats-bar" id="statsBar">
+    <div class="left">
+      <span>🎯 Skor: <strong class="score" id="scoreDisplay">0</strong></span>
+      <span>📌 <strong id="questionCounter">0/195</strong></span>
+      <span>⏱️ <strong class="timer" id="timerDisplay">20:00</strong></span>
+    </div>
+    <div>
+      <span style="color:var(--muted);font-size:0.85rem;">🏛️ <span id="entityCount">0</span> negara ditemukan</span>
+    </div>
+  </div>
+
+  <!-- GAME AREA -->
+  <div class="game-area" id="gameArea">
+    <div id="map"></div>
+
+    <div class="feedback-bar">
+      <div class="feedback-msg info" id="feedbackMsg">👆 Klik di peta untuk menjawab</div>
+      <button class="btn-restart" id="restartBtn">🔄 Ulang</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-overlay" id="resultOverlay">
+    <div class="result-icon" id="resultIcon">🏆</div>
+    <div class="result-title">
+      Skor akhir: <span class="highlight" id="finalScore">0/195</span>
+    </div>
+    <div class="result-desc" id="resultDesc">Keren! Kamu jago geografi!</div>
+    <button class="btn-restart" id="restartFromResultBtn">🔄 Main Lagi</button>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <span>© 2024 Azzam Hafidz Murobbi. Dibuat dengan ❤️</span>
+  <a href="index.html">← Kembali ke Portfolio</a>
+</footer>
+
+<script>
+// ================================================================
+// SOUND EFFECTS
+// ================================================================
+const correctSound = new Audio('correct.mp3');
+const wrongSound = new Audio('fahh.mp3');
+
+function playCorrect() { correctSound.currentTime = 0; correctSound.play().catch(e => {}); }
+function playWrong() { wrongSound.currentTime = 0; wrongSound.play().catch(e => {}); }
+
+// ================================================================
+// STATE
+// ================================================================
+let countryNames = [];
+let countryMap = {};
+let currentQuestion = 0;
+let totalQuestions = 195;
+let score = 0;
+let isAnswered = false;
+let selectedCountries = [];
+let timerInterval = null;
+let timeLeft = 20 * 60;
+let isGameOver = false;
+
+const countryNameEl = document.createElement('div'); // dummy
+const scoreDisplay = document.getElementById('scoreDisplay');
+const feedbackMsg = document.getElementById('feedbackMsg');
+const restartBtn = document.getElementById('restartBtn');
+const restartFromResultBtn = document.getElementById('restartFromResultBtn');
+const gameArea = document.getElementById('gameArea');
+const resultOverlay = document.getElementById('resultOverlay');
+const finalScore = document.getElementById('finalScore');
+const resultDesc = document.getElementById('resultDesc');
+const resultIcon = document.getElementById('resultIcon');
+const questionCounter = document.getElementById('questionCounter');
+const timerDisplay = document.getElementById('timerDisplay');
+const entityCount = document.getElementById('entityCount');
+
+let map;
+let geoLayer;
+let highlightLayer = L.layerGroup();
+
+// ================================================================
+// PETA
+// ================================================================
+function initMap() {
+  map = L.map('map', {
+    center: [20, 0],
+    zoom: 2,
+    zoomControl: false,
+    attributionControl: false,
+    maxBounds: [[-90, -180], [90, 180]],
+    maxBoundsViscosity: 1.0
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap, &copy; CartoDB',
+    noWrap: true,
+    minZoom: 1,
+    maxZoom: 10
+  }).addTo(map);
+}
+
+// ================================================================
+// LOAD DATA
+// ================================================================
+async function loadCountries() {
+  try {
+    const resp = await fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson');
+    const data = await resp.json();
+    data.features.forEach(f => {
+      const name = f.properties.name;
+      if (name) { countryMap[name] = f; countryNames.push(name); }
+    });
+    geoLayer = L.geoJSON(data, {
+      style: { color: '#444', weight: 1, fillColor: '#2a2a36', fillOpacity: 0.8 },
+      onEachFeature: function(feature, layer) {
+        layer.on('click', function(e) { handleMapClick(feature, layer, e); });
+      }
+    }).addTo(map);
+    highlightLayer.addTo(map);
+    startNewGame();
+  } catch (err) {
+    console.error('Gagal load GeoJSON:', err);
+    feedbackMsg.textContent = '❌ Gagal memuat data peta. Refresh halaman.';
+    feedbackMsg.className = 'feedback-msg wrong';
+  }
+}
+
+// ================================================================
+// TIMER
+// ================================================================
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 20 * 60;
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      if (!isGameOver) {
+        isGameOver = true;
+        showResult('⏰ Waktu habis!');
+      }
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const mins = Math.floor(timeLeft / 60);
+  const secs = timeLeft % 60;
+  timerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  timerDisplay.classList.toggle('warning', timeLeft <= 60);
+}
+
+function stopTimer() { clearInterval(timerInterval); timerInterval = null; }
+
+// ================================================================
+// GAME LOGIC
+// ================================================================
+function startNewGame() {
+  isGameOver = false;
+  currentQuestion = 0;
+  score = 0;
+  isAnswered = false;
+  selectedCountries = [];
+  scoreDisplay.textContent = '0';
+  gameArea.classList.remove('hide');
+  resultOverlay.classList.remove('show');
+  feedbackMsg.textContent = '👆 Klik di peta untuk menjawab';
+  feedbackMsg.className = 'feedback-msg info';
+  highlightLayer.clearLayers();
+  timerDisplay.classList.remove('warning');
+  if (map) map.setView([20, 0], 2);
+  shuffleArray(countryNames);
+  selectedCountries = countryNames.slice(0, 195);
+  totalQuestions = selectedCountries.length;
+  questionCounter.textContent = `0/${totalQuestions}`;
+  if (geoLayer) {
+    geoLayer.eachLayer(l => {
+      l.setStyle({ fillColor: '#2a2a36', fillOpacity: 0.8, color: '#444', weight: 1 });
+    });
+  }
+  startTimer();
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (isGameOver) return;
+  if (currentQuestion >= totalQuestions) { showResult('🎉 Selesai!'); return; }
+  const country = selectedCountries[currentQuestion];
+  // Update question in feedback
+  feedbackMsg.textContent = `👆 Klik lokasi negara "${country}" di peta`;
+  feedbackMsg.className = 'feedback-msg info';
+  questionCounter.textContent = `${currentQuestion + 1}/${totalQuestions}`;
+  isAnswered = false;
+  highlightLayer.clearLayers();
+  if (geoLayer) {
+    geoLayer.eachLayer(l => {
+      l.setStyle({ fillColor: '#2a2a36', fillOpacity: 0.8, color: '#444', weight: 1 });
+    });
+  }
+}
+
+function handleMapClick(feature, layer, event) {
+  if (isAnswered || isGameOver) return;
+  if (!feature.properties || !feature.properties.name) return;
+  const clickedName = feature.properties.name;
+  const targetName = selectedCountries[currentQuestion];
+  const isCorrect = (clickedName.toLowerCase() === targetName.toLowerCase());
+  geoLayer.eachLayer(l => {
+    l.setStyle({ fillColor: '#2a2a36', fillOpacity: 0.8, color: '#444', weight: 1 });
+  });
+  let targetLayer = null;
+  geoLayer.eachLayer(l => {
+    const name = l.feature?.properties?.name;
+    if (name && name.toLowerCase() === targetName.toLowerCase()) { targetLayer = l; }
+  });
+  if (targetLayer) {
+    targetLayer.setStyle({
+      fillColor: isCorrect ? '#6EE7B7' : '#f87171',
+      fillOpacity: 0.6,
+      color: isCorrect ? '#6EE7B7' : '#f87171',
+      weight: 3
+    });
+    highlightLayer.addLayer(targetLayer);
+  }
+  if (isCorrect) {
+    score++;
+    scoreDisplay.textContent = score;
+    feedbackMsg.textContent = `✅ Benar! ${targetName} tepat!`;
+    feedbackMsg.className = 'feedback-msg correct';
+    playCorrect();
+  } else {
+    feedbackMsg.textContent = `❌ Salah. Yang kamu klik adalah ${clickedName}. Jawaban: ${targetName}`;
+    feedbackMsg.className = 'feedback-msg wrong';
+    playWrong();
+  }
+  entityCount.textContent = score;
+  isAnswered = true;
+  setTimeout(() => {
+    if (isGameOver) return;
+    currentQuestion++;
+    loadQuestion();
+  }, 800);
+}
+
+function showResult(customTitle) {
+  stopTimer();
+  isGameOver = true;
+  gameArea.classList.add('hide');
+  resultOverlay.classList.add('show');
+  const total = totalQuestions;
+  const pct = Math.round((score / total) * 100);
+  finalScore.textContent = `${score}/${total}`;
+  let icon, desc;
+  if (customTitle && customTitle.includes('Waktu')) {
+    icon = '⏰';
+    desc = `Waktu 20 menit habis! Kamu menjawab ${score} dari ${total} negara. Coba lagi!`;
+  } else if (pct === 100) {
+    icon = '🌟';
+    desc = 'Sempurna! Kamu ahli geografi sejati!';
+  } else if (pct >= 70) {
+    icon = '🏆';
+    desc = 'Keren banget! Pengetahuan geografimu luas!';
+  } else if (pct >= 40) {
+    icon = '📚';
+    desc = 'Lumayan, terus belajar dan eksplorasi peta!';
+  } else {
+    icon = '🗺️';
+    desc = 'Ayo coba lagi, pelajari peta dunia lebih dalam!';
+  }
+  resultIcon.textContent = icon;
+  resultDesc.textContent = desc;
+}
+
+function restartGame() {
+  stopTimer();
+  isGameOver = false;
+  highlightLayer.clearLayers();
+  if (geoLayer) {
+    geoLayer.eachLayer(l => {
+      l.setStyle({ fillColor: '#2a2a36', fillOpacity: 0.8, color: '#444', weight: 1 });
+    });
+  }
+  if (map) map.setView([20, 0], 2);
+  startNewGame();
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+restartBtn.addEventListener('click', restartGame);
+restartFromResultBtn.addEventListener('click', restartGame);
+
+// ================================================================
+// START
+// ================================================================
+initMap();
+loadCountries();
+
+// Observer untuk reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

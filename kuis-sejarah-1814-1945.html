@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🧠 Kuis Sejarah 1814–1945 — Azzam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0C0C0E;
+      --surface: #141416;
+      --border:  #222226;
+      --accent:  #6EE7B7;
+      --accent2: #818CF8;
+      --text:    #E4E4E7;
+      --muted:   #71717A;
+      --correct: #6EE7B7;
+      --wrong:   #f87171;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 6vw;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(12,12,14,.7);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .nav-back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    .page-hero {
+      padding: 8rem 6vw 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .page-tag span {
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      display: block;
+    }
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: .75rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      max-width: 50ch;
+      font-weight: 300;
+      font-size: 1.05rem;
+    }
+
+    .content-wrap {
+      padding: 2rem 6vw 4rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 0.8rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .stats-bar .left { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .stats-bar .left span { color: var(--muted); font-size: 0.9rem; }
+    .stats-bar .left strong { color: var(--text); }
+    .stats-bar .score { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
+    .stats-bar .difficulty {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+    .stats-bar .diff-easy { background: rgba(110,231,183,0.15); color: var(--accent); }
+    .stats-bar .diff-medium { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .stats-bar .diff-hard { background: rgba(248,113,113,0.15); color: #f87171; }
+
+    .progress-wrap {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .progress-wrap .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+
+    .question-box {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-left: 4px solid var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .q-number {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .q-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 1.5rem;
+    }
+    .option-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .option-btn:hover:not(.disabled) {
+      border-color: var(--accent);
+      background: rgba(110,231,183,0.05);
+      transform: translateX(4px);
+    }
+    .option-btn.correct {
+      border-color: var(--correct);
+      background: rgba(110,231,183,0.12);
+      color: var(--correct);
+    }
+    .option-btn.wrong {
+      border-color: var(--wrong);
+      background: rgba(248,113,113,0.12);
+      color: var(--wrong);
+    }
+    .option-btn.disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    .option-btn.disabled:hover { transform: none; border-color: var(--border); background: var(--bg); }
+
+    .feedback-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      min-height: 3rem;
+      padding: 0.5rem 0;
+    }
+    .feedback-text {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .feedback-text.correct { color: var(--correct); }
+    .feedback-text.wrong { color: var(--wrong); }
+    .feedback-text.info { color: var(--muted); }
+
+    .btn-next {
+      background: var(--accent);
+      color: #0C0C0E;
+      border: none;
+      padding: 0.6rem 2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none;
+    }
+    .btn-next:hover { background: #a7f3d0; transform: scale(1.02); }
+    .btn-next.show { display: inline-block; }
+
+    .btn-restart {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 1.8rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-restart:hover { border-color: var(--accent); color: var(--accent); }
+
+    .result-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .result-screen.show { display: flex; }
+    .result-icon { font-size: 4rem; margin-bottom: 0.5rem; }
+    .result-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .result-title .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .result-desc { color: var(--muted); font-size: 1rem; margin-bottom: 1.5rem; }
+    .result-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .result-stats .stat-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.8rem 1.5rem;
+      min-width: 100px;
+    }
+    .result-stats .stat-item .label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .result-stats .stat-item .value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .result-stats .stat-item .value.green { color: var(--correct); }
+    .result-stats .stat-item .value.red { color: var(--wrong); }
+    .result-stats .stat-item .value.yellow { color: #fbbf24; }
+
+    .quiz-screen.hide { display: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .8rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    footer a:hover { color: var(--accent); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      .page-hero { padding: 7rem 1.5rem 2rem; }
+      .content-wrap { padding: 1.5rem 1.5rem 3rem; }
+      .stats-bar { flex-direction: column; align-items: stretch; }
+      .stats-bar .left { justify-content: space-between; }
+      .q-text { font-size: 1rem; }
+      .option-btn { padding: 0.7rem 1rem; font-size: 0.85rem; }
+      .result-stats { gap: 0.8rem; }
+      .result-stats .stat-item { min-width: 70px; padding: 0.6rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">AHM.</a>
+  <a href="index.html" class="nav-back">← Kembali ke Portfolio</a>
+</nav>
+
+<div class="page-hero">
+  <p class="page-tag"><span></span> Kuis Sejarah</p>
+  <h1>🧠 Kuis Sejarah 1814–1945</h1>
+  <p>120 soal pilihan ganda tentang sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
+</div>
+
+<div class="content-wrap">
+  <div class="stats-bar">
+    <div class="left">
+      <span>🎯 Skor: <strong class="score" id="scoreDisplay">0</strong></span>
+      <span>📌 <strong id="progressText">1/120</strong></span>
+      <span id="difficultyDisplay" class="difficulty diff-easy">Mudah</span>
+    </div>
+    <div>
+      <span style="color:var(--muted);font-size:0.85rem;">✅ <span id="correctCount">0</span> | ❌ <span id="wrongCount">0</span></span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="quiz-screen" id="quizScreen">
+    <div class="question-box">
+      <div class="q-number" id="qNumber">Pertanyaan 1 / 120</div>
+      <div class="q-text" id="qText">Loading...</div>
+    </div>
+
+    <div class="options-grid" id="optionsContainer"></div>
+
+    <div class="feedback-area">
+      <div class="feedback-text info" id="feedbackText">👆 Pilih jawaban di atas</div>
+      <button class="btn-next" id="nextBtn">Selanjutnya →</button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-icon" id="resultIcon">🏆</div>
+    <div class="result-title">
+      Skor akhir: <span class="highlight" id="finalScore">0/120</span>
+    </div>
+    <div class="result-desc" id="resultDesc">Keren! Pengetahuan sejarahmu luas!</div>
+    <div class="result-stats">
+      <div class="stat-item"><div class="label">Benar</div><div class="value green" id="finalCorrect">0</div></div>
+      <div class="stat-item"><div class="label">Salah</div><div class="value red" id="finalWrong">0</div></div>
+      <div class="stat-item"><div class="label">Akurasi</div><div class="value yellow" id="finalAccuracy">0%</div></div>
+    </div>
+    <button class="btn-restart" id="restartBtn">🔄 Main Lagi</button>
+  </div>
+</div>
+
+<footer>
+  <span>© 2024 Azzam Hafidz Murobbi. Dibuat dengan ❤️</span>
+  <a href="index.html">← Kembali ke Portfolio</a>
+</footer>
+
+<script>
+// ================================================================
+// SOUND EFFECTS
+// ================================================================
+const correctSound = new Audio('correct.mp3');
+const wrongSound = new Audio('fahh.mp3');
+
+function playCorrect() { correctSound.currentTime = 0; correctSound.play().catch(e => {}); }
+function playWrong() { wrongSound.currentTime = 0; wrongSound.play().catch(e => {}); }
+
+// ================================================================
+// 120 SOAL
+// ================================================================
+const questions = [
+  // Mudah (1-40)
+  { difficulty: 'Mudah', question: "Perang apa yang terjadi pada tahun 1914–1918?", options: ["Perang Dunia I", "Perang Dunia II", "Perang Napoleon", "Perang Korea"], answer: "Perang Dunia I" },
+  { difficulty: 'Mudah', question: "Siapa Kaisar Jerman selama Perang Dunia I?", options: ["Wilhelm II", "Bismarck", "Hitler", "Frederick III"], answer: "Wilhelm II" },
+  { difficulty: 'Mudah', question: "Perjanjian apa yang mengakhiri Perang Dunia I?", options: ["Versailles", "Trianon", "Saint-Germain", "Neuilly"], answer: "Versailles" },
+  { difficulty: 'Mudah', question: "Negara mana yang memulai Perang Dunia II di Eropa?", options: ["Jerman", "Italia", "Jepang", "Rusia"], answer: "Jerman" },
+  { difficulty: 'Mudah', question: "Siapa Perdana Menteri Inggris selama Perang Dunia II?", options: ["Churchill", "Chamberlain", "Attlee", "Lloyd George"], answer: "Churchill" },
+  { difficulty: 'Mudah', question: "Apa kode nama invasi Sekutu ke Normandia?", options: ["Overlord", "Barbarossa", "Torch", "Husky"], answer: "Overlord" },
+  { difficulty: 'Mudah', question: "Negara mana yang mengebom Pearl Harbor?", options: ["Jepang", "Jerman", "Italia", "Rusia"], answer: "Jepang" },
+  { difficulty: 'Mudah', question: "Siapa pemimpin Jerman selama Perang Dunia II?", options: ["Hitler", "Goebbels", "Himmler", "Göring"], answer: "Hitler" },
+  { difficulty: 'Mudah', question: "Apa nama pertempuran udara terbesar di Perang Dunia II?", options: ["Battle of Britain", "Battle of Midway", "Battle of Stalingrad", "Battle of El Alamein"], answer: "Battle of Britain" },
+  { difficulty: 'Mudah', question: "Siapa Presiden AS yang memutuskan bom atom di Jepang?", options: ["Truman", "Roosevelt", "Eisenhower", "Wilson"], answer: "Truman" },
+  { difficulty: 'Mudah', question: "Tahun berapa Perang Dunia II dimulai?", options: ["1939", "1914", "1941", "1937"], answer: "1939" },
+  { difficulty: 'Mudah', question: "Apa nama sandi serangan Jerman ke Uni Soviet?", options: ["Barbarossa", "Overlord", "Seelöwe", "Blau"], answer: "Barbarossa" },
+  { difficulty: 'Mudah', question: "Siapa diktator Italia selama Perang Dunia II?", options: ["Mussolini", "Garibaldi", "Cavour", "Mazzini"], answer: "Mussolini" },
+  { difficulty: 'Mudah', question: "Apa nama pertempuran laut terbesar di Perang Dunia II?", options: ["Midway", "Leyte Gulf", "Coral Sea", "Guadalcanal"], answer: "Leyte Gulf" },
+  { difficulty: 'Mudah', question: "Negara mana yang pertama kali menggunakan tank dalam perang?", options: ["Inggris", "Jerman", "Prancis", "AS"], answer: "Inggris" },
+  { difficulty: 'Mudah', question: "Apa nama Perdana Menteri Prancis selama Perang Dunia II?", options: ["Pétain", "De Gaulle", "Laval", "Reynaud"], answer: "Pétain" },
+  { difficulty: 'Mudah', question: "Siapa pemimpin Uni Soviet selama Perang Dunia II?", options: ["Stalin", "Lenin", "Khrushchev", "Trotsky"], answer: "Stalin" },
+  { difficulty: 'Mudah', question: "Apa nama pertempuran di Stalingrad?", options: ["Stalingrad", "Moscow", "Leningrad", "Kursk"], answer: "Stalingrad" },
+  { difficulty: 'Mudah', question: "Negara mana yang pertama kali menggunakan senjata kimia di Perang Dunia I?", options: ["Jerman", "Prancis", "Inggris", "Rusia"], answer: "Jerman" },
+  { difficulty: 'Mudah', question: "Apa nama kapal perang Inggris yang tenggelam di Perang Dunia II?", options: ["Hood", "Bismarck", "Tirpitz", "Repulse"], answer: "Hood" },
+  { difficulty: 'Mudah', question: "Kapan Jerman menyerah di Perang Dunia II?", options: ["1945", "1944", "1946", "1943"], answer: "1945" },
+  { difficulty: 'Mudah', question: "Apa nama pendaratan Sekutu di Italia?", options: ["Salerno", "Anzio", "Sicily", "Naples"], answer: "Salerno" },
+  { difficulty: 'Mudah', question: "Siapa Panglima Tertinggi Sekutu di Eropa?", options: ["Eisenhower", "Montgomery", "Patton", "Bradley"], answer: "Eisenhower" },
+  { difficulty: 'Mudah', question: "Apa nama pesawat pembom atom di Hiroshima?", options: ["Enola Gay", "Bockscar", "Memphis Belle", "Flying Fortress"], answer: "Enola Gay" },
+  { difficulty: 'Mudah', question: "Kapan Jepang menyerah di Perang Dunia II?", options: ["1945", "1944", "1946", "1943"], answer: "1945" },
+  { difficulty: 'Mudah', question: "Apa nama perjanjian yang membentuk Liga Bangsa-Bangsa?", options: ["Versailles", "Paris", "Geneva", "London"], answer: "Versailles" },
+  { difficulty: 'Mudah', question: "Siapa Raja Inggris selama Perang Dunia II?", options: ["George VI", "Edward VIII", "George V", "Charles"], answer: "George VI" },
+  { difficulty: 'Mudah', question: "Apa nama pasukan Jerman di Afrika Utara?", options: ["Afrika Korps", "Panzer Division", "Luftwaffe", "Kriegsmarine"], answer: "Afrika Korps" },
+  { difficulty: 'Mudah', question: "Siapa pemimpin Perlawanan Prancis?", options: ["De Gaulle", "Pétain", "Laval", "Giraud"], answer: "De Gaulle" },
+  { difficulty: 'Mudah', question: "Apa nama pertempuran di El Alamein?", options: ["El Alamein", "Tobruk", "Benghazi", "Tripoli"], answer: "El Alamein" },
+  { difficulty: 'Mudah', question: "Siapa panglima Jerman di Afrika?", options: ["Rommel", "Guderian", "Manstein", "Kluge"], answer: "Rommel" },
+  { difficulty: 'Mudah', question: "Apa nama pesawat tempur Jerman di Perang Dunia II?", options: ["Messerschmitt", "Spitfire", "Zero", "Mustang"], answer: "Messerschmitt" },
+  { difficulty: 'Mudah', question: "Siapa pemimpin Jepang selama Perang Dunia II?", options: ["Hirohito", "Tojo", "Yamamoto", "Nagumo"], answer: "Hirohito" },
+  { difficulty: 'Mudah', question: "Apa nama serangan Jerman ke Inggris?", options: ["Battle of Britain", "Blitz", "Barbarossa", "Overlord"], answer: "Blitz" },
+  { difficulty: 'Mudah', question: "Apa nama pasukan terjun payung Jerman?", options: ["Fallschirmjäger", "Waffen-SS", "Wehrmacht", "Luftwaffe"], answer: "Fallschirmjäger" },
+  { difficulty: 'Mudah', question: "Siapa presiden Prancis sebelum Perang Dunia II?", options: ["Lebrun", "Poincaré", "Doumergue", "Millerand"], answer: "Lebrun" },
+  { difficulty: 'Mudah', question: "Apa nama pertempuran di Pasifik?", options: ["Guadalcanal", "Iwo Jima", "Okinawa", "Saipan"], answer: "Guadalcanal" },
+  { difficulty: 'Mudah', question: "Siapa panglima Sekutu di Pasifik?", options: ["MacArthur", "Nimitz", "Halsey", "Spruance"], answer: "MacArthur" },
+  { difficulty: 'Mudah', question: "Apa nama kapal induk Jepang di Midway?", options: ["Akagi", "Kaga", "Soryu", "Hiryu"], answer: "Akagi" },
+  { difficulty: 'Mudah', question: "Apa nama pesawat pembom Inggris di Perang Dunia II?", options: ["Lancaster", "Spitfire", "Hurricane", "Mosquito"], answer: "Lancaster" },
+  // Sedang (41-80)
+  { difficulty: 'Sedang', question: "Kapan Kongres Wina berlangsung?", options: ["1814–1815", "1815–1816", "1813–1814", "1816–1817"], answer: "1814–1815" },
+  { difficulty: 'Sedang', question: "Siapa tokoh utama Kongres Wina?", options: ["Metternich", "Castlereagh", "Talleyrand", "Alexander I"], answer: "Metternich" },
+  { difficulty: 'Sedang', question: "Apa yang dimaksud dengan 'Spring of Nations'?", options: ["Revolusi 1848", "Revolusi 1830", "Revolusi 1917", "Revolusi 1789"], answer: "Revolusi 1848" },
+  { difficulty: 'Sedang', question: "Siapa yang menyatukan Italia?", options: ["Garibaldi", "Mazzini", "Cavour", "Victor Emmanuel"], answer: "Cavour" },
+  { difficulty: 'Sedang', question: "Kapan Jerman bersatu?", options: ["1871", "1866", "1870", "1848"], answer: "1871" },
+  { difficulty: 'Sedang', question: "Siapa Kanselir Jerman yang menyatukan Jerman?", options: ["Bismarck", "Wilhelm I", "Frederick III", "Wilhelm II"], answer: "Bismarck" },
+  { difficulty: 'Sedang', question: "Apa nama perang antara Prancis dan Prusia?", options: ["Franco-Prussian War", "Seven Weeks War", "Schleswig War", "Thirty Years War"], answer: "Franco-Prussian War" },
+  { difficulty: 'Sedang', question: "Kapan Perang Krimea berlangsung?", options: ["1853–1856", "1854–1857", "1855–1858", "1856–1859"], answer: "1853–1856" },
+  { difficulty: 'Sedang', question: "Siapa yang menulis 'Komunisme Manifesto'?", options: ["Marx & Engels", "Lenin & Trotsky", "Stalin & Khrushchev", "Robespierre & Danton"], answer: "Marx & Engels" },
+  { difficulty: 'Sedang', question: "Apa nama perang antara Amerika Serikat dan Spanyol?", options: ["Spanish-American War", "Mexican-American War", "Philippine-American War", "Cuban-American War"], answer: "Spanish-American War" },
+  { difficulty: 'Sedang', question: "Kapan Revolusi Bolshevik terjadi?", options: ["1917", "1918", "1916", "1919"], answer: "1917" },
+  { difficulty: 'Sedang', question: "Siapa pemimpin Bolshevik?", options: ["Lenin", "Trotsky", "Stalin", "Kerensky"], answer: "Lenin" },
+  { difficulty: 'Sedang', question: "Apa nama perjanjian yang mengakhiri Perang Rusia-Jepang?", options: ["Portsmouth", "Treaty of Paris", "Treaty of Versailles", "Treaty of Brest-Litovsk"], answer: "Portsmouth" },
+  { difficulty: 'Sedang', question: "Kapan Pembunuhan Archduke Franz Ferdinand?", options: ["1914", "1915", "1913", "1916"], answer: "1914" },
+  { difficulty: 'Sedang', question: "Apa nama kapal selam Jerman di Perang Dunia I?", options: ["U-boat", "Submarine", "Kriegsmarine", "Fleet"], answer: "U-boat" },
+  { difficulty: 'Sedang', question: "Apa nama pertempuran terbesar di Perang Dunia I?", options: ["Somme", "Verdun", "Ypres", "Marne"], answer: "Somme" },
+  { difficulty: 'Sedang', question: "Siapa yang menembak Franz Ferdinand?", options: ["Princip", "Cvijovic", "Grabez", "Turbic"], answer: "Princip" },
+  { difficulty: 'Sedang', question: "Apa nama organisasi yang menjadi cikal bakal Uni Soviet?", options: ["Soviet", "Duma", "Komintern", "Komsomol"], answer: "Soviet" },
+  { difficulty: 'Sedang', question: "Kapan Perang Sipil Rusia berakhir?", options: ["1921", "1920", "1922", "1919"], answer: "1921" },
+  { difficulty: 'Sedang', question: "Apa nama perjanjian yang mengakhiri Perang Dunia I untuk Rusia?", options: ["Brest-Litovsk", "Versailles", "Trianon", "Saint-Germain"], answer: "Brest-Litovsk" },
+  { difficulty: 'Sedang', question: "Siapa Perdana Menteri Italia sebelum Perang Dunia II?", options: ["Mussolini", "Nitti", "Giolitti", "Orlando"], answer: "Giolitti" },
+  { difficulty: 'Sedang', question: "Apa nama perjanjian antara Jerman dan Uni Soviet di Perang Dunia II?", options: ["Molotov-Ribbentrop", "Hitler-Stalin", "Berlin-Moscow", "Nazi-Soviet"], answer: "Molotov-Ribbentrop" },
+  { difficulty: 'Sedang', question: "Kapan Blitzkrieg pertama kali digunakan?", options: ["1939", "1940", "1941", "1938"], answer: "1939" },
+  { difficulty: 'Sedang', question: "Apa nama pertempuran di Kursk?", options: ["Kursk", "Stalingrad", "Moscow", "Leningrad"], answer: "Kursk" },
+  { difficulty: 'Sedang', question: "Siapa yang memimpin Operasi Overlord?", options: ["Eisenhower", "Montgomery", "Bradley", "Patton"], answer: "Eisenhower" },
+  { difficulty: 'Sedang', question: "Apa nama pengungsian besar di Dunkirk?", options: ["Dunkirk", "Calais", "Boulogne", "Le Havre"], answer: "Dunkirk" },
+  { difficulty: 'Sedang', question: "Kapan Jerman menyerang Polandia?", options: ["1939", "1940", "1941", "1938"], answer: "1939" },
+  { difficulty: 'Sedang', question: "Apa nama perlawanan Prancis?", options: ["Maquis", "FTP", "FFI", "Resistance"], answer: "Maquis" },
+  { difficulty: 'Sedang', question: "Siapa yang mengembangkan bom atom?", options: ["Oppenheimer", "Einstein", "Fermi", "Teller"], answer: "Oppenheimer" },
+  { difficulty: 'Sedang', question: "Apa nama pertempuran di Bulge?", options: ["Battle of the Bulge", "Ardennes", "Normandy", "Falaise"], answer: "Battle of the Bulge" },
+  { difficulty: 'Sedang', question: "Kapan Italia menyerah di Perang Dunia II?", options: ["1943", "1944", "1945", "1942"], answer: "1943" },
+  { difficulty: 'Sedang', question: "Apa nama pertempuran di Monte Cassino?", options: ["Monte Cassino", "Anzio", "Salerno", "Naples"], answer: "Monte Cassino" },
+  { difficulty: 'Sedang', question: "Siapa yang memimpin Angkatan Udara Jerman?", options: ["Göring", "Goebbels", "Himmler", "Speer"], answer: "Göring" },
+  { difficulty: 'Sedang', question: "Apa nama pesawat tempur AS di Perang Dunia II?", options: ["Mustang", "Thunderbolt", "Lightning", "Corsair"], answer: "Mustang" },
+  { difficulty: 'Sedang', question: "Siapa yang memimpin Angkatan Laut AS di Pasifik?", options: ["Nimitz", "MacArthur", "Halsey", "Spruance"], answer: "Nimitz" },
+  { difficulty: 'Sedang', question: "Apa nama perjanjian damai dengan Jepang?", options: ["San Francisco", "Tokyo", "Hiroshima", "Nagasaki"], answer: "San Francisco" },
+  { difficulty: 'Sedang', question: "Kapan PBB didirikan?", options: ["1945", "1944", "1946", "1943"], answer: "1945" },
+  { difficulty: 'Sedang', question: "Siapa Sekretaris Jenderal PBB pertama?", options: ["Lie", "Hammarskjöld", "U Thant", "Waldheim"], answer: "Lie" },
+  { difficulty: 'Sedang', question: "Apa nama pengadilan penjahat perang di Jerman?", options: ["Nuremberg", "Tokyo", "Berlin", "Munich"], answer: "Nuremberg" },
+  { difficulty: 'Sedang', question: "Apa nama pengadilan penjahat perang di Jepang?", options: ["Tokyo", "Nuremberg", "Kyoto", "Osaka"], answer: "Tokyo" },
+  // Sulit (81-120)
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Kongres Wina?", options: ["Metternich", "Castlereagh", "Talleyrand", "Alexander I"], answer: "Metternich" },
+  { difficulty: 'Sulit', question: "Apa yang dimaksud dengan 'Concert of Europe'?", options: ["Keseimbangan kekuatan Eropa", "Aliansi militer", "Perjanjian perdagangan", "Persatuan Eropa"], answer: "Keseimbangan kekuatan Eropa" },
+  { difficulty: 'Sulit', question: "Kapan Revolusi Yunani berlangsung?", options: ["1821–1832", "1820–1830", "1822–1833", "1819–1829"], answer: "1821–1832" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Revolusi Yunani?", options: ["Ypsilantis", "Kolokotronis", "Miaoulis", "Kanaris"], answer: "Ypsilantis" },
+  { difficulty: 'Sulit', question: "Apa nama perang antara Inggris dan China?", options: ["Opium War", "Boxer War", "Sino-Japanese War", "Taiping War"], answer: "Opium War" },
+  { difficulty: 'Sulit', question: "Kapan Perang Opium berakhir?", options: ["1842", "1841", "1843", "1840"], answer: "1842" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Revolusi 1848 di Austria?", options: ["Metternich", "Kossuth", "Garibaldi", "Mazzini"], answer: "Metternich" },
+  { difficulty: 'Sulit', question: "Apa nama pertempuran di Sadowa?", options: ["Sadowa", "Königgrätz", "Sedan", "Metz"], answer: "Königgrätz" },
+  { difficulty: 'Sulit', question: "Kapan Perang Austro-Prusia berlangsung?", options: ["1866", "1867", "1865", "1868"], answer: "1866" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Perang Sipil AS?", options: ["Lincoln", "Davis", "Grant", "Lee"], answer: "Lincoln" },
+  { difficulty: 'Sulit', question: "Kapan Perang Sipil AS berakhir?", options: ["1865", "1864", "1866", "1863"], answer: "1865" },
+  { difficulty: 'Sulit', question: "Apa nama pertempuran terbesar di Perang Sipil AS?", options: ["Gettysburg", "Antietam", "Bull Run", "Shiloh"], answer: "Gettysburg" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin pembentukan Kekaisaran Jerman?", options: ["Bismarck", "Wilhelm I", "Frederick III", "Wilhelm II"], answer: "Bismarck" },
+  { difficulty: 'Sulit', question: "Kapan Proklamasi Kekaisaran Jerman?", options: ["1871", "1870", "1872", "1869"], answer: "1871" },
+  { difficulty: 'Sulit', question: "Apa nama pertempuran di Sedan?", options: ["Sedan", "Metz", "Paris", "Toul"], answer: "Sedan" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Revolusi Meiji di Jepang?", options: ["Meiji", "Tokugawa", "Saigo", "Katsu"], answer: "Meiji" },
+  { difficulty: 'Sulit', question: "Kapan Restorasi Meiji berlangsung?", options: ["1868", "1867", "1869", "1866"], answer: "1868" },
+  { difficulty: 'Sulit', question: "Apa nama perang antara Jepang dan China?", options: ["Sino-Japanese War", "Russo-Japanese War", "Pacific War", "Asian War"], answer: "Sino-Japanese War" },
+  { difficulty: 'Sulit', question: "Kapan Perang Jepang-China berlangsung?", options: ["1894–1895", "1895–1896", "1893–1894", "1896–1897"], answer: "1894–1895" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Perlawanan Boer?", options: ["Botha", "Kruger", "Smuts", "Malan"], answer: "Botha" },
+  { difficulty: 'Sulit', question: "Kapan Perang Boer berlangsung?", options: ["1899–1902", "1898–1901", "1900–1903", "1897–1900"], answer: "1899–1902" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin pembantaian Armenia?", options: ["Talaat", "Enver", "Djemal", "Kemal"], answer: "Talaat" },
+  { difficulty: 'Sulit', question: "Kapan Pembantaian Armenia berlangsung?", options: ["1915", "1914", "1916", "1913"], answer: "1915" },
+  { difficulty: 'Sulit', question: "Apa nama pertempuran di Gallipoli?", options: ["Gallipoli", "Dardanelles", "Anzac", "Canakkale"], answer: "Gallipoli" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin pasukan Ottoman di Gallipoli?", options: ["Kemal", "Enver", "Talaat", "Djemal"], answer: "Kemal" },
+  { difficulty: 'Sulit', question: "Apa nama perjanjian damai dengan Ottoman?", options: ["Sèvres", "Lausanne", "Bucharest", "Athens"], answer: "Lausanne" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Revolusi Jerman 1918?", options: ["Ebert", "Liebknecht", "Luxemburg", "Scheidemann"], answer: "Ebert" },
+  { difficulty: 'Sulit', question: "Kapan Weimar Republic didirikan?", options: ["1919", "1918", "1920", "1917"], answer: "1919" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Kapp Putsch?", options: ["Kapp", "Littwitz", "Ebert", "Noske"], answer: "Kapp" },
+  { difficulty: 'Sulit', question: "Kapan Beer Hall Putsch berlangsung?", options: ["1923", "1924", "1922", "1925"], answer: "1923" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin Beer Hall Putsch?", options: ["Hitler", "Ludendorff", "Göring", "Himmler"], answer: "Hitler" },
+  { difficulty: 'Sulit', question: "Apa nama perjanjian antara Jerman dan Rusia 1922?", options: ["Rapallo", "Brest-Litovsk", "Moscow", "Berlin"], answer: "Rapallo" },
+  { difficulty: 'Sulit', question: "Kapan Anschluss terjadi?", options: ["1938", "1937", "1939", "1936"], answer: "1938" },
+  { difficulty: 'Sulit', question: "Apa nama pertempuran di Finlandia?", options: ["Winter War", "Continuation War", "Finnish War", "Soviet-Finnish War"], answer: "Winter War" },
+  { difficulty: 'Sulit', question: "Kapan Winter War berlangsung?", options: ["1939–1940", "1940–1941", "1938–1939", "1941–1942"], answer: "1939–1940" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin pertahanan Finlandia?", options: ["Mannerheim", "Kekkonen", "Paasikivi", "Ryti"], answer: "Mannerheim" },
+  { difficulty: 'Sulit', question: "Apa nama pertempuran di Narvik?", options: ["Narvik", "Trondheim", "Bergen", "Oslo"], answer: "Narvik" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin operasi Norwegia?", options: ["Dietl", "Rommel", "Guderian", "Manstein"], answer: "Dietl" },
+  { difficulty: 'Sulit', question: "Apa nama pertempuran di Kreta?", options: ["Kreta", "Greece", "Crete", "Macedonia"], answer: "Kreta" },
+  { difficulty: 'Sulit', question: "Siapa yang memimpin invasi Kreta?", options: ["Student", "Göring", "Kesselring", "Richthofen"], answer: "Student" }
+];
+
+// ================================================================
+// STATE & DOM
+// ================================================================
+let currentIndex = 0;
+let score = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let isAnswered = false;
+let totalQuestions = questions.length;
+let shuffledQuestions = [];
+
+const scoreDisplay = document.getElementById('scoreDisplay');
+const progressText = document.getElementById('progressText');
+const difficultyDisplay = document.getElementById('difficultyDisplay');
+const correctCountEl = document.getElementById('correctCount');
+const wrongCountEl = document.getElementById('wrongCount');
+const progressBar = document.getElementById('progressBar');
+const qNumber = document.getElementById('qNumber');
+const qText = document.getElementById('qText');
+const optionsContainer = document.getElementById('optionsContainer');
+const feedbackText = document.getElementById('feedbackText');
+const nextBtn = document.getElementById('nextBtn');
+const quizScreen = document.getElementById('quizScreen');
+const resultScreen = document.getElementById('resultScreen');
+const finalScore = document.getElementById('finalScore');
+const finalCorrect = document.getElementById('finalCorrect');
+const finalWrong = document.getElementById('finalWrong');
+const finalAccuracy = document.getElementById('finalAccuracy');
+const resultIcon = document.getElementById('resultIcon');
+const resultDesc = document.getElementById('resultDesc');
+const restartBtn = document.getElementById('restartBtn');
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shuffleOptions(options) {
+  const shuffled = [...options];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+function startGame() {
+  shuffledQuestions = shuffleArray([...questions]);
+  currentIndex = 0;
+  score = 0;
+  correctCount = 0;
+  wrongCount = 0;
+  isAnswered = false;
+  scoreDisplay.textContent = '0';
+  correctCountEl.textContent = '0';
+  wrongCountEl.textContent = '0';
+  quizScreen.classList.remove('hide');
+  resultScreen.classList.remove('show');
+  nextBtn.classList.remove('show');
+  feedbackText.textContent = '👆 Pilih jawaban di atas';
+  feedbackText.className = 'feedback-text info';
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (currentIndex >= totalQuestions) { showResult(); return; }
+  const q = shuffledQuestions[currentIndex];
+  qNumber.textContent = `Pertanyaan ${currentIndex + 1} / ${totalQuestions}`;
+  qText.textContent = q.question;
+  progressText.textContent = `${currentIndex + 1}/${totalQuestions}`;
+  progressBar.style.width = `${(currentIndex / totalQuestions) * 100}%`;
+  const diff = q.difficulty;
+  difficultyDisplay.textContent = diff;
+  difficultyDisplay.className = `difficulty diff-${diff.toLowerCase()}`;
+  const shuffledOpts = shuffleOptions(q.options);
+  optionsContainer.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  shuffledOpts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = `${labels[i]}. ${opt}`;
+    btn.dataset.correct = (opt === q.answer) ? 'true' : 'false';
+    btn.addEventListener('click', () => handleOptionClick(btn));
+    optionsContainer.appendChild(btn);
+  });
+  isAnswered = false;
+  nextBtn.classList.remove('show');
+  feedbackText.textContent = '👆 Pilih jawaban di atas';
+  feedbackText.className = 'feedback-text info';
+}
+
+function handleOptionClick(btn) {
+  if (isAnswered) return;
+  const isCorrect = btn.dataset.correct === 'true';
+  const allBtns = document.querySelectorAll('.option-btn');
+  allBtns.forEach(b => b.classList.add('disabled'));
+  allBtns.forEach(b => {
+    if (b.dataset.correct === 'true') b.classList.add('correct');
+    if (b === btn && !isCorrect) b.classList.add('wrong');
+  });
+  if (isCorrect) {
+    score++; correctCount++;
+    scoreDisplay.textContent = score;
+    correctCountEl.textContent = correctCount;
+    feedbackText.textContent = '✅ Benar!';
+    feedbackText.className = 'feedback-text correct';
+    playCorrect();
+  } else {
+    wrongCount++;
+    wrongCountEl.textContent = wrongCount;
+    const correctText = document.querySelector('.option-btn.correct')?.textContent || '';
+    feedbackText.textContent = `❌ Salah. Jawaban benar: ${correctText}`;
+    feedbackText.className = 'feedback-text wrong';
+    playWrong();
+  }
+  isAnswered = true;
+  nextBtn.classList.add('show');
+}
+
+function nextQuestion() { currentIndex++; loadQuestion(); }
+
+function showResult() {
+  quizScreen.classList.add('hide');
+  resultScreen.classList.add('show');
+  const total = totalQuestions;
+  const pct = Math.round((score / total) * 100);
+  finalScore.textContent = `${score}/${total}`;
+  finalCorrect.textContent = correctCount;
+  finalWrong.textContent = wrongCount;
+  finalAccuracy.textContent = `${pct}%`;
+  let icon, desc;
+  if (pct >= 90) { icon = '🏆'; desc = 'Luar biasa! Kamu ahli sejarah sejati!'; }
+  else if (pct >= 70) { icon = '🌟'; desc = 'Keren! Pengetahuanmu sangat luas!'; }
+  else if (pct >= 50) { icon = '📚'; desc = 'Lumayan, terus belajar!'; }
+  else { icon = '📖'; desc = 'Ayo baca lebih banyak dan coba lagi!'; }
+  resultIcon.textContent = icon;
+  resultDesc.textContent = desc;
+  progressBar.style.width = '100%';
+}
+
+function restartGame() { startGame(); }
+
+nextBtn.addEventListener('click', nextQuestion);
+restartBtn.addEventListener('click', restartGame);
+
+startGame();
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

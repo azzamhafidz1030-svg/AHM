@@ -1,0 +1,566 @@
+cat > /mnt/user-data/outputs/artikel.html << 'ENDOFFILE'
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artikel — Azzam Hafidz Murobbi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#0C0C0E; --surface:#141416; --border:#222226;
+      --accent:#6EE7B7; --accent2:#818CF8; --text:#E4E4E7; --muted:#71717A;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; font-size:16px; line-height:1.6; overflow-x:hidden; }
+
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.25rem 6vw; backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border); background:rgba(12,12,14,.7);
+    }
+    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--accent); letter-spacing:.04em; text-decoration:none; }
+    .nav-back { color:var(--muted); text-decoration:none; font-size:.875rem; font-weight:500; display:flex; align-items:center; gap:.5rem; transition:color .2s; }
+    .nav-back:hover { color:var(--accent); }
+
+    .page-hero { padding:10rem 6vw 4rem; border-bottom:1px solid var(--border); }
+    .page-tag { display:inline-flex; align-items:center; gap:.5rem; font-size:.75rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+    .page-tag span { width:24px; height:1px; background:var(--accent); display:block; }
+    .page-hero h1 { font-family:'Syne',sans-serif; font-size:clamp(2rem,5vw,4rem); font-weight:800; line-height:1.1; letter-spacing:-.02em; margin-bottom:1rem; }
+    .page-hero p { color:var(--muted); max-width:50ch; font-weight:300; font-size:1.05rem; }
+
+    .filter-bar { padding:2rem 6vw; display:flex; gap:.75rem; flex-wrap:wrap; border-bottom:1px solid var(--border); }
+    .filter-btn { padding:.4rem 1rem; border:1px solid var(--border); border-radius:100px; background:transparent; color:var(--muted); font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s; font-family:'Inter',sans-serif; }
+    .filter-btn:hover, .filter-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(110,231,183,.05); }
+
+    .artikel-wrap { padding:3rem 6vw 6rem; }
+    .artikel-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:1.5rem; }
+
+    .artikel-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; transition:border-color .2s,transform .2s; cursor:pointer; }
+    .artikel-card:hover { border-color:rgba(110,231,183,.4); transform:translateY(-4px); }
+
+    .artikel-thumb { width:100%; height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); }
+    .artikel-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+    .artikel-thumb .emoji-bg { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:3rem; }
+
+    .a1{background:linear-gradient(135deg,#1a0a0a,#3d1515);}
+    .a2{background:linear-gradient(135deg,#0a1a0a,#153d15);}
+    .a3{background:linear-gradient(135deg,#0a0a1a,#15153d);}
+    .a4{background:linear-gradient(135deg,#1a1a0a,#3d3d15);}
+    .a5{background:linear-gradient(135deg,#1a0a1a,#3d153d);}
+    .a6{background:linear-gradient(135deg,#0a1a1a,#153d3d);}
+    .a7{background:linear-gradient(135deg,#1a0f0a,#3d2515);}
+    .a8{background:linear-gradient(135deg,#0f0a1a,#25153d);}
+    .a9{background:linear-gradient(135deg,#0a1a0f,#153d25);}
+
+    .artikel-body { padding:1.25rem; }
+    .artikel-meta { display:flex; align-items:center; gap:.75rem; margin-bottom:.75rem; flex-wrap:wrap; }
+    .artikel-kategori { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; padding:.2rem .6rem; border:1px solid rgba(110,231,183,.3); border-radius:100px; }
+    .artikel-tanggal { font-size:.75rem; color:var(--muted); }
+    .artikel-title { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; margin-bottom:.5rem; line-height:1.3; }
+    .artikel-desc { font-size:.85rem; color:var(--muted); font-weight:300; margin-bottom:1rem; line-height:1.6; }
+    .artikel-link { font-size:.8rem; font-weight:600; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:.3rem; transition:gap .2s; }
+    .artikel-link:hover { gap:.6rem; }
+
+    .modal-overlay { position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.85); backdrop-filter:blur(8px); display:flex; align-items:flex-start; justify-content:center; padding:2rem 1rem; opacity:0; pointer-events:none; transition:opacity .3s; overflow-y:auto; }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    .modal { background:var(--surface); border:1px solid var(--border); border-radius:12px; width:100%; max-width:720px; transform:translateY(30px); transition:transform .3s; overflow:hidden; }
+    .modal-overlay.open .modal { transform:translateY(0); }
+    .modal-header { padding:2rem 2rem 1.5rem; border-bottom:1px solid var(--border); position:relative; }
+    .modal-close { position:absolute; top:1.5rem; right:1.5rem; background:var(--border); border:none; color:var(--muted); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .modal-close:hover { background:var(--accent); color:#0C0C0E; }
+    .modal-kategori { font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:.75rem; }
+    .modal-title { font-family:'Syne',sans-serif; font-size:clamp(1.4rem,3vw,2rem); font-weight:800; line-height:1.2; margin-bottom:.5rem; }
+    .modal-date { font-size:.8rem; color:var(--muted); }
+    .modal-body { padding:2rem; }
+    .modal-body p { color:var(--muted); margin-bottom:1.25rem; font-weight:300; line-height:1.8; font-size:.95rem; }
+    .modal-body h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; color:var(--text); margin:1.5rem 0 .75rem; }
+    .modal-body ul { padding-left:1.25rem; margin-bottom:1.25rem; }
+    .modal-body ul li { color:var(--muted); font-size:.95rem; margin-bottom:.4rem; font-weight:300; }
+
+    footer { border-top:1px solid var(--border); padding:2rem 6vw; display:flex; justify-content:space-between; align-items:center; font-size:.8rem; color:var(--muted); flex-wrap:wrap; gap:1rem; }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity .6s ease,transform .6s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+    @media(max-width:768px){ .artikel-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">AHM.</a>
+  <a href="index.html" class="nav-back">← Kembali ke Portfolio</a>
+</nav>
+
+<div class="page-hero">
+  <p class="page-tag"><span></span> Pengetahuan & Wawasan</p>
+  <h1>Artikel Militer<br>& Sejarah</h1>
+  <p>Kumpulan artikel tentang sejarah dunia, strategi militer, dan peristiwa penting yang membentuk peradaban.</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterArtikel('semua',this)">Semua</button>
+  <button class="filter-btn" onclick="filterArtikel('militer',this)">Militer</button>
+  <button class="filter-btn" onclick="filterArtikel('sejarah',this)">Sejarah</button>
+  <button class="filter-btn" onclick="filterArtikel('perang',this)">Perang</button>
+  <button class="filter-btn" onclick="filterArtikel('senjata',this)">Senjata</button>
+</div>
+
+<div class="artikel-wrap">
+  <div class="artikel-grid" id="artikelGrid">
+
+    <!-- 0: Perang Dunia II -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(0)">
+      <div class="artikel-thumb a1">
+        <img src="ww2 1.jpg" alt="Perang Dunia II" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">10 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Dunia II: Pertempuran yang Mengubah Dunia</h3>
+        <p class="artikel-desc">Mengenal kronologi, strategi, dan dampak Perang Dunia II yang menjadi konflik terbesar dalam sejarah manusia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 1: Sun Tzu -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(1)">
+      <div class="artikel-thumb a2">
+        <img src="sun tzu.jpg" alt="Sun Tzu" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">5 Jun 2024</span></div>
+        <h3 class="artikel-title">Strategi Perang Sun Tzu yang Masih Relevan</h3>
+        <p class="artikel-desc">Pelajaran dari kitab The Art of War karya Sun Tzu yang hingga kini dipakai oleh militer dan pemimpin dunia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 2: Ottoman -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(2)">
+      <div class="artikel-thumb a3">
+        <img src="kemal.jpg" alt="Ottoman" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">1 Jun 2024</span></div>
+        <h3 class="artikel-title">Kejatuhan Kekaisaran Ottoman</h3>
+        <p class="artikel-desc">Bagaimana kekaisaran yang pernah menguasai tiga benua akhirnya runtuh dan melahirkan Turki modern.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 3: Senjata Modern -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(3)">
+      <div class="artikel-thumb a4">
+        <img src="drone.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">28 Mei 2024</span></div>
+        <h3 class="artikel-title">Teknologi Senjata Modern yang Mengubah Peperangan</h3>
+        <p class="artikel-desc">Dari drone tempur hingga rudal hipersonik, teknologi militer modern yang mendefinisikan ulang strategi perang.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 4: Perang Dingin -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(4)">
+      <div class="artikel-thumb a5">
+        <img src="cold war.jpg" alt="Perang Dingin" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">20 Mei 2024</span></div>
+        <h3 class="artikel-title">Perang Dingin: Dua Kekuatan yang Mengancam Dunia</h3>
+        <p class="artikel-desc">Rivalitas Amerika Serikat dan Uni Soviet yang berlangsung puluhan tahun dan membentuk peta dunia modern.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 5: Perang Saudara Spanyol -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(5)">
+      <div class="artikel-thumb a4">
+        <img src="spaincivilwar.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">1 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Saudara Spanyol</h3>
+        <p class="artikel-desc">Konflik brutal 1936–1939 yang membelah Spanyol menjadi dua kubu dan menjadi pemanasan Perang Dunia II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 6: Perang Musim Dingin -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(6)">
+      <div class="artikel-thumb a4">
+        <img src="winterwr.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">3 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Musim Dingin Finlandia</h3>
+        <p class="artikel-desc">Bagaimana Finlandia kecil berhasil menahan serangan Uni Soviet yang jauh lebih besar selama musim dingin 1939.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 7: Object 775 -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(7)">
+      <div class="artikel-thumb a4">
+        <img src="objct7775.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">5 Jun 2024</span></div>
+        <h3 class="artikel-title">Tank Object 775</h3>
+        <p class="artikel-desc">Tank eksperimental Soviet dengan meriam roket unik yang tidak pernah diproduksi massal namun meninggalkan jejak sejarah.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 8: Tank Maus -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(8)">
+     <div class="artikel-thumb a4">
+        <img src="maus.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">7 Jun 2024</span></div>
+        <h3 class="artikel-title">Tank Maus — Monster Baja Nazi</h3>
+        <p class="artikel-desc">Tank terberat yang pernah dibuat manusia, 188 ton baja Jerman yang tidak pernah bertempur di medan perang.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 9: Attack of the Dead Men -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(9)">
+      <div class="artikel-thumb a4">
+        <img src="a.o.t.d.m..jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">9 Jun 2024</span></div>
+        <h3 class="artikel-title">Attack of the Dead Men</h3>
+        <p class="artikel-desc">100 tentara Rusia yang terkena gas klorin bangkit menyerang dan memukul mundur pasukan Jerman.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 10: Perang Rif -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(10)">
+      <div class="artikel-thumb a4">
+        <img src="rif.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">11 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Rif</h3>
+        <p class="artikel-desc">Perlawanan suku Berber Maroko melawan Spanyol dan Prancis 1921–1926 yang menginspirasi gerakan kemerdekaan dunia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 11: Perang Dunia I -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(11)">
+     <div class="artikel-thumb a4">
+        <img src="ww1.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">13 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Dunia I</h3>
+        <p class="artikel-desc">Konflik global 1914–1918 yang menghancurkan empat kekaisaran besar dan merenggut 20 juta jiwa manusia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 12: Divisi SS Handschar -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(12)">
+      <div class="artikel-thumb a4">
+        <img src="handschar.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">15 Jun 2024</span></div>
+        <h3 class="artikel-title">Divisi SS Handschar</h3>
+        <p class="artikel-desc">Divisi Waffen-SS unik yang terdiri dari Muslim Bosnia bertempur untuk Nazi Jerman di Balkan pada PD II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 13: Panzerfaust -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(13)">
+      <div class="artikel-thumb a4">
+        <img src="panzerfaust.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">17 Jun 2024</span></div>
+        <h3 class="artikel-title">Panzerfaust — Senjata Anti-Tank Jerman</h3>
+        <p class="artikel-desc">Senjata anti-tank sekali pakai yang murah dan mematikan, mimpi buruk pasukan lapis baja Sekutu di akhir PD II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="tutupArtikel(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <button class="modal-close" onclick="tutupArtikel()">✕</button>
+      <p class="modal-kategori" id="modalKategori"></p>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-date" id="modalDate"></p>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2024 Azzam Hafidz Murobbi. Dibuat dengan ❤️</span>
+  <a href="index.html" style="color:var(--muted);text-decoration:none;font-size:.8rem;">← Kembali ke Portfolio</a>
+</footer>
+
+<script>
+const artikelData = [
+  // 0
+  { kategori:"Perang", title:"Perang Dunia II: Pertempuran yang Mengubah Dunia", tanggal:"10 Juni 2024", isi:`
+    <p>Perang Dunia II (1939–1945) adalah konflik militer terbesar dalam sejarah manusia yang melibatkan lebih dari 70 negara dan menewaskan sekitar 70–85 juta jiwa.</p>
+    <h3>Latar Belakang</h3>
+    <p>Perang ini bermula dari ambisi ekspansif Nazi Jerman di bawah Adolf Hitler, fasisme Italia di bawah Mussolini, dan militerisme Jepang. Invasi Jerman ke Polandia pada 1 September 1939 memicu deklarasi perang dari Inggris dan Prancis.</p>
+    <h3>Front Utama</h3>
+    <ul>
+      <li><strong>Front Eropa Barat</strong> — Jerman menduduki Prancis, Belgia, dan Belanda.</li>
+      <li><strong>Front Timur</strong> — Pertempuran Jerman vs Uni Soviet, termasuk Pertempuran Stalingrad yang menjadi titik balik perang.</li>
+      <li><strong>Pasifik</strong> — Jepang vs Amerika Serikat setelah serangan Pearl Harbor 1941.</li>
+    </ul>
+    <h3>Akhir Perang</h3>
+    <p>Perang berakhir dengan menyerahnya Jerman pada Mei 1945, diikuti menyerahnya Jepang pada Agustus 1945 setelah bom atom dijatuhkan di Hiroshima dan Nagasaki.</p>
+    <h3>Dampak</h3>
+    <p>Perang ini melahirkan PBB, Perang Dingin, dekolonisasi Asia-Afrika, dan tatanan dunia baru yang masih kita rasakan hingga hari ini.</p>
+  `},
+  // 1
+  { kategori:"Militer", title:"Strategi Perang Sun Tzu yang Masih Relevan", tanggal:"5 Juni 2024", isi:`
+    <p>Sun Tzu adalah seorang jenderal dan filsuf militer Tiongkok yang hidup sekitar abad ke-5 SM. Karyanya, The Art of War, menjadi salah satu buku strategi paling berpengaruh sepanjang masa.</p>
+    <h3>Prinsip Utama Sun Tzu</h3>
+    <ul>
+      <li><strong>"Kenali dirimu dan kenali musuhmu"</strong> — Kemenangan membutuhkan pemahaman mendalam tentang diri sendiri dan lawan.</li>
+      <li><strong>"Perang terbaik adalah menang tanpa bertarung"</strong> — Strategi diplomatik dan psikologis lebih baik dari konfrontasi langsung.</li>
+      <li><strong>"Kecepatan adalah senjata"</strong> — Bergerak cepat dan tidak terduga membuat musuh kerepotan.</li>
+    </ul>
+    <h3>Relevansi Modern</h3>
+    <p>Ajaran Sun Tzu tidak hanya dipakai militer, tapi juga dunia bisnis, politik, dan olahraga. Banyak CEO dan pemimpin dunia mengaku terinspirasi oleh The Art of War.</p>
+    <h3>Penerapan dalam Militer Modern</h3>
+    <p>Doktrin perang asimetris, operasi intelijen, dan perang siber semuanya mencerminkan prinsip-prinsip yang Sun Tzu ajarkan 2.500 tahun yang lalu.</p>
+  `},
+  // 2
+  { kategori:"Sejarah", title:"Kejatuhan Kekaisaran Ottoman", tanggal:"1 Juni 2024", isi:`
+    <p>Kekaisaran Ottoman berdiri selama lebih dari 600 tahun (1299–1922) dan pada puncaknya menguasai wilayah dari Maroko hingga Persia, dari Hungaria hingga Yaman.</p>
+    <h3>Faktor Kemunduran</h3>
+    <ul>
+      <li><strong>Kekalahan dalam Perang Dunia I</strong> — Ottoman berpihak pada Jerman yang kalah perang.</li>
+      <li><strong>Nasionalisme</strong> — Bangkitnya semangat nasionalisme berbagai etnis di dalam kekaisaran.</li>
+      <li><strong>Korupsi dan birokrasi</strong> — Lemahnya pemerintahan pusat dan ketidakmampuan beradaptasi dengan modernitas.</li>
+    </ul>
+    <h3>Perjanjian Lausanne 1923</h3>
+    <p>Setelah Perang Kemerdekaan Turki di bawah Mustafa Kemal Atatürk, Perjanjian Lausanne 1923 mengakui kedaulatan Turki modern dan menandai berakhirnya era Ottoman.</p>
+    <h3>Warisan Ottoman</h3>
+    <p>Kekaisaran Ottoman meninggalkan warisan budaya, arsitektur, dan hukum yang masih terasa di lebih dari 40 negara yang pernah menjadi wilayahnya.</p>
+  `},
+  // 3
+  { kategori:"Militer", title:"Teknologi Senjata Modern yang Mengubah Peperangan", tanggal:"28 Mei 2024", isi:`
+    <p>Perkembangan teknologi militer pada abad ke-21 telah mendefinisikan ulang cara perang dilakukan, dari pertempuran fisik menjadi konflik yang melibatkan kecerdasan buatan, siber, dan luar angkasa.</p>
+    <h3>Drone Tempur</h3>
+    <p>Drone atau UAV kini menjadi tulang punggung operasi militer modern. Dari pengintaian hingga serangan presisi, drone mengurangi risiko bagi pilot manusia.</p>
+    <h3>Rudal Hipersonik</h3>
+    <p>Rudal yang bergerak di atas Mach 5 hampir tidak bisa dicegat sistem pertahanan konvensional. Rusia, China, dan AS berlomba mengembangkan teknologi ini.</p>
+    <h3>Perang Siber</h3>
+    <ul>
+      <li>Serangan terhadap infrastruktur digital musuh</li>
+      <li>Propaganda dan disinformasi digital</li>
+      <li>Pencurian data intelijen</li>
+    </ul>
+    <h3>AI dalam Militer</h3>
+    <p>Kecerdasan buatan digunakan untuk analisis data intelijen, sistem senjata otonom, dan pengambilan keputusan di medan perang secara real-time.</p>
+  `},
+  // 4
+  { kategori:"Sejarah", title:"Perang Dingin: Dua Kekuatan yang Mengancam Dunia", tanggal:"20 Mei 2024", isi:`
+    <p>Perang Dingin (1947–1991) adalah persaingan geopolitik, ideologis, dan militer antara Amerika Serikat dan Uni Soviet yang berlangsung hampir setengah abad.</p>
+    <h3>Mengapa Disebut "Dingin"?</h3>
+    <p>Karena kedua kekuatan tidak pernah bertempur secara langsung, melainkan melalui negara-negara proksi, perlombaan senjata, dan persaingan teknologi.</p>
+    <h3>Peristiwa Kunci</h3>
+    <ul>
+      <li><strong>Blokade Berlin (1948)</strong> — Soviet memblokade Berlin Barat, AS merespons dengan jembatan udara.</li>
+      <li><strong>Krisis Rudal Kuba (1962)</strong> — Dunia hampir menuju perang nuklir.</li>
+      <li><strong>Perlombaan Luar Angkasa</strong> — Sputnik, Apollo 11, persaingan teknologi antariksa.</li>
+      <li><strong>Perang Vietnam & Korea</strong> — Perang proksi yang menelan jutaan korban.</li>
+    </ul>
+    <h3>Akhir Perang Dingin</h3>
+    <p>Runtuhnya Tembok Berlin pada 1989 dan bubarnya Uni Soviet pada 1991 mengakhiri Perang Dingin dengan kemenangan blok Barat.</p>
+  `},
+  // 5
+  { kategori:"Perang", title:"Perang Saudara Spanyol", tanggal:"1 Juni 2024", isi:`
+    <p>Perang Saudara Spanyol (1936–1939) adalah konflik antara pemerintah Republik Spanyol yang sah melawan pasukan nasionalis pimpinan Jenderal Francisco Franco.</p>
+    <h3>Latar Belakang</h3>
+    <p>Ketegangan politik antara kaum kiri dan kanan telah lama membara di Spanyol. Pada Juli 1936, Franco memimpin kudeta militer yang gagal, namun memicu perang saudara yang menghancurkan.</p>
+    <h3>Pihak yang Bertarung</h3>
+    <ul>
+      <li><strong>Republik</strong> — didukung Uni Soviet dan relawan internasional (Brigade Internasional)</li>
+      <li><strong>Nasionalis</strong> — didukung Nazi Jerman dan Fasis Italia</li>
+    </ul>
+    <h3>Pemboman Guernica</h3>
+    <p>Pada April 1937, Jerman mengebom kota Guernica sebagai "latihan" untuk Perang Dunia II. Tragedi ini diabadikan Pablo Picasso dalam lukisan terkenal "Guernica".</p>
+    <h3>Akhir Perang</h3>
+    <p>Franco memenangkan perang pada April 1939 dan memerintah Spanyol sebagai diktator hingga kematiannya pada 1975. Perang ini menewaskan sekitar 500.000 orang.</p>
+  `},
+  // 6
+  { kategori:"Perang", title:"Perang Musim Dingin Finlandia", tanggal:"3 Juni 2024", isi:`
+    <p>Perang Musim Dingin (30 November 1939 – 13 Maret 1940) adalah konflik antara Uni Soviet dan Finlandia. Meski kalah secara jumlah, Finlandia memberikan perlawanan luar biasa yang mengejutkan dunia.</p>
+    <h3>Kekuatan Kedua Pihak</h3>
+    <ul>
+      <li><strong>Soviet</strong> — 450.000 tentara, 6.000 tank, 3.800 pesawat</li>
+      <li><strong>Finlandia</strong> — 300.000 tentara, 30 tank, 130 pesawat</li>
+    </ul>
+    <h3>Taktik Finlandia</h3>
+    <p>Tentara Finlandia memanfaatkan hutan dan salju tebal untuk bertempur secara gerilya. Pasukan ski Finlandia bergerak cepat dan menyergap kolom Soviet yang lambat di medan salju.</p>
+    <h3>Simo Häyhä — White Death</h3>
+    <p>Sniper legendaris Finlandia ini mencatat 500+ konfirmasi pembunuhan dalam 100 hari, menjadikannya sniper paling mematikan dalam sejarah perang modern.</p>
+    <h3>Hasil Perang</h3>
+    <p>Finlandia akhirnya kalah dan harus menyerahkan 11% wilayahnya kepada Soviet. Namun ketahanan Finlandia memalukan Uni Soviet di mata dunia.</p>
+  `},
+  // 7
+  { kategori:"Senjata", title:"Tank Object 775", tanggal:"5 Juni 2024", isi:`
+    <p>Object 775 adalah tank eksperimental Soviet yang dikembangkan pada awal 1960-an dengan desain yang sangat unik dan revolusioner.</p>
+    <h3>Desain Unik</h3>
+    <p>Tank ini menggunakan meriam-peluncur roket (ATGM launcher) kaliber 125mm yang bisa menembakkan rudal anti-tank berpemandu dari dalam lambung tank yang sangat rendah.</p>
+    <h3>Spesifikasi</h3>
+    <ul>
+      <li><strong>Berat</strong> — sekitar 36 ton</li>
+      <li><strong>Senjata utama</strong> — meriam roket 125mm</li>
+      <li><strong>Awak</strong> — hanya 2 orang</li>
+      <li><strong>Profil</strong> — sangat rendah, sulit dijadikan target</li>
+    </ul>
+    <h3>Mengapa Tidak Diproduksi?</h3>
+    <p>Meski inovatif, Object 775 memiliki masalah serius — jangkauan penglihatan awak sangat terbatas dan sistem senjatanya terlalu kompleks. Soviet akhirnya memilih T-64.</p>
+  `},
+  // 8
+  { kategori:"Senjata", title:"Tank Maus — Monster Baja Nazi", tanggal:"7 Juni 2024", isi:`
+    <p>Panzerkampfwagen VIII Maus adalah tank terberat yang pernah dibuat dalam sejarah. Dengan bobot 188 ton, tank raksasa ini adalah proyek ambisius Nazi Jerman yang tidak pernah bertempur.</p>
+    <h3>Spesifikasi Monster</h3>
+    <ul>
+      <li><strong>Berat</strong> — 188 ton</li>
+      <li><strong>Panjang</strong> — 10,2 meter</li>
+      <li><strong>Senjata utama</strong> — meriam 128mm + meriam 75mm</li>
+      <li><strong>Baju baja</strong> — hingga 240mm di bagian depan</li>
+      <li><strong>Kecepatan</strong> — hanya 20 km/jam</li>
+    </ul>
+    <h3>Masalah Besar</h3>
+    <p>Maus terlalu berat untuk melewati jembatan manapun di Eropa. Tank ini harus menyeberangi sungai dengan cara menyelam di dasar sungai menggunakan snorkel.</p>
+    <h3>Nasib Maus</h3>
+    <p>Hanya 2 unit yang berhasil dibuat. Keduanya dihancurkan oleh Jerman sendiri agar tidak jatuh ke tangan Soviet. Satu unit kini ada di Museum Tank Kubinka, Rusia.</p>
+  `},
+  // 9
+  { kategori:"Sejarah", title:"Attack of the Dead Men", tanggal:"9 Juni 2024", isi:`
+    <p>"Serangan Orang Mati" terjadi pada 6 Agustus 1915 di Benteng Osowiec, Polandia — salah satu kisah paling luar biasa dalam sejarah Perang Dunia I.</p>
+    <h3>Serangan Gas Jerman</h3>
+    <p>Jerman melancarkan serangan gas klorin dalam skala besar — 30 tabung gas menghasilkan awan beracun setinggi 12 meter. Sekitar 100 tentara Rusia yang tersisa terkena gas mematikan ini.</p>
+    <h3>Bangkit dari Kematian</h3>
+    <p>Tentara Rusia yang sudah sekarat, dengan paru-paru terbakar, kulit melepuh, dan memuntahkan darah — bangkit dan melancarkan serangan balik dengan bayonet.</p>
+    <h3>Akibat bagi Jerman</h3>
+    <p>Pasukan Jerman yang melihat puluhan "zombie" berdarah menyerang mereka panik besar. Mereka mundur dan saling menginjak satu sama lain. Ratusan tentara Jerman meninggal karena kepanikan ini.</p>
+    <h3>Warisan</h3>
+    <p>Kisah ini menjadi legenda dalam sejarah militer Rusia sebagai simbol keteguhan jiwa dan keberanian yang melampaui batas manusiawi.</p>
+  `},
+  // 10
+  { kategori:"Perang", title:"Perang Rif", tanggal:"11 Juni 2024", isi:`
+    <p>Perang Rif (1921–1926) adalah perlawanan suku Berber di pegunungan Rif, Maroko Utara, melawan penjajahan Spanyol dan kemudian Prancis, dipimpin oleh Abd el-Krim.</p>
+    <h3>Bencana Annual 1921</h3>
+    <p>Pada Juli 1921, pasukan Berber menghancurkan total 20.000 tentara Spanyol di Annual — kekalahan militer terparah Spanyol sejak abad ke-16.</p>
+    <h3>Republik Rif</h3>
+    <p>Abd el-Krim mendirikan Republik Konfederasi Suku Rif — negara modern pertama di Afrika dengan konstitusi dan tentara reguler.</p>
+    <h3>Penggunaan Senjata Kimia</h3>
+    <p>Spanyol dan Prancis menggunakan gas mustard dan fosgen dalam skala besar terhadap penduduk sipil Berber — salah satu penggunaan senjata kimia pertama dalam sejarah kolonial.</p>
+    <h3>Pengaruh Global</h3>
+    <p>Kemenangan awal Abd el-Krim menginspirasi gerakan kemerdekaan di Asia, Afrika, dan Timur Tengah, termasuk Ho Chi Minh dan Mao Zedong.</p>
+  `},
+  // 11
+  { kategori:"Perang", title:"Perang Dunia I", tanggal:"13 Juni 2024", isi:`
+    <p>Perang Dunia I (1914–1918) adalah konflik global yang menghancurkan empat kekaisaran besar — Ottoman, Austro-Hungaria, Jerman, dan Rusia — serta menewaskan lebih dari 20 juta orang.</p>
+    <h3>Pemicu Perang</h3>
+    <p>Pembunuhan Archduke Franz Ferdinand di Sarajevo pada 28 Juni 1914 memicu serangkaian aliansi yang menyeret seluruh Eropa ke dalam perang hanya dalam hitungan minggu.</p>
+    <h3>Perang Parit</h3>
+    <p>PD I didominasi perang parit di Front Barat. Jutaan tentara hidup dalam parit berlumpur selama berbulan-bulan hanya untuk maju beberapa meter.</p>
+    <h3>Pertempuran Paling Berdarah</h3>
+    <ul>
+      <li><strong>Pertempuran Somme</strong> — 1 juta korban dalam 141 hari</li>
+      <li><strong>Pertempuran Verdun</strong> — 700.000 korban dalam 10 bulan</li>
+      <li><strong>Pertempuran Gallipoli</strong> — 500.000 korban di kedua pihak</li>
+    </ul>
+    <h3>Akhir Perang & Dampak</h3>
+    <p>Jerman menyerah pada 11 November 1918. Perjanjian Versailles yang keras menjadi benih lahirnya Nazi dan Perang Dunia II dua dekade kemudian.</p>
+  `},
+  // 12
+  { kategori:"Militer", title:"Divisi SS Handschar", tanggal:"15 Juni 2024", isi:`
+    <p>Divisi SS ke-13 "Handschar" adalah divisi Waffen-SS yang unik karena sebagian besar anggotanya adalah Muslim Bosnia, menjadi unit Muslim terbesar dalam sejarah militer Jerman.</p>
+    <h3>Pembentukan</h3>
+    <p>Heinrich Himmler membentuk divisi ini setelah melihat potensi rekrutmen di Bosnia, dengan dukungan Grand Mufti Yerusalem Amin al-Husseini.</p>
+    <h3>Keunikan Divisi</h3>
+    <ul>
+      <li>Diizinkan membawa imam di setiap batalion</li>
+      <li>Mendapat makanan halal</li>
+      <li>Seragam khusus dengan peci fez</li>
+      <li>Lambang divisi: pedang handschar dan swastika</li>
+    </ul>
+    <h3>Pemberontakan Internal</h3>
+    <p>Pada September 1943, terjadi pemberontakan dalam divisi. Sejumlah tentara menolak berperang dan membunuh beberapa perwira Jerman sebelum ditumpas.</p>
+    <h3>Kejahatan Perang</h3>
+    <p>Divisi ini terlibat dalam pembantaian warga sipil Serbia dan Yahudi di Bosnia.</p>
+  `},
+  // 13
+  { kategori:"Senjata", title:"Panzerfaust — Senjata Anti-Tank Jerman", tanggal:"17 Juni 2024", isi:`
+    <p>Panzerfaust (bahasa Jerman: "tinju baja") adalah senjata anti-tank sekali pakai yang dikembangkan Jerman pada Perang Dunia II. Sederhana, murah, dan sangat mematikan.</p>
+    <h3>Desain Revolusioner</h3>
+    <p>Panzerfaust terdiri dari tabung baja sederhana berisi hulu ledak berbentuk kerucut. Siapapun bisa menggunakannya setelah pelatihan singkat.</p>
+    <h3>Varian Utama</h3>
+    <ul>
+      <li><strong>Panzerfaust 30</strong> — jangkauan 30 meter, penetrasi 140mm baja</li>
+      <li><strong>Panzerfaust 60</strong> — jangkauan 60 meter, lebih akurat</li>
+      <li><strong>Panzerfaust 100</strong> — jangkauan 100 meter, bisa diisi ulang</li>
+      <li><strong>Panzerfaust 150</strong> — versi terakhir, tidak sempat diproduksi massal</li>
+    </ul>
+    <h3>Dampak di Medan Perang</h3>
+    <p>Jerman memproduksi lebih dari 8 juta unit Panzerfaust. Di akhir perang, senjata ini menjadi andalan Volkssturm dalam mempertahankan kota-kota Jerman.</p>
+    <h3>Warisan</h3>
+    <p>Konsep Panzerfaust menginspirasi pengembangan RPG-7 Soviet dan berbagai senjata anti-tank modern yang masih digunakan hingga hari ini.</p>
+  `}
+];
+
+function bukaArtikel(index) {
+  const a = artikelData[index];
+  document.getElementById('modalKategori').textContent = a.kategori;
+  document.getElementById('modalTitle').textContent = a.title;
+  document.getElementById('modalDate').textContent = a.tanggal;
+  document.getElementById('modalBody').innerHTML = a.isi;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function tutupArtikel(e) {
+  if (!e || e.target === document.getElementById('modalOverlay') || (e.target && e.target.classList.contains('modal-close'))) {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+function filterArtikel(kat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.artikel-card').forEach(card => {
+    card.style.display = (kat === 'semua' || card.dataset.kategori === kat) ? '' : 'none';
+  });
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') tutupArtikel({}); });
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+

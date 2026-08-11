@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🇹🇷 Kamus Turki — Azzam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0C0C0E;
+      --surface: #141416;
+      --border:  #222226;
+      --accent:  #6EE7B7;
+      --accent2: #818CF8;
+      --text:    #E4E4E7;
+      --muted:   #71717A;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 6vw;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(12,12,14,.7);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .nav-back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    .page-hero {
+      padding: 8rem 6vw 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .page-tag span {
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      display: block;
+    }
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: .75rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      max-width: 50ch;
+      font-weight: 300;
+      font-size: 1.05rem;
+    }
+
+    .content-wrap {
+      padding: 2rem 6vw 4rem;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .search-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+      min-width: 180px;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .search-input::placeholder { color: var(--muted); }
+
+    .direction-toggle {
+      display: flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .direction-toggle button {
+      background: transparent;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .direction-toggle button.active {
+      background: var(--accent);
+      color: #0C0C0E;
+    }
+    .direction-toggle button:first-child {
+      border-right: 1px solid var(--border);
+    }
+    .direction-toggle button:hover:not(.active) {
+      color: var(--text);
+    }
+
+    .total-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-align: right;
+    }
+
+    .word-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-height: 460px;
+      overflow-y: auto;
+      padding-right: 0.3rem;
+    }
+    .word-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .word-list::-webkit-scrollbar-track {
+      background: var(--bg);
+      border-radius: 4px;
+    }
+    .word-list::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .word-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface);
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      border-left: 3px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .word-item:hover {
+      border-left-color: var(--accent);
+      background: rgba(110,231,183,0.04);
+    }
+    .word-item .turki {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+    .word-item .indonesia {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .word-item .indonesia::before {
+      content: "→ ";
+      color: var(--accent2);
+      font-weight: 300;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 0;
+      color: var(--muted);
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .8rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    footer a:hover { color: var(--accent); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      .page-hero { padding: 7rem 1.5rem 2rem; }
+      .content-wrap { padding: 1.5rem 1.5rem 3rem; }
+      .search-box { flex-direction: column; }
+      .direction-toggle { align-self: stretch; }
+      .direction-toggle button { flex: 1; text-align: center; }
+      .word-item { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+      .word-item .indonesia::before { content: "→ "; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">AHM.</a>
+  <a href="index.html" class="nav-back">← Kembali ke Portfolio</a>
+</nav>
+
+<div class="page-hero">
+  <p class="page-tag"><span></span> Kamus Bahasa</p>
+  <h1>🇹🇷 Kamus Turki</h1>
+  <p>Kamus bahasa Turki–Indonesia dengan 90+ kata dasar. Cari cepat, dua arah, desain elegan.</p>
+</div>
+
+<div class="content-wrap">
+  <div class="search-box">
+    <input type="text" class="search-input" id="searchInput" placeholder="Cari kata… (Turki atau Indonesia)" />
+    <div class="direction-toggle" id="directionToggle">
+      <button class="active" data-dir="turki-indo">🇹🇷 → 🇮🇩</button>
+      <button data-dir="indo-turki">🇮🇩 → 🇹🇷</button>
+    </div>
+  </div>
+
+  <div class="total-hint" id="totalHint">Menampilkan 0 kata</div>
+
+  <div class="word-list" id="wordList">
+    <div class="empty-state">
+      <div class="icon">📖</div>
+      <p>Memuat kamus…</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2024 Azzam Hafidz Murobbi. Dibuat dengan ❤️</span>
+  <a href="index.html">← Kembali ke Portfolio</a>
+</footer>
+
+<script>
+// ================================================================
+// DATA KAMUS
+// ================================================================
+const dictionary = [
+  { turki: "merhaba", indonesia: "halo" },
+  { turki: "hoş geldin", indonesia: "selamat datang" },
+  { turki: "günaydın", indonesia: "selamat pagi" },
+  { turki: "iyi günler", indonesia: "selamat siang" },
+  { turki: "iyi akşamlar", indonesia: "selamat sore" },
+  { turki: "iyi geceler", indonesia: "selamat malam" },
+  { turki: "teşekkür ederim", indonesia: "terima kasih" },
+  { turki: "rica ederim", indonesia: "sama-sama" },
+  { turki: "lütfen", indonesia: "tolong" },
+  { turki: "evet", indonesia: "ya" },
+  { turki: "hayır", indonesia: "tidak" },
+  { turki: "belki", indonesia: "mungkin" },
+  { turki: "tamam", indonesia: "oke" },
+  { turki: "nasılsın?", indonesia: "apa kabar?" },
+  { turki: "iyiyim", indonesia: "saya baik" },
+  { turki: "adın ne?", indonesia: "siapa nama kamu?" },
+  { turki: "benim adım", indonesia: "nama saya" },
+  { turki: "nerelisin?", indonesia: "dari mana?" },
+  { turki: "nerede", indonesia: "di mana" },
+  { turki: "ne zaman", indonesia: "kapan" },
+  { turki: "neden", indonesia: "mengapa" },
+  { turki: "nasıl", indonesia: "bagaimana" },
+  { turki: "kaç", indonesia: "berapa" },
+  { turki: "bu", indonesia: "ini" },
+  { turki: "şu", indonesia: "itu" },
+  { turki: "o", indonesia: "dia" },
+  { turki: "ben", indonesia: "saya" },
+  { turki: "sen", indonesia: "kamu" },
+  { turki: "biz", indonesia: "kita" },
+  { turki: "siz", indonesia: "Anda" },
+  { turki: "onlar", indonesia: "mereka" },
+  { turki: "ev", indonesia: "rumah" },
+  { turki: "okul", indonesia: "sekolah" },
+  { turki: "kitap", indonesia: "buku" },
+  { turki: "kalem", indonesia: "pensil" },
+  { turki: "masa", indonesia: "meja" },
+  { turki: "sandalye", indonesia: "kursi" },
+  { turki: "kapı", indonesia: "pintu" },
+  { turki: "pencere", indonesia: "jendela" },
+  { turki: "ağaç", indonesia: "pohon" },
+  { turki: "çiçek", indonesia: "bunga" },
+  { turki: "su", indonesia: "air" },
+  { turki: "ekmek", indonesia: "roti" },
+  { turki: "peynir", indonesia: "keju" },
+  { turki: "yumurta", indonesia: "telur" },
+  { turki: "et", indonesia: "daging" },
+  { turki: "tavuk", indonesia: "ayam" },
+  { turki: "balık", indonesia: "ikan" },
+  { turki: "meyve", indonesia: "buah" },
+  { turki: "sebze", indonesia: "sayur" },
+  { turki: "arkadaş", indonesia: "teman" },
+  { turki: "aile", indonesia: "keluarga" },
+  { turki: "anne", indonesia: "ibu" },
+  { turki: "baba", indonesia: "ayah" },
+  { turki: "kardeş", indonesia: "saudara" },
+  { turki: "çocuk", indonesia: "anak" },
+  { turki: "insan", indonesia: "manusia" },
+  { turki: "ülke", indonesia: "negara" },
+  { turki: "şehir", indonesia: "kota" },
+  { turki: "köy", indonesia: "desa" },
+  { turki: "deniz", indonesia: "laut" },
+  { turki: "dağ", indonesia: "gunung" },
+  { turki: "nehir", indonesia: "sungai" },
+  { turki: "göl", indonesia: "danau" },
+  { turki: "orman", indonesia: "hutan" },
+  { turki: "hayvan", indonesia: "hewan" },
+  { turki: "kuş", indonesia: "burung" },
+  { turki: "kedi", indonesia: "kucing" },
+  { turki: "köpek", indonesia: "anjing" },
+  { turki: "at", indonesia: "kuda" },
+  { turki: "araba", indonesia: "mobil" },
+  { turki: "uçak", indonesia: "pesawat" },
+  { turki: "gemi", indonesia: "kapal" },
+  { turki: "tren", indonesia: "kereta" },
+  { turki: "otobüs", indonesia: "bus" },
+  { turki: "bisiklet", indonesia: "sepeda" },
+  { turki: "motosiklet", indonesia: "motor" },
+  { turki: "telefon", indonesia: "telepon" },
+  { turki: "bilgisayar", indonesia: "komputer" },
+  { turki: "televizyon", indonesia: "televisi" },
+  { turki: "müzik", indonesia: "musik" },
+  { turki: "şarkı", indonesia: "lagu" },
+  { turki: "dans", indonesia: "tarih" },
+  { turki: "resim", indonesia: "gambar" },
+  { turki: "fotoğraf", indonesia: "foto" },
+  { turki: "spor", indonesia: "olahraga" },
+  { turki: "futbol", indonesia: "sepak bola" },
+  { turki: "basketbol", indonesia: "basket" },
+  { turki: "voleybol", indonesia: "voli" },
+  { turki: "yüzme", indonesia: "renang" },
+  { turki: "koşu", indonesia: "lari" },
+  { turki: "yemek", indonesia: "makan" },
+  { turki: "içmek", indonesia: "minum" },
+  { turki: "uyumak", indonesia: "tidur" },
+  { turki: "okumak", indonesia: "membaca" },
+  { turki: "yazmak", indonesia: "menulis" },
+  { turki: "konuşmak", indonesia: "berbicara" },
+  { turki: "dinlemek", indonesia: "mendengar" },
+  { turki: "görmek", indonesia: "melihat" },
+  { turki: "sevmek", indonesia: "mencintai" },
+  { turki: "nefret etmek", indonesia: "membenci" },
+  { turki: "gülmek", indonesia: "tertawa" },
+  { turki: "ağlamak", indonesia: "menangis" },
+  { turki: "yürümek", indonesia: "berjalan" },
+  { turki: "koşmak", indonesia: "berlari" },
+  { turki: "zıplamak", indonesia: "meloncat" }
+];
+
+// ================================================================
+// STATE & DOM
+// ================================================================
+let currentDirection = 'turki-indo';
+const searchInput = document.getElementById('searchInput');
+const wordList = document.getElementById('wordList');
+const totalHint = document.getElementById('totalHint');
+const toggleBtns = document.querySelectorAll('#directionToggle button');
+
+function render(query = '') {
+  const q = query.trim().toLowerCase();
+  let results = [];
+  if (currentDirection === 'turki-indo') {
+    results = dictionary.filter(item =>
+      item.turki.toLowerCase().includes(q) ||
+      item.indonesia.toLowerCase().includes(q)
+    );
+    results.sort((a, b) => a.turki.localeCompare(b.turki));
+  } else {
+    results = dictionary.filter(item =>
+      item.indonesia.toLowerCase().includes(q) ||
+      item.turki.toLowerCase().includes(q)
+    );
+    results.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
+  }
+
+  if (results.length === 0) {
+    wordList.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">🔍</div>
+        <p>Tidak ditemukan kata untuk "<strong>${query || '…'}</strong>"</p>
+      </div>
+    `;
+  } else {
+    wordList.innerHTML = results.map(item => {
+      if (currentDirection === 'turki-indo') {
+        return `<div class="word-item"><span class="turki">${item.turki}</span><span class="indonesia">${item.indonesia}</span></div>`;
+      } else {
+        return `<div class="word-item"><span class="turki">${item.indonesia}</span><span class="indonesia">${item.turki}</span></div>`;
+      }
+    }).join('');
+  }
+  totalHint.textContent = `Menampilkan ${results.length} dari ${dictionary.length} kata`;
+}
+
+searchInput.addEventListener('input', (e) => render(e.target.value));
+
+toggleBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    toggleBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentDirection = btn.dataset.dir;
+    render(searchInput.value);
+  });
+});
+
+render('');
+
+// Reveal observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
