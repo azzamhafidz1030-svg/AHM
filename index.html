@@ -325,6 +325,55 @@
       cursor: pointer;
     }
 
+    /* ========================================================= */
+    /* ===== CLOCK: FLOATING DIGITAL CLOCK (NEW) ===== */
+    /* ========================================================= */
+    .floating-clock {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 999;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.6rem 1.2rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-family: 'Inter', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      transition: border-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      pointer-events: none; /* biar gak menghalangi klik di bawahnya */
+    }
+    .floating-clock:hover {
+      border-color: var(--accent);
+    }
+    .clock-icon {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    .clock-time {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      font-variant-numeric: tabular-nums;
+    }
+    .clock-separator {
+      animation: clockPulse 1s step-end infinite;
+      color: var(--muted);
+    }
+    @keyframes clockPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    /* ========================================================= */
+
     @media (max-width: 768px) {
       .about-grid { grid-template-columns: 1fr; }
       .about-img-wrap { display: none; }
@@ -333,6 +382,15 @@
       .music-panel { width: 280px; right: -8px; }
       .music-controls .volume-wrap input[type="range"] { width: 40px; }
       .projects-grid { grid-template-columns: 1fr; }
+      
+      /* ===== CLOCK: responsive ===== */
+      .floating-clock {
+        bottom: 6rem; /* naik sedikit biar gak ketutupan player */
+        left: 1rem;
+        padding: 0.4rem 1rem;
+        font-size: 0.75rem;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
@@ -447,8 +505,6 @@
       </div>
     </a>
 
-   
-
     <!-- 5. Kuis Sejarah 1814–1945 -->
     <a href="kuis-sejarah-1814-1945.html" style="text-decoration:none;">
       <div class="project-card reveal">
@@ -458,7 +514,7 @@
         <div class="project-body">
           <p class="project-tag">Kuis · Sejarah</p>
           <h3 class="project-title">Kuis Sejarah 1814–1945</h3>
-          <p class="project-desc">quiz tenta ng sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
+          <p class="project-desc">quiz tentang sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
           <div class="project-links">
             <span class="project-link">↗ Mulai Kuis</span>
           </div>
@@ -592,6 +648,15 @@
   </div>
 </div>
 
+<!-- ========================================================= -->
+<!-- ===== CLOCK: FLOATING DIGITAL CLOCK (NEW) ===== -->
+<!-- ========================================================= -->
+<div class="floating-clock">
+  <span class="clock-icon">🕒</span>
+  <span class="clock-time" id="clockDisplay">00:00:00</span>
+</div>
+<!-- ========================================================= -->
+
 <script>
   // ===== REVEAL ANIMATION =====
   const observer = new IntersectionObserver((entries) => {
@@ -704,6 +769,20 @@
 
     console.log('🎵 Music Player siap! Upload lagu dari file explorer.');
   })();
+
+  // =========================================================
+  // ===== CLOCK: DIGITAL CLOCK UPDATER (NEW) =====
+  // =========================================================
+  function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clockDisplay').textContent = `${hours}:${minutes}:${seconds}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+  // =========================================================
 </script>
 </body>
-</html>     
+</html>
