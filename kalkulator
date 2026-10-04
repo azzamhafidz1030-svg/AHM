@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🧮 Kalkulator Serbaguna — Azzam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0C0C0E;
+      --surface: #141416;
+      --border:  #222226;
+      --accent:  #6EE7B7;
+      --accent2: #818CF8;
+      --text:    #E4E4E7;
+      --muted:   #71717A;
+      --danger:  #f87171;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 6vw;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(12,12,14,.7);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .nav-back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    .page-hero {
+      padding: 8rem 6vw 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .page-tag span {
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      display: block;
+    }
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: .75rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      max-width: 50ch;
+      font-weight: 300;
+      font-size: 1.05rem;
+    }
+
+    /* ===== LAYOUT: 2 KOLOM ===== */
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
+      padding: 3rem 6vw 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    /* ===== KOLOM KIRI: SPACE UNTUK GAMBAR ===== */
+    .image-space {
+      position: sticky;
+      top: 100px;
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .image-space:hover {
+      border-color: var(--accent);
+    }
+    .image-space .placeholder-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    .image-space .placeholder-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .image-space .placeholder-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 30ch;
+      line-height: 1.6;
+    }
+    /* Kalau kamu tambahkan <img> di sini, otomatis nyesuaikan */
+    .image-space img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+    }
+    .image-space .img-caption {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ===== KOLOM KANAN: KALKULATOR ===== */
+    .calculator {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.5);
+    }
+
+    .calc-mode {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.3rem;
+    }
+    .calc-mode button {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .calc-mode button.active {
+      background: var(--accent);
+      color: #0C0C0E;
+    }
+    .calc-mode button:hover:not(.active) {
+      color: var(--text);
+    }
+
+    .calc-display {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      text-align: right;
+      overflow: hidden;
+    }
+    .calc-history {
+      font-size: 0.8rem;
+      color: var(--muted);
+      min-height: 1.2rem;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
+    .calc-output {
+      font-family: 'Syne', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      word-break: break-all;
+      overflow-wrap: anywhere;
+      line-height: 1.2;
+    }
+    .calc-output.error {
+      color: var(--danger);
+      font-size: 1.3rem;
+    }
+
+    .calc-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+    .calc-buttons button {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 0.9rem 0;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .calc-buttons button:hover {
+      border-color: var(--accent);
+      background: rgba(110,231,183,0.05);
+    }
+    .calc-buttons button:active {
+      transform: scale(0.96);
+    }
+    .calc-buttons button.op {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .calc-buttons button.fn {
+      color: var(--accent2);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .calc-buttons button.eq {
+      background: var(--accent);
+      color: #0C0C0E;
+      border-color: var(--accent);
+    }
+    .calc-buttons button.eq:hover {
+      background: #a7f3d0;
+    }
+    .calc-buttons button.clear {
+      color: var(--danger);
+    }
+    .calc-buttons button.span-2 {
+      grid-column: span 2;
+    }
+
+    /* Scientific mode — sembunyikan dulu */
+    .calc-buttons.scientific .sci-only { display: flex; }
+    .calc-buttons .sci-only { display: none; }
+
+    /* ===== RIWAYAT ===== */
+    .calc-history-panel {
+      margin-top: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+    .calc-history-panel::-webkit-scrollbar { width: 4px; }
+    .calc-history-panel::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    .calc-history-panel .hist-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .calc-history-panel .hist-empty {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .calc-history-panel .hist-item {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 0.2rem 0;
+      border-bottom: 1px solid rgba(34,34,38,0.5);
+      cursor: pointer;
+      transition: color 0.2s;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .calc-history-panel .hist-item:last-child { border-bottom: none; }
+    .calc-history-panel .hist-item:hover { color: var(--accent); }
+    .calc-history-panel .hist-item .hist-result {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .8rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .calc-layout {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem 3rem;
+        gap: 1.5rem;
+      }
+      .image-space {
+        position: static;
+        min-height: 300px;
+        order: 2;
+      }
+      .calculator { order: 1; }
+    }
+    @media (max-width: 480px) {
+      .calc-buttons button { padding: 0.7rem 0; font-size: 0.9rem; }
+      .calc-output { font-size: 1.6rem; }
+      .calc-buttons button.fn { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">AHM.</a>
+  <a href="index.html" class="nav-back">← Kembali ke Portfolio</a>
+</nav>
+
+<div class="page-hero">
+  <p class="page-tag"><span></span> Utility</p>
+  <h1>🧮 Kalkulator Serbaguna</h1>
+  <p>Kalkulator ilmiah dengan mode basic & scientific. Dilengkapi riwayat perhitungan dan antarmuka yang bersih.</p>
+</div>
+
+<div class="calc-layout">
+
+  <!-- ===== KOLOM KIRI: SPACE UNTUK GAMBAR ===== -->
+  <!-- 
+    🖼️ TEMPAT GAMBAR KAMU! 
+    Tinggal ganti <div class="image-placeholder"> di bawah dengan:
+    <img src="gambar-kalkulator.jpg" alt="Ilustrasi Kalkulator" />
+    <p class="img-caption">Keterangan gambar (opsional)</p>
+  -->
+  <div class="image-space">
+    <div class="placeholder-icon">🖼️</div>
+    <div class="placeholder-title">Tempat Gambar</div>
+    <p class="placeholder-desc">
+      Ganti blok ini dengan tag <code>&lt;img src="..."&gt;</code> untuk menampilkan gambar, ilustrasi, atau foto kamu di sini.
+    </p>
+  </div>
+
+  <!-- ===== KOLOM KANAN: KALKULATOR ===== -->
+  <div class="calculator">
+    <!-- Mode toggle -->
+    <div class="calc-mode">
+      <button class="active" data-mode="basic">Basic</button>
+      <button data-mode="scientific">Scientific</button>
+    </div>
+
+    <!-- Display -->
+    <div class="calc-display">
+      <div class="calc-history" id="calcHistory"></div>
+      <div class="calc-output" id="calcOutput">0</div>
+    </div>
+
+    <!-- Tombol -->
+    <div class="calc-buttons" id="calcButtons">
+      <!-- Row 1 -->
+      <button class="clear" data-action="clear">AC</button>
+      <button class="clear" data-action="backspace">⌫</button>
+      <button class="fn" data-action="percent">%</button>
+      <button class="op" data-action="divide">÷</button>
+
+      <!-- Row 2 -->
+      <button class="fn sci-only" data-action="sin">sin</button>
+      <button class="fn sci-only" data-action="cos">cos</button>
+      <button class="fn sci-only" data-action="tan">tan</button>
+      <button class="op sci-only" data-action="power">xʸ</button>
+
+      <!-- Row 3 -->
+      <button data-num="7">7</button>
+      <button data-num="8">8</button>
+      <button data-num="9">9</button>
+      <button class="op" data-action="multiply">×</button>
+
+      <!-- Row 4 -->
+      <button class="fn sci-only" data-action="sqrt">√</button>
+      <button class="fn sci-only" data-action="log">log</button>
+      <button class="fn sci-only" data-action="ln">ln</button>
+      <button class="op sci-only" data-action="factorial">n!</button>
+
+      <!-- Row 5 -->
+      <button data-num="4">4</button>
+      <button data-num="5">5</button>
+      <button data-num="6">6</button>
+      <button class="op" data-action="subtract">−</button>
+
+      <!-- Row 6 -->
+      <button class="fn sci-only" data-action="pi">π</button>
+      <button class="fn sci-only" data-action="e">e</button>
+      <button class="fn sci-only" data-action="open-paren">(</button>
+      <button class="fn sci-only" data-action="close-paren">)</button>
+
+      <!-- Row 7 -->
+      <button data-num="1">1</button>
+      <button data-num="2">2</button>
+      <button data-num="3">3</button>
+      <button class="op" data-action="add">+</button>
+
+      <!-- Row 8 -->
+      <button class="fn sci-only" data-action="square">x²</button>
+      <button class="fn sci-only" data-action="abs">|x|</button>
+      <button data-num="0">0</button>
+      <button data-action="decimal">.</button>
+
+      <!-- Row 9 -->
+      <button class="span-2 sci-only" data-action="reciprocal">1/x</button>
+      <button class="span-2 eq" data-action="equals">=</button>
+    </div>
+
+    <!-- Riwayat -->
+    <div class="calc-history-panel" id="historyPanel">
+      <div class="hist-title">Riwayat</div>
+      <div id="historyList">
+        <div class="hist-empty">Belum ada perhitungan</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>© 2024 Azzam Hafidz Murobbi. Dibuat dengan ❤️</span>
+  <a href="index.html">← Kembali ke Portfolio</a>
+</footer>
+
+<script>
+// ================================================================
+// KALKULATOR SERBAGUNA
+// ================================================================
+(function() {
+  const outputEl = document.getElementById('calcOutput');
+  const historyEl = document.getElementById('calcHistory');
+  const buttonsContainer = document.getElementById('calcButtons');
+  const historyList = document.getElementById('historyList');
+  const modeButtons = document.querySelectorAll('.calc-mode button');
+
+  let currentInput = '0';
+  let previousValue = null;
+  let currentOperator = null;
+  let waitingForOperand = false;
+  let lastResult = null;
+
+  // ===== UTIL =====
+  function formatNumber(num) {
+    if (!isFinite(num)) return 'Error';
+    // Batasi panjang tampilan
+    if (Math.abs(num) >= 1e12 || (Math.abs(num) < 1e-6 && num !== 0)) {
+      return num.toExponential(6);
+    }
+    // Bulatkan agar tidak terlalu panjang
+    let str = parseFloat(num.toPrecision(12)).toString();
+    return str;
+  }
+
+  function updateDisplay() {
+    outputEl.textContent = currentInput;
+    outputEl.classList.toggle('error', currentInput === 'Error');
+  }
+
+  function updateHistoryDisplay() {
+    if (previousValue !== null && currentOperator) {
+      const opSymbol = { add: '+', subtract: '−', multiply: '×', divide: '÷', power: '^' }[currentOperator] || currentOperator;
+      historyEl.textContent = `${formatNumber(previousValue)} ${opSymbol}`;
+    } else {
+      historyEl.textContent = '';
+    }
+  }
+
+  // ===== INPUT ANGKA =====
+  function inputDigit(digit) {
+    if (waitingForOperand) {
+      currentInput = digit;
+      waitingForOperand = false;
+    } else {
+      if (currentInput === '0') currentInput = digit;
+      else if (currentInput === '-0') currentInput = '-' + digit;
+      else currentInput += digit;
+    }
+    updateDisplay();
+  }
+
+  function inputDecimal() {
+    if (waitingForOperand) {
+      currentInput = '0.';
+      waitingForOperand = false;
+    } else if (!currentInput.includes('.')) {
+      currentInput += '.';
+    }
+    updateDisplay();
+  }
+
+  // ===== OPERASI =====
+  function calculate(a, b, op) {
+    switch (op) {
+      case 'add': return a + b;
+      case 'subtract': return a - b;
+      case 'multiply': return a * b;
+      case 'divide': return b === 0 ? NaN : a / b;
+      case 'power': return Math.pow(a, b);
+      default: return b;
+    }
+  }
+
+  function handleOperator(op) {
+    const inputValue = parseFloat(currentInput);
+    if (isNaN(inputValue)) return;
+
+    if (previousValue !== null && currentOperator && !waitingForOperand) {
+      const result = calculate(previousValue, inputValue, currentOperator);
+      if (isNaN(result) || !isFinite(result)) {
+        currentInput = 'Error';
+        previousValue = null;
+        currentOperator = null;
+        updateDisplay();
+        updateHistoryDisplay();
+        return;
+      }
+      currentInput = formatNumber(result);
+      previousValue = result;
+      updateDisplay();
+    } else {
+      previousValue = inputValue;
+    }
+
+    waitingForOperand = true;
+    currentOperator = op;
+    updateHistoryDisplay();
+  }
+
+  function handleEquals() {
+    if (previousValue === null || !currentOperator) return;
+    const inputValue = parseFloat(currentInput);
+    if (isNaN(inputValue)) return;
+
+    const result = calculate(previousValue, inputValue, currentOperator);
+    if (isNaN(result) || !isFinite(result)) {
+      currentInput = 'Error';
+      addHistory(`${formatNumber(previousValue)} ${currentOperator} ${formatNumber(inputValue)}`, 'Error');
+    } else {
+      const expression = `${formatNumber(previousValue)} ${{add:'+',subtract:'−',multiply:'×',divide:'÷',power:'^'}[currentOperator]} ${formatNumber(inputValue)}`;
+      addHistory(expression, formatNumber(result));
+      currentInput = formatNumber(result);
+    }
+    previousValue = null;
+    currentOperator = null;
+    waitingForOperand = true;
+    lastResult = result;
+    updateDisplay();
+    updateHistoryDisplay();
+  }
+
+  // ===== FUNGSI ILMIAH =====
+  function handleFunction(action) {
+    const inputValue = parseFloat(currentInput);
+    if (isNaN(inputValue)) return;
+
+    let result;
+    let label;
+
+    switch (action) {
+      case 'sin': result = Math.sin(inputValue); label = `sin(${inputValue})`; break;
+      case 'cos': result = Math.cos(inputValue); label = `cos(${inputValue})`; break;
+      case 'tan': result = Math.tan(inputValue); label = `tan(${inputValue})`; break;
+      case 'sqrt':
+        if (inputValue < 0) { result = NaN; }
+        else { result = Math.sqrt(inputValue); }
+        label = `√(${inputValue})`;
+        break;
+      case 'log':
+        if (inputValue <= 0) { result = NaN; }
+        else { result = Math.log10(inputValue); }
+        label = `log(${inputValue})`;
+        break;
+      case 'ln':
+        if (inputValue <= 0) { result = NaN; }
+        else { result = Math.log(inputValue); }
+        label = `ln(${inputValue})`;
+        break;
+      case 'square': result = inputValue * inputValue; label = `(${inputValue})²`; break;
+      case 'factorial':
+        if (inputValue < 0 || !Number.isInteger(inputValue) || inputValue > 170) { result = NaN; }
+        else { result = factorial(inputValue); }
+        label = `${inputValue}!`;
+        break;
+      case 'abs': result = Math.abs(inputValue); label = `|${inputValue}|`; break;
+      case 'reciprocal':
+        if (inputValue === 0) { result = NaN; }
+        else { result = 1 / inputValue; }
+        label = `1/(${inputValue})`;
+        break;
+      case 'pi': result = Math.PI; label = `π`; break;
+      case 'e': result = Math.E; label = `e`; break;
+      default: return;
+    }
+
+    if (isNaN(result) || !isFinite(result)) {
+      currentInput = 'Error';
+    } else {
+      currentInput = formatNumber(result);
+      addHistory(label, formatNumber(result));
+    }
+    waitingForOperand = true;
+    updateDisplay();
+    updateHistoryDisplay();
+  }
+
+  function factorial(n) {
+    if (n === 0 || n === 1) return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) result *= i;
+    return result;
+  }
+
+  // ===== AC, BACKSPACE, PERCENT =====
+  function handleClear() {
+    currentInput = '0';
+    previousValue = null;
+    currentOperator = null;
+    waitingForOperand = false;
+    updateDisplay();
+    updateHistoryDisplay();
+  }
+
+  function handleBackspace() {
+    if (waitingForOperand) return;
+    if (currentInput.length <= 1 || (currentInput.length === 2 && currentInput.startsWith('-'))) {
+      currentInput = '0';
+    } else {
+      currentInput = currentInput.slice(0, -1);
+    }
+    updateDisplay();
+  }
+
+  function handlePercent() {
+    const inputValue = parseFloat(currentInput);
+    if (isNaN(inputValue)) return;
+    currentInput = formatNumber(inputValue / 100);
+    updateDisplay();
+  }
+
+  // ===== RIWAYAT =====
+  function addHistory(expression, result) {
+    const emptyEl = historyList.querySelector('.hist-empty');
+    if (emptyEl) emptyEl.remove();
+
+    const item = document.createElement('div');
+    item.className = 'hist-item';
+    item.innerHTML = `<span>${expression}</span> <span class="hist-result">= ${result}</span>`;
+    item.addEventListener('click', () => {
+      currentInput = result;
+      waitingForOperand = true;
+      updateDisplay();
+    });
+    historyList.prepend(item);
+
+    // Batasi 20 riwayat
+    const items = historyList.querySelectorAll('.hist-item');
+    if (items.length > 20) items[items.length - 1].remove();
+  }
+
+  // ===== EVENT: TOMBOL =====
+  buttonsContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+
+    if (btn.dataset.num !== undefined) {
+      inputDigit(btn.dataset.num);
+    } else if (btn.dataset.action === 'decimal') {
+      inputDecimal();
+    } else if (btn.dataset.action === 'clear') {
+      handleClear();
+    } else if (btn.dataset.action === 'backspace') {
+      handleBackspace();
+    } else if (btn.dataset.action === 'percent') {
+      handlePercent();
+    } else if (btn.dataset.action === 'equals') {
+      handleEquals();
+    } else if (['add', 'subtract', 'multiply', 'divide', 'power'].includes(btn.dataset.action)) {
+      handleOperator(btn.dataset.action);
+    } else if (btn.dataset.action) {
+      handleFunction(btn.dataset.action);
+    }
+  });
+
+  // ===== MODE TOGGLE =====
+  modeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const mode = btn.dataset.mode;
+      buttonsContainer.classList.toggle('scientific', mode === 'scientific');
+    });
+  });
+
+  // ===== KEYBOARD SUPPORT =====
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    const key = e.key;
+
+    if (key >= '0' && key <= '9') { inputDigit(key); e.preventDefault(); }
+    else if (key === '.') { inputDecimal(); e.preventDefault(); }
+    else if (key === '+') { handleOperator('add'); e.preventDefault(); }
+    else if (key === '-') { handleOperator('subtract'); e.preventDefault(); }
+    else if (key === '*') { handleOperator('multiply'); e.preventDefault(); }
+    else if (key === '/') { handleOperator('divide'); e.preventDefault(); }
+    else if (key === '^') { handleOperator('power'); e.preventDefault(); }
+    else if (key === 'Enter' || key === '=') { handleEquals(); e.preventDefault(); }
+    else if (key === 'Backspace') { handleBackspace(); e.preventDefault(); }
+    else if (key === 'Escape') { handleClear(); e.preventDefault(); }
+    else if (key === '%') { handlePercent(); e.preventDefault(); }
+  });
+
+  // ===== INIT =====
+  updateDisplay();
+  console.log('🧮 Kalkulator Serbaguna siap! Coba keyboard juga, bro.');
+})();
+</script>
+</body>
+</html>
