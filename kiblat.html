@@ -6,73 +6,38 @@
 <title>🕌 Arah Kiblat — Azzam</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 :root {
-  --bg: #0C0C0E;
-  --surface: #141416;
-  --border: #222226;
-  --accent: #6EE7B7;
-  --accent2: #818CF8;
-  --text: #E4E4E7;
-  --muted: #71717A;
-  --gold: #fbbf24;
-  --danger: #f87171;
+  --bg: #0C0C0E; --surface: #141416; --border: #222226;
+  --accent: #6EE7B7; --accent2: #818CF8;
+  --text: #E4E4E7; --muted: #71717A;
+  --gold: #fbbf24; --danger: #f87171;
 }
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg); color: var(--text);
   font-family: 'Inter', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh; overflow-x: hidden;
   touch-action: manipulation;
 }
-
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 5vw;
-  backdrop-filter: blur(12px);
+  padding: 1rem 5vw; backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
-  background: rgba(12,12,14,.8);
+  background: rgba(12,12,14,.85);
 }
-.nav-logo {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
-  color: var(--accent); letter-spacing: .04em; text-decoration: none;
-}
-.nav-back {
-  color: var(--muted); text-decoration: none; font-size: .8rem;
-  font-weight: 500;
-}
+.nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--accent); text-decoration: none; }
+.nav-back { color: var(--muted); text-decoration: none; font-size: .8rem; font-weight: 500; }
 
-.wrap {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 5rem 1rem 2rem;
-  text-align: center;
-}
+.wrap { max-width: 500px; margin: 0 auto; padding: 5rem 1rem 2rem; text-align: center; }
+.title { font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 800; margin-bottom: 0.3rem; }
+.subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem; }
 
-.title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  font-weight: 800;
-  margin-bottom: 0.3rem;
-}
-.subtitle {
-  color: var(--muted);
-  font-size: 0.85rem;
-  margin-bottom: 1.2rem;
-}
-
-/* STATUS */
 .status {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-  font-weight: 500;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.8rem 1rem;
+  margin-bottom: 1rem; font-size: 0.85rem; font-weight: 500;
+  line-height: 1.5;
 }
 .status.ok { border-color: rgba(110,231,183,.5); color: var(--accent); }
 .status.err { border-color: rgba(248,113,113,.5); color: var(--danger); }
@@ -81,242 +46,135 @@ nav {
 
 /* KOMPAS */
 .compass {
-  position: relative;
-  width: 280px;
-  height: 280px;
-  margin: 0 auto 1rem;
-  border-radius: 50%;
+  position: relative; width: 280px; height: 280px;
+  margin: 0 auto 1rem; border-radius: 50%;
   background: radial-gradient(circle, rgba(110,231,183,.1) 0%, transparent 70%);
   border: 3px solid var(--border);
   transition: border-color 0.3s;
 }
 .compass.active { border-color: var(--accent); }
-.compass.active::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  border: 3px solid var(--accent);
-  animation: pulse 2s ease-out infinite;
-  pointer-events: none;
-}
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.15); opacity: 0; }
-}
 
 .compass .label {
-  position: absolute;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: var(--muted);
-  z-index: 3;
+  position: absolute; font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.2rem; color: var(--muted); z-index: 3;
 }
 .compass .label.n { top: 8px; left: 50%; transform: translateX(-50%); color: var(--danger); }
 .compass .label.e { right: 12px; top: 50%; transform: translateY(-50%); }
 .compass .label.s { bottom: 8px; left: 50%; transform: translateX(-50%); }
 .compass .label.w { left: 12px; top: 50%; transform: translateY(-50%); }
 
-/* PANAH (diputar sesuai arah kiblat RELATIF ke HP) */
 .arrow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
+  position: absolute; top: 50%; left: 50%;
+  width: 0; height: 0;
   transform-origin: 0 0;
   transition: transform 0.15s ease-out;
   z-index: 2;
 }
 .arrow::before {
-  content: '';
-  position: absolute;
-  left: -13px;
-  top: -125px;
-  width: 0;
-  height: 0;
+  content: ''; position: absolute;
+  left: -13px; top: -125px;
+  width: 0; height: 0;
   border-left: 13px solid transparent;
   border-right: 13px solid transparent;
   border-bottom: 85px solid var(--gold);
   filter: drop-shadow(0 0 12px rgba(251,191,36,.8));
 }
 .arrow::after {
-  content: '🕋';
-  position: absolute;
-  left: -16px;
-  top: -158px;
-  font-size: 1.8rem;
+  content: '🕋'; position: absolute;
+  left: -16px; top: -158px; font-size: 1.8rem;
 }
-
-/* GARIS TENGAH (arah HP) */
 .compass-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 4px solid var(--bg);
-  transform: translate(-50%, -50%);
-  z-index: 4;
+  position: absolute; top: 50%; left: 50%;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); border: 4px solid var(--bg);
+  transform: translate(-50%, -50%); z-index: 4;
   box-shadow: 0 0 16px rgba(110,231,183,.8);
 }
 
-/* ANGKA BESAR */
 .big-number {
-  font-family: 'Syne', sans-serif;
-  font-size: 2.6rem;
-  font-weight: 800;
-  color: var(--gold);
-  margin-bottom: 0.2rem;
+  font-family: 'Syne', sans-serif; font-size: 2.6rem;
+  font-weight: 800; color: var(--gold); margin-bottom: 0.2rem;
   text-shadow: 0 0 20px rgba(251,191,36,.4);
   font-variant-numeric: tabular-nums;
 }
 .big-label {
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 1.2rem;
-}
-
-/* INFO SENSOR */
-.sensor-info {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
+  font-size: 0.75rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-.sensor-badge {
-  padding: 0.3rem 0.8rem;
-  border-radius: 100px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--muted);
-}
-.sensor-badge.on {
-  background: rgba(110,231,183,.1);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.sensor-badge.off {
-  background: rgba(248,113,113,.1);
-  border-color: var(--danger);
-  color: var(--danger);
 }
 
-/* TOMBOL */
-.btn-big {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 1rem 1.5rem;
-  background: var(--accent);
-  color: #0C0C0E;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 700;
-  font-family: 'Syne', sans-serif;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-bottom: 0.8rem;
+/* BADGE */
+.badges { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.badge {
+  padding: 0.3rem 0.8rem; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 600;
+  background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+  transition: all 0.3s;
+}
+.badge.on { background: rgba(110,231,183,.12); border-color: var(--accent); color: var(--accent); }
+.badge.off { background: rgba(248,113,113,.12); border-color: var(--danger); color: var(--danger); }
+
+/* BUTTONS */
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%; padding: 1rem 1.5rem;
+  background: var(--accent); color: #0C0C0E;
+  border: none; border-radius: 12px;
+  font-size: 1rem; font-weight: 700;
+  font-family: 'Syne', sans-serif; cursor: pointer;
+  transition: all 0.15s; margin-bottom: 0.7rem;
   box-shadow: 0 6px 20px rgba(110,231,183,.25);
-  -webkit-user-select: none;
-  user-select: none;
+  -webkit-user-select: none; user-select: none;
 }
-.btn-big:active { transform: scale(0.97); }
-.btn-big.secondary {
-  background: transparent;
-  color: var(--text);
-  border: 2px solid var(--border);
-  box-shadow: none;
-  font-size: 0.9rem;
-  padding: 0.8rem 1rem;
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn.ghost {
+  background: transparent; color: var(--text);
+  border: 2px solid var(--border); box-shadow: none;
+  font-size: 0.9rem; padding: 0.8rem 1rem;
 }
-.btn-big.hidden { display: none; }
+.btn.gold {
+  background: var(--gold); color: #0C0C0E;
+  box-shadow: 0 6px 20px rgba(251,191,36,.25);
+}
 
-/* FORM MANUAL */
-.manual-form {
-  display: none;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  text-align: left;
+/* FORM */
+.form {
+  display: none; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 1rem; margin-bottom: 1rem; text-align: left;
 }
-.manual-form.show { display: block; }
-.manual-form label {
-  display: block;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-bottom: 0.3rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
+.form.show { display: block; }
+.form label {
+  display: block; font-size: 0.7rem; color: var(--muted);
+  margin-bottom: 0.3rem; text-transform: uppercase;
+  letter-spacing: 0.05em; font-weight: 600;
 }
-.manual-form input {
-  width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.6rem 0.8rem;
-  color: var(--text);
-  font-family: inherit;
-  font-size: 0.9rem;
-  margin-bottom: 0.8rem;
+.form input {
+  width: 100%; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 0.7rem; color: var(--text);
+  font-family: inherit; font-size: 0.9rem; margin-bottom: 0.8rem;
 }
-.manual-form input:focus { outline: none; border-color: var(--accent); }
+.form input:focus { outline: none; border-color: var(--accent); }
 
-/* STEPS */
-.steps {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
+/* DEBUG PANEL */
+.debug {
+  background: #0a0a0c; border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.8rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem; color: var(--muted);
+  text-align: left; margin-top: 1rem;
+  max-height: 160px; overflow-y: auto;
 }
-.step {
-  flex: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.7rem 0.5rem;
-  text-align: center;
-}
-.step .num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #0C0C0E;
-  font-weight: 800;
-  font-size: 0.75rem;
-  font-family: 'Syne', sans-serif;
-  margin-bottom: 0.3rem;
-}
-.step .txt {
-  font-size: 0.7rem;
-  color: var(--muted);
-  line-height: 1.3;
-}
+.debug .line { margin-bottom: 0.2rem; }
+.debug .k { color: var(--accent2); }
+.debug .v { color: var(--accent); }
 
 footer {
-  border-top: 1px solid var(--border);
-  padding: 1.5rem 5vw;
-  text-align: center;
-  font-size: .75rem;
-  color: var(--muted);
-  margin-top: 2rem;
+  border-top: 1px solid var(--border); padding: 1.5rem 5vw;
+  text-align: center; font-size: .75rem;
+  color: var(--muted); margin-top: 2rem;
 }
 footer a { color: var(--muted); text-decoration: none; }
 
@@ -335,19 +193,16 @@ footer a { color: var(--muted); text-decoration: none; }
 </nav>
 
 <div class="wrap">
-
   <h1 class="title">🕌 Arah Kiblat</h1>
-  <p class="subtitle">Aktifkan kompas HP untuk arah real-time</p>
+  <p class="subtitle">Ikuti 3 langkah di bawah, selesai!</p>
 
-  <div class="status info" id="status">📡 Mencari lokasimu…</div>
+  <div class="status info" id="status">Menyiapkan…</div>
 
-  <!-- SENSOR BADGES -->
-  <div class="sensor-info">
-    <span class="sensor-badge" id="badgeGPS">📍 GPS</span>
-    <span class="sensor-badge" id="badgeCompass">🧭 Kompas</span>
+  <div class="badges">
+    <span class="badge" id="badgeGPS">📍 GPS</span>
+    <span class="badge" id="badgeCompass">🧭 Kompas</span>
   </div>
 
-  <!-- KOMPAS -->
   <div class="compass" id="compass">
     <span class="label n">U</span>
     <span class="label e">T</span>
@@ -360,26 +215,19 @@ footer a { color: var(--muted); text-decoration: none; }
   <div class="big-number" id="bigNumber">—°</div>
   <div class="big-label">Arah dari Utara</div>
 
-  <!-- TOMBOL UTAMA -->
-  <button class="btn-big" id="btnActivate">🧭 Aktifkan Kompas HP</button>
-  <button class="btn-big secondary" id="btnDetect">📍 Deteksi Ulang Lokasi</button>
-  <button class="btn-big secondary" id="btnManual">✏️ Input Koordinat Manual</button>
+  <button class="btn" id="btnGPS">📍 Langkah 1: Deteksi Lokasi</button>
+  <button class="btn gold" id="btnCompass">🧭 Langkah 2: Aktifkan Kompas HP</button>
+  <button class="btn ghost" id="btnManual">✏️ Input Manual</button>
 
-  <!-- FORM MANUAL -->
-  <div class="manual-form" id="manualForm">
+  <div class="form" id="form">
     <label>Latitude</label>
     <input type="number" id="latIn" placeholder="-6.2088" step="0.0001" inputmode="decimal" />
     <label>Longitude</label>
     <input type="number" id="lonIn" placeholder="106.8456" step="0.0001" inputmode="decimal" />
-    <button class="btn-big" id="btnHitung" style="margin-bottom:0;">🧭 Hitung Arah Kiblat</button>
+    <button class="btn" id="btnHitung" style="margin-bottom:0;">Hitung Arah Kiblat</button>
   </div>
 
-  <!-- STEPS -->
-  <div class="steps">
-    <div class="step"><div class="num">1</div><div class="txt">Klik <strong>Aktifkan Kompas</strong></div></div>
-    <div class="step"><div class="num">2</div><div class="txt">Izinkan <strong>lokasi + sensor</strong></div></div>
-    <div class="step"><div class="num">3</div><div class="txt">Putar HP, panah 🕋 ikut muter</div></div>
-  </div>
+  <div class="debug" id="debug"></div>
 
 </div>
 
@@ -389,39 +237,53 @@ footer a { color: var(--muted); text-decoration: none; }
 
 <script>
 // ================================================================
-// ARAH KIBLAT — VERSI HP-FIRST + SENSOR KOMPAS
+// ARAH KIBLAT — VERSI BERSIH
 // ================================================================
 const KAABAH_LAT = 21.4225;
 const KAABAH_LON = 39.8262;
-const EARTH_RADIUS = 6371;
+const R_EARTH = 6371;
 
+// DOM
 const statusEl = document.getElementById('status');
-const arrow = document.getElementById('arrow');
-const bigNumber = document.getElementById('bigNumber');
+const arrowEl = document.getElementById('arrow');
+const bigNumberEl = document.getElementById('bigNumber');
 const compassEl = document.getElementById('compass');
 const badgeGPS = document.getElementById('badgeGPS');
 const badgeCompass = document.getElementById('badgeCompass');
-const btnActivate = document.getElementById('btnActivate');
-const btnDetect = document.getElementById('btnDetect');
+const btnGPS = document.getElementById('btnGPS');
+const btnCompass = document.getElementById('btnCompass');
 const btnManual = document.getElementById('btnManual');
-const manualForm = document.getElementById('manualForm');
+const btnHitung = document.getElementById('btnHitung');
+const form = document.getElementById('form');
 const latIn = document.getElementById('latIn');
 const lonIn = document.getElementById('lonIn');
-const btnHitung = document.getElementById('btnHitung');
+const debugEl = document.getElementById('debug');
 
 // STATE
 let userLat = null;
 let userLon = null;
-let kiblatBearing = 0;      // arah kiblat dari utara (absolut)
-let deviceHeading = 0;      // arah HP menghadap (dari sensor)
-let compassActive = false;
-let hasCompassSensor = false;
+let kiblatBearing = 0;      // arah kiblat (0-360 dari utara)
+let deviceHeading = 0;      // arah HP menghadap (0-360 dari utara)
+let sensorWorking = false;
+
+// ===== DEBUG LOG =====
+function logDebug(key, value) {
+  const line = document.createElement('div');
+  line.className = 'line';
+  line.innerHTML = `<span class="k">${key}:</span> <span class="v">${value}</span>`;
+  debugEl.prepend(line);
+  // Batasi 10 baris
+  while (debugEl.children.length > 10) {
+    debugEl.removeChild(debugEl.lastChild);
+  }
+}
 
 // ===== HITUNG =====
 function hitungBearing(lat1, lon1, lat2, lon2) {
   const toRad = d => d * Math.PI / 180;
   const toDeg = r => r * 180 / Math.PI;
-  const φ1 = toRad(lat1), φ2 = toRad(lat2), Δλ = toRad(lon2 - lon1);
+  const φ1 = toRad(lat1), φ2 = toRad(lat2);
+  const Δλ = toRad(lon2 - lon1);
   const y = Math.sin(Δλ) * Math.cos(φ2);
   const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
   let b = toDeg(Math.atan2(y, x));
@@ -433,56 +295,48 @@ function hitungJarak(lat1, lon1, lat2, lon2) {
   const φ1 = toRad(lat1), φ2 = toRad(lat2);
   const Δφ = toRad(lat2 - lat1), Δλ = toRad(lon2 - lon1);
   const a = Math.sin(Δφ/2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) ** 2;
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return EARTH_RADIUS * c;
+  return R_EARTH * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-// ===== UPDATE VISUAL =====
-function updateCompassVisual() {
-  // Sudut panah = kiblat - heading HP
-  // Kalau HP menghadap utara (heading 0), panah di kiblat
-  // Kalau HP menghadap timur (heading 90), panah mundur 90 derajat
-  let arrowRotation = kiblatBearing - deviceHeading;
-  arrowRotation = ((arrowRotation % 360) + 360) % 360;
+// ===== RENDER PANAH =====
+function renderArrow() {
+  // Panah harus menunjuk arah kiblat RELATIF terhadap arah HP menghadap
+  // Jika HP menghadap utara (heading 0), panah di sudut kiblat (misal 295°)
+  // Jika HP menghadap kiblat (heading 295°), panah harus di 0° (atas)
+  const rotation = (kiblatBearing - deviceHeading + 360) % 360;
+  arrowEl.style.transform = `rotate(${rotation}deg)`;
 
-  arrow.style.transform = `rotate(${arrowRotation}deg)`;
+  logDebug('Kiblat', kiblatBearing.toFixed(1) + '°');
+  logDebug('Heading HP', deviceHeading.toFixed(1) + '°');
+  logDebug('Rotasi panah', rotation.toFixed(1) + '°');
 }
 
-function updateKiblatData() {
+// ===== HITUNG KIBLAT =====
+function hitungKiblat() {
   if (userLat === null || userLon === null) return;
   kiblatBearing = hitungBearing(userLat, userLon, KAABAH_LAT, KAABAH_LON);
   const jarak = hitungJarak(userLat, userLon, KAABAH_LAT, KAABAH_LON);
-
-  bigNumber.textContent = kiblatBearing.toFixed(1) + '°';
-
-  const jarakEl = document.querySelector('.mini-info .val');
-  // Update info jika ada
-  let infoJarak = document.getElementById('infoJarak');
-  if (!infoJarak) {
-    const info = document.createElement('div');
-    info.className = 'sensor-info';
-    info.innerHTML = `<span class="sensor-badge">📏 ${jarak.toFixed(0)} km ke Ka'bah</span>`;
-    document.querySelector('.big-label').after(info);
-    infoJarak = info;
-  } else {
-    infoJarak.querySelector('.sensor-badge').textContent = `📏 ${jarak.toFixed(0)} km ke Ka'bah`;
-  }
-
-  updateCompassVisual();
+  bigNumberEl.textContent = kiblatBearing.toFixed(1) + '°';
+  logDebug('Jarak Ka\'bah', jarak.toFixed(0) + ' km');
+  renderArrow();
 }
 
-// ===== DETEKSI LOKASI =====
-function deteksiLokasi() {
+// ===== STATUS HELPER =====
+function setStatus(msg, type = 'info') {
+  statusEl.className = 'status ' + type;
+  statusEl.textContent = msg;
+  logDebug('Status', msg);
+}
+
+// ===== LANGKAH 1: GPS =====
+btnGPS.addEventListener('click', () => {
   if (!navigator.geolocation) {
-    statusEl.className = 'status err';
-    statusEl.textContent = '❌ Browser tidak mendukung GPS';
-    badgeGPS.className = 'sensor-badge off';
-    badgeGPS.textContent = '📍 GPS ✗';
+    setStatus('❌ Browser tidak mendukung GPS', 'err');
+    badgeGPS.className = 'badge off';
     return;
   }
-
-  statusEl.className = 'status info';
-  statusEl.textContent = '📡 Meminta izin lokasi…';
+  setStatus('📡 Meminta izin lokasi… Klik "Izinkan" di popup', 'info');
+  badgeGPS.textContent = '📍 GPS…';
 
   navigator.geolocation.getCurrentPosition(
     (pos) => {
@@ -490,147 +344,132 @@ function deteksiLokasi() {
       userLon = pos.coords.longitude;
       latIn.value = userLat.toFixed(4);
       lonIn.value = userLon.toFixed(4);
-      badgeGPS.className = 'sensor-badge on';
+      badgeGPS.className = 'badge on';
       badgeGPS.textContent = '📍 GPS ✓';
-      updateKiblatData();
-      statusEl.className = 'status ok';
-      statusEl.textContent = '✅ Lokasi terdeteksi!';
-      if (!compassActive) {
-        statusEl.textContent = '✅ Lokasi OK. Klik "Aktifkan Kompas HP" untuk arah real-time.';
-      }
+      hitungKiblat();
+      setStatus('✅ Lokasi OK! Lanjut klik tombol kuning "Aktifkan Kompas HP"', 'ok');
     },
     (err) => {
-      console.warn('GPS error:', err);
-      badgeGPS.className = 'sensor-badge off';
+      badgeGPS.className = 'badge off';
       badgeGPS.textContent = '📍 GPS ✗';
-      statusEl.className = 'status err';
-      statusEl.textContent = '⚠️ GPS gagal. Klik "Input Koordinat Manual".';
+      let msg = '⚠️ GPS gagal: ';
+      if (err.code === 1) msg += 'izin ditolak. Cek setting browser → izinkan lokasi.';
+      else if (err.code === 2) msg += 'sinyal tidak tersedia. Coba di luar ruangan.';
+      else if (err.code === 3) msg += 'timeout. Coba lagi.';
+      else msg += err.message;
+      setStatus(msg, 'err');
+      form.classList.add('show');
     },
-    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
   );
-}
+});
 
-// ===== SENSOR KOMPAS (deviceorientation) =====
-function handleOrientation(event) {
-  let heading = null;
+// ===== LANGKAH 2: SENSOR KOMPAS =====
+btnCompass.addEventListener('click', async () => {
+  logDebug('Sensor API', window.DeviceOrientationEvent ? 'tersedia' : 'TIDAK ADA');
 
-  // iOS: webkitCompassHeading
-  if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
-    heading = event.webkitCompassHeading;
-  }
-  // Android / Chrome: alpha (0-360, arah kompas)
-  else if (event.alpha !== null && event.alpha !== undefined) {
-    heading = 360 - event.alpha; // Konversi ke arah kompas
-  }
-
-  // Fallback pakai absolute orientation
-  if (heading === null && event.absolute && event.alpha !== null) {
-    heading = 360 - event.alpha;
-  }
-
-  if (heading !== null && !isNaN(heading)) {
-    deviceHeading = heading;
-    hasCompassSensor = true;
-    badgeCompass.className = 'sensor-badge on';
-    badgeCompass.textContent = '🧭 Kompas ✓';
-    updateCompassVisual();
-  }
-}
-
-// ===== AKTIFKAN KOMPAS (user gesture) =====
-async function aktifkanKompas() {
-  statusEl.className = 'status info';
-  statusEl.textContent = '🔄 Mengaktifkan sensor kompas…';
-
-  // Cek dukungan
   if (!window.DeviceOrientationEvent) {
-    statusEl.className = 'status err';
-    statusEl.textContent = '❌ HP ini tidak punya sensor arah (deviceorientation).';
-    badgeCompass.className = 'sensor-badge off';
+    setStatus('❌ HP ini tidak punya sensor deviceorientation.', 'err');
+    badgeCompass.className = 'badge off';
     badgeCompass.textContent = '🧭 Kompas ✗';
     return;
   }
 
-  try {
-    // iOS 13+ butuh requestPermission
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+  setStatus('🔄 Mengaktifkan sensor…', 'info');
+
+  // iOS 13+ minta izin
+  if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+    logDebug('iOS', 'butuh requestPermission');
+    try {
       const permission = await DeviceOrientationEvent.requestPermission();
+      logDebug('Izin sensor', permission);
       if (permission !== 'granted') {
-        statusEl.className = 'status err';
-        statusEl.textContent = '❌ Izin sensor ditolak. Coba lagi dan klik "Izinkan".';
+        setStatus('❌ Izin sensor DITOLAK. Buka Settings Safari → Motion & Orientation → Allow.', 'err');
+        badgeCompass.className = 'badge off';
+        badgeCompass.textContent = '🧭 Kompas ✗';
         return;
       }
+    } catch (err) {
+      setStatus('❌ Error izin: ' + err.message, 'err');
+      return;
+    }
+  }
+
+  // Pasang listener
+  let eventCount = 0;
+  function handler(e) {
+    eventCount++;
+    let heading = null;
+
+    // iOS: webkitCompassHeading (0 = utara, searah jarum jam)
+    if (typeof e.webkitCompassHeading === 'number' && e.webkitCompassHeading >= 0) {
+      heading = e.webkitCompassHeading;
+    }
+    // Android: alpha (0-360, berlawanan jarum jam dari utara)
+    else if (typeof e.alpha === 'number' && e.alpha !== null) {
+      heading = (360 - e.alpha) % 360;
     }
 
-    // Pasang listener
-    window.addEventListener('deviceorientationabsolute', handleOrientation, true);
-    window.addEventListener('deviceorientation', handleOrientation, true);
-
-    // Tunggu 1 detik, cek apakah sensor ngasih data
-    setTimeout(() => {
-      if (hasCompassSensor) {
-        compassActive = true;
+    if (heading !== null && !isNaN(heading)) {
+      deviceHeading = heading;
+      if (!sensorWorking) {
+        sensorWorking = true;
+        badgeCompass.className = 'badge on';
+        badgeCompass.textContent = '🧭 Kompas ✓';
         compassEl.classList.add('active');
-        btnActivate.classList.add('hidden');
-        statusEl.className = 'status ok';
-        statusEl.textContent = '🎉 Kompas aktif! Putar HP, panah 🕋 ikut bergerak.';
-      } else {
-        statusEl.className = 'status warn';
-        statusEl.textContent = '⚠️ Sensor tidak merespon. HP kamu mungkin tidak punya magnetometer. Gunakan arah dari Utara saja.';
-        badgeCompass.className = 'sensor-badge off';
-        badgeCompass.textContent = '🧭 Kompas ✗';
-        // Tetap aktifkan visual meski tanpa sensor
-        compassActive = true;
-        compassEl.classList.add('active');
-        btnActivate.classList.add('hidden');
+        setStatus('🎉 Kompas aktif! Putar HP, panah 🕋 ikut bergerak.', 'ok');
       }
-    }, 1500);
-
-  } catch (err) {
-    console.error('Sensor error:', err);
-    statusEl.className = 'status err';
-    statusEl.textContent = '❌ Gagal aktifkan sensor: ' + err.message;
+      renderArrow();
+    }
   }
-}
 
-// ===== EVENT BINDING =====
-btnActivate.addEventListener('click', aktifkanKompas);
-btnDetect.addEventListener('click', deteksiLokasi);
+  window.addEventListener('deviceorientationabsolute', handler, true);
+  window.addEventListener('deviceorientation', handler, true);
 
+  // Cek 2 detik kemudian
+  setTimeout(() => {
+    logDebug('Event count', eventCount);
+    if (!sensorWorking) {
+      if (eventCount === 0) {
+        setStatus('⚠️ Sensor tidak ngasih data. Kemungkinan: (1) HP tidak punya magnetometer, (2) tidak HTTPS, (3) perlu di HP asli.', 'warn');
+      } else {
+        setStatus('⚠️ Sensor ngasih data tapi heading tidak valid. HP mungkin tidak punya magnetometer.', 'warn');
+      }
+      badgeCompass.className = 'badge off';
+      badgeCompass.textContent = '🧭 Kompas ✗';
+      // Tetap tampilkan arah kiblat dari utara
+      compassEl.classList.add('active');
+    }
+  }, 2000);
+});
+
+// ===== LANGKAH 3: MANUAL =====
 btnManual.addEventListener('click', () => {
-  manualForm.classList.toggle('show');
+  form.classList.toggle('show');
 });
 
 btnHitung.addEventListener('click', () => {
   const lat = parseFloat(latIn.value);
   const lon = parseFloat(lonIn.value);
   if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-    statusEl.className = 'status err';
-    statusEl.textContent = '❌ Koordinat tidak valid!';
+    setStatus('❌ Koordinat tidak valid. Latitude -90..90, Longitude -180..180.', 'err');
     return;
   }
   userLat = lat;
   userLon = lon;
-  badgeGPS.className = 'sensor-badge on';
+  badgeGPS.className = 'badge on';
   badgeGPS.textContent = '📍 Manual ✓';
-  updateKiblatData();
-  statusEl.className = 'status ok';
-  statusEl.textContent = '✅ Arah kiblat dihitung dari koordinat manual.';
+  hitungKiblat();
+  setStatus('✅ Arah kiblat dihitung dari koordinat manual.', 'ok');
 });
 
 // ===== INIT =====
-// Cek apakah deviceorientation tersedia
-if (!window.DeviceOrientationEvent) {
-  badgeCompass.className = 'sensor-badge off';
-  badgeCompass.textContent = '🧭 Kompas ✗';
-} else {
-  badgeCompass.textContent = '🧭 Kompas ?';
-}
+logDebug('HTTPS', location.protocol === 'https:' ? '✓' : '✗ (' + location.protocol + ')');
+logDebug('Hostname', location.hostname);
+logDebug('deviceorientation', window.DeviceOrientationEvent ? '✓' : '✗');
+logDebug('geolocation', navigator.geolocation ? '✓' : '✗');
 
-// Auto-deteksi lokasi saat halaman dibuka
-deteksiLokasi();
-
-console.log('🕌 Arah Kiblat HP-first siap!');
+setStatus('👆 Klik tombol hijau "Deteksi Lokasi" dulu', 'info');
 </script>
 </body>
 </html>
