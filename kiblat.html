@@ -451,10 +451,9 @@ html, body {
   <div class="spinner"></div>
   <div id="loadingText">Menyiapkan…</div>
 </div>
-
 <script>
 // ================================================================
-// QIBLA FINDER — KAMERA + AR
+// QIBLA FINDER — VERSI KALIBRASI
 // ================================================================
 const KAABAH_LAT = 21.4225;
 const KAABAH_LON = 39.8262;
@@ -482,16 +481,21 @@ let userLat = null;
 let userLon = null;
 let kiblatBearing = 0;
 let deviceHeading = 0;
+let rawHeading = 0;
 let jarak = 0;
 let sensorActive = false;
 let cameraStream = null;
+
+// ===== KALIBRASI =====
+let calibrationOffset = 0;    // offset derajat (untuk koreksi)
+let invertAxis = false;        // balik arah kalau HP sumbu terbalik
+let sensorSource = '';         // 'ios' | 'android-abs' | 'android'
 
 // ===== HELPER =====
 function setStatus(msg, type = 'info') {
   statusLine.className = 'status-line ' + type;
   statusLine.textContent = msg;
 }
-
 function showLoading(text) {
   loadingText.textContent = text;
   loading.classList.add('show');
@@ -519,6 +523,17 @@ function hitungJarak(lat1, lon1, lat2, lon2) {
   return R_EARTH * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+// ===== NORMALISASI SUDUT =====
+function normalizeAngle(deg) {
+  return ((deg % 360) + 360) % 360;
+}
+function angleDiff(a, b) {
+  let d = a - b;
+  while (d > 180) d -= 360;
+  while (d < -180) d += 360;
+  return d;
+}
+
 // ===== RENDER UI =====
 function render() {
   if (kiblatBearing === 0 || !sensorActive) {
@@ -527,51 +542,36 @@ function render() {
     return;
   }
 
-  // Selisih antara arah kiblat dan arah HP
-  let diff = kiblatBearing - deviceHeading;
-  // Normalisasi ke -180..180
-  while (diff > 180) diff -= 360;
-  while (diff < -180) diff += 360;
-
+  // Hitung selisih
+  const diff = angleDiff(kiblatBearing, deviceHeading);
   const absDiff = Math.abs(diff);
 
-  // Update stats
   statKiblat.textContent = kiblatBearing.toFixed(1) + '°';
   statHeading.textContent = deviceHeading.toFixed(1) + '°';
   statJarak.textContent = jarak.toFixed(0) + ' km';
 
-  // Kalau HP menghadap kiblat (selisih < 15°)
-  if (absDiff < 15) {
-    // Tampilkan Ka'bah
+  // Tampilkan overlay kaabah
+  if (absDiff < 20) {
     kaabahOverlay.classList.add('visible');
-    kaabahTarget.style.transform = `translateX(${diff * 8}px) scale(${1 - absDiff/60})`;
+    const xOffset = diff * 10;
+    const scale = Math.max(0.5, 1 - absDiff / 40);
+    kaabahTarget.style.transform = `translateX(${xOffset}px) scale(${scale})`;
     kaabahLabel.textContent = absDiff < 5 ? '🎯 Tepat!' : 'Mendekati…';
     topArrow.classList.remove('visible');
     setStatus('✅ Kamu menghadap kiblat!', 'ok');
-  }
-  // Kalau selisih 15-90° → tampilkan panah
-  else if (absDiff < 90) {
+  } else if (absDiff < 100) {
     kaabahOverlay.classList.add('visible');
-    kaabahTarget.style.transform = `translateX(${Math.sign(diff) * 200}px) scale(0.6)`;
+    const dir = Math.sign(diff);
+    kaabahTarget.style.transform = `translateX(${dir * 250}px) scale(0.5)`;
     kaabahLabel.textContent = jarak.toFixed(0) + ' km';
     topArrow.classList.remove('visible');
-
-    if (diff > 0) {
-      setStatus('Putar HP ke kanan →', 'info');
-    } else {
-      setStatus('← Putar HP ke kiri', 'info');
-    }
-  }
-  // Selisih > 90° → tampilkan panah besar di atas
-  else {
+    setStatus(diff > 0 ? 'Putar HP ke kanan →' : '← Putar HP ke kiri', 'info');
+  } else {
     kaabahOverlay.classList.remove('visible');
     topArrow.classList.add('visible');
-
-    if (diff > 0) {
-      topArrowBubble.textContent = `Putar ke kanan ${absDiff.toFixed(0)}° →`;
-    } else {
-      topArrowBubble.textContent = `← Putar ke kiri ${absDiff.toFixed(0)}°`;
-    }
+    topArrowBubble.textContent = diff > 0
+      ? `Putar ke kanan ${absDiff.toFixed(0)}° →`
+      : `← Putar ke kiri ${absDiff.toFixed(0)}°`;
     setStatus('Putar HP untuk menemukan kiblat', 'warn');
   }
 }
@@ -579,31 +579,68 @@ function render() {
 // ===== SENSOR =====
 function handleOrientation(e) {
   let heading = null;
-  let source = '';
 
   // iOS
   if (typeof e.webkitCompassHeading === 'number' && e.webkitCompassHeading >= 0) {
     heading = e.webkitCompassHeading;
-    source = 'iOS';
+    if (sensorSource !== 'ios') {
+      sensorSource = 'ios';
+      console.log('📱 Sumber: iOS webkitCompassHeading');
+    }
   }
   // Android absolute
-  else if (e.type === 'deviceorientationabsolute' && e.alpha !== null) {
-    heading = (360 - e.alpha) % 360;
-    source = 'Android-abs';
+  else if (e.type === 'deviceorientationabsolute' && e.alpha !== null && e.alpha !== undefined) {
+    heading = invertAxis ? e.alpha : (360 - e.alpha) % 360;
+    if (sensorSource !== 'android-abs') {
+      sensorSource = 'android-abs';
+      console.log('📱 Sumber: Android deviceorientationabsolute');
+    }
   }
   // Fallback
   else if (e.alpha !== null && e.alpha !== undefined) {
-    heading = (360 - e.alpha) % 360;
-    source = 'fallback';
+    heading = invertAxis ? e.alpha : (360 - e.alpha) % 360;
+    if (sensorSource !== 'android') {
+      sensorSource = 'android';
+      console.log('📱 Sumber: Android alpha fallback');
+    }
   }
 
   if (heading === null || isNaN(heading)) return;
 
-  deviceHeading = heading;
+  rawHeading = normalizeAngle(heading);
+  deviceHeading = normalizeAngle(rawHeading + calibrationOffset);
+
   if (!sensorActive) {
     sensorActive = true;
-    setStatus('🧭 Sensor aktif. Putar HP untuk cari kiblat.', 'ok');
+    setStatus('🧭 Sensor aktif. Kalibrasi bisa dilakukan.', 'ok');
   }
+  render();
+}
+
+// ===== KALIBRASI =====
+// Saat HP menghadap utara (dilihat dari kompas HP atau kira-kira)
+// User bisa klik tombol "Set Utara" untuk set heading = 0
+function setNorthCalibration() {
+  calibrationOffset = normalizeAngle(0 - rawHeading);
+  console.log('🔧 Kalibrasi: offset =', calibrationOffset.toFixed(1) + '°');
+  setStatus('✅ Kalibrasi utara disimpan. Offset: ' + calibrationOffset.toFixed(1) + '°', 'ok');
+  render();
+}
+
+// Toggle invert (kalau arah kebalik total)
+function toggleInvert() {
+  invertAxis = !invertAxis;
+  setStatus(invertAxis
+    ? '🔄 Arah dibalik. Cek lagi apakah sudah benar.'
+    : '🔄 Arah normal. Cek lagi apakah sudah benar.', 'warn');
+  render();
+}
+
+// Reset kalibrasi
+function resetCalibration() {
+  calibrationOffset = 0;
+  invertAxis = false;
+  setStatus('♻️ Kalibrasi direset ke default.', 'info');
   render();
 }
 
@@ -624,7 +661,7 @@ async function mulaiKamera() {
     return true;
   } catch (err) {
     console.warn('Kamera gagal:', err);
-    setStatus('❌ Kamera tidak bisa diakses. Cek izin browser.', 'err');
+    setStatus('❌ Kamera tidak bisa diakses.', 'err');
     return false;
   }
 }
@@ -632,10 +669,7 @@ async function mulaiKamera() {
 // ===== LOKASI =====
 function ambilLokasi() {
   return new Promise((resolve) => {
-    if (!navigator.geolocation) {
-      resolve(false);
-      return;
-    }
+    if (!navigator.geolocation) { resolve(false); return; }
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         userLat = pos.coords.latitude;
@@ -647,7 +681,7 @@ function ambilLokasi() {
       },
       (err) => {
         console.warn('GPS gagal:', err);
-        setStatus('⚠️ GPS gagal. Coba izinkan lokasi.', 'err');
+        setStatus('⚠️ GPS gagal.', 'err');
         resolve(false);
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
@@ -658,20 +692,14 @@ function ambilLokasi() {
 // ===== MINI MAP =====
 function updateMiniMap() {
   if (userLat === null || userLon === null) return;
-
-  // Proyeksi sederhana ke 100x100
   const x = ((userLon + 180) / 360) * 100;
   const y = ((90 - userLat) / 180) * 100;
   mapUser.setAttribute('cx', x);
   mapUser.setAttribute('cy', y);
-
-  // Ka'bah
   const kx = ((KAABAH_LON + 180) / 360) * 100;
   const ky = ((90 - KAABAH_LAT) / 180) * 100;
   mapKaabah.setAttribute('cx', kx);
   mapKaabah.setAttribute('cy', ky);
-
-  // Garis penghubung
   mapLine.setAttribute('x1', x);
   mapLine.setAttribute('y1', y);
   mapLine.setAttribute('x2', kx);
@@ -684,7 +712,6 @@ async function aktifkanSensor() {
     setStatus('❌ HP tidak punya sensor kompas.', 'err');
     return false;
   }
-
   if (typeof DeviceOrientationEvent.requestPermission === 'function') {
     try {
       const perm = await DeviceOrientationEvent.requestPermission();
@@ -693,21 +720,42 @@ async function aktifkanSensor() {
         return false;
       }
     } catch (err) {
-      setStatus('❌ Error izin sensor: ' + err.message, 'err');
+      setStatus('❌ Error izin: ' + err.message, 'err');
       return false;
     }
   }
-
   window.addEventListener('deviceorientationabsolute', handleOrientation, true);
   window.addEventListener('deviceorientation', handleOrientation, true);
   return true;
+}
+
+// ===== TOMBOL KALIBRASI (inject ke UI) =====
+function tambahTombolKalibrasi() {
+  const panel = document.querySelector('.bottom-panel');
+  const calibDiv = document.createElement('div');
+  calibDiv.style.cssText = 'display:flex;gap:0.5rem;margin-top:0.6rem;flex-wrap:wrap;justify-content:center;';
+  calibDiv.innerHTML = `
+    <button id="btnSetNorth" style="flex:1;min-width:120px;padding:0.6rem 0.8rem;background:rgba(110,231,183,0.15);border:1px solid rgba(110,231,183,0.5);color:#6EE7B7;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">
+      🧭 Set Utara
+    </button>
+    <button id="btnInvert" style="flex:1;min-width:120px;padding:0.6rem 0.8rem;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.5);color:#fbbf24;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">
+      🔄 Balik Arah
+    </button>
+    <button id="btnReset" style="flex:1;min-width:120px;padding:0.6rem 0.8rem;background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.5);color:#f87171;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;">
+      ♻️ Reset
+    </button>
+  `;
+  panel.appendChild(calibDiv);
+
+  document.getElementById('btnSetNorth').addEventListener('click', setNorthCalibration);
+  document.getElementById('btnInvert').addEventListener('click', toggleInvert);
+  document.getElementById('btnReset').addEventListener('click', resetCalibration);
 }
 
 // ===== MULAI =====
 btnStart.addEventListener('click', async () => {
   btnStart.disabled = true;
 
-  // 1. Kamera
   const kameraOK = await mulaiKamera();
   if (!kameraOK) {
     hideLoading();
@@ -715,37 +763,32 @@ btnStart.addEventListener('click', async () => {
     return;
   }
 
-  // 2. Lokasi
   showLoading('Mendeteksi lokasi…');
   await ambilLokasi();
 
-  // 3. Sensor
   showLoading('Mengaktifkan sensor…');
   await aktifkanSensor();
 
-  // 4. Sembunyikan start screen
+  // Tunggu 1.5 detik biar sensor ngasih data
+  await new Promise(r => setTimeout(r, 1500));
+
   hideLoading();
   startScreen.classList.add('hidden');
 
-  // Pesan
+  // Tambahkan tombol kalibrasi
+  tambahTombolKalibrasi();
+
   if (userLat !== null) {
-    setStatus('✅ Siap! Putar HP untuk cari arah kiblat.', 'ok');
+    setStatus('✅ Siap! Putar HP. Kalau arah salah, pakai tombol kalibrasi.', 'ok');
   } else {
-    setStatus('⚠️ Lokasi tidak terdeteksi. Coba refresh & izinkan lokasi.', 'warn');
+    setStatus('⚠️ Lokasi tidak terdeteksi.', 'warn');
   }
 
-  // Mulai render loop (untuk smoothing)
   setInterval(() => {
     if (sensorActive) render();
   }, 100);
 });
 
-// ===== CEK DUKUNGAN =====
-if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-  setStatus('❌ Browser tidak mendukung kamera. Gunakan Chrome/Safari terbaru.', 'err');
-}
-
-console.log('🕋 Qibla Finder siap!');
-</script>
+console.log('🕋 Qibla Finder + Kalibrasi siap!');
 </body>
 </html>
