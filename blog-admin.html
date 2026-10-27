@@ -76,7 +76,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <p>Masukkan password untuk mengelola artikel.</p>
     <input type="password" class="lock-input" id="passwordInput" placeholder="••••••" />
     <button class="lock-btn" id="btnUnlock">🔓 Buka Admin</button>
-    <p style="margin-top:1rem;font-size:0.7rem;color:var(--muted);">Cek kode HTML untuk melihat password.</p>
+    <p style="margin-top:1rem;font-size:0.7rem;color:var(--muted);">Password ada di dalam kode HTML ini.</p>
   </div>
 </div>
 
@@ -90,17 +90,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   <div class="wrap">
     <div class="page-head">
       <h1>✏️ Admin Blog</h1>
-      <p>Tulis, edit, dan hapus artikel blog kamu.</p>
+      <p>Tulis artikel, lalu copy kodenya ke blog.html</p>
     </div>
 
     <div class="info-box">
-      💡 <strong>Penting:</strong> Artikel yang kamu tulis di sini akan <strong>disimpan sementara di browser ini</strong>. Agar artikel dan password bisa dilihat dari komputer/HP lain, kamu harus <strong>menyalin kodenya secara manual</strong> ke file <code>blog.html</code> seperti panduan di bawah.
+      💡 <strong>Penting:</strong> Karena web ini berjalan tanpa database server, artikel yang kamu simpan di sini akan menghasilkan <strong>kode khusus</strong>. Kamu harus copy kode itu dan tempel ke file <code>blog.html</code> biar artikelnya muncul di publik!
     </div>
 
     <!-- FORM EDITOR -->
     <div class="card">
       <h2>📝 <span id="editorTitle">Tulis Artikel Baru</span></h2>
-      <input type="hidden" id="editId" />
       <div class="form-group">
         <label>Judul Artikel</label>
         <input type="text" id="judul" placeholder="Contoh: Mengapa Perang Dunia II Dimulai?" />
@@ -131,28 +130,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
         <textarea id="konten" placeholder="&lt;p&gt;Paragraf pertama...&lt;/p&gt;"></textarea>
       </div>
       <div class="btn-row">
-        <button class="btn btn-primary" id="btnSave">💾 Simpan & Buat Kode</button>
+        <button class="btn btn-primary" id="btnSave">💾 Simpan & Copy Kode</button>
         <button class="btn btn-ghost" id="btnClear">🧹 Bersihkan Form</button>
       </div>
     </div>
 
     <!-- GANTI PASSWORD -->
     <div class="card">
-      <h2>🔑 Ganti Password</h2>
-      <div class="form-group">
-        <label>Password Lama</label>
-        <input type="password" id="oldPass" placeholder="••••••" />
-      </div>
-      <div class="form-group">
-        <label>Password Baru (min. 6 karakter)</label>
-        <input type="password" id="newPass" placeholder="••••••" />
-      </div>
-      <button class="btn btn-ghost" id="btnChangePass">🔑 Ganti Password</button>
+      <h2>🔑 Ganti Password (Panduan)</h2>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">
+        Untuk mengganti password, buka file <code>blog-admin.html</code> di editor teks kamu (VS Code/Notepad), lalu cari tulisan <code>const PASSWORD_SAAT_INI = "azzam123";</code> dan ganti kata <code>azzam123</code> dengan password barumu. Simpan dan upload ke GitHub.
+      </p>
     </div>
 
     <!-- DAFTAR ARTIKEL -->
     <div class="card">
-      <h2>📚 Daftar Artikel (<span id="postCount">0</span>)</h2>
+      <h2>📚 Daftar Artikel Dibuat (<span id="postCount">0</span>)</h2>
       <div id="postList"></div>
     </div>
   </div>
@@ -162,32 +155,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 <script>
 // ================================================================
-// KONFIGURASI PASSWORD
+// KONFIGURASI PASSWORD ADMIN
 // ================================================================
-// GANTI "azzam123" DENGAN PASSWORD RAHASIAMU
 const PASSWORD_SAAT_INI = "azzam123"; 
+const STORAGE_KEY = 'ahm_blog_draft'; // Hanya menyimpan draf sementara
 
-const STORAGE_KEY = 'ahm_blog_posts'; 
-// Mulai kosong, nanti diisi data dummy biar gampang ngetes
-let daftarArtikel = [
-  { id: "welcome", judul: "Selamat Datang di Blog Saya!", kategori: "Umum", tanggal: "2024-12-01", excerpt: "Halo! Ini artikel pertama.", konten: "<p>Halo teman-teman! 👋</p>" }
-];
-
-// Muat artikel dari memori browser
+// Memuat draf dari browser
 function loadPosts() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) return JSON.parse(stored);
   } catch (e) {}
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(daftarArtikel));
-  return daftarArtikel;
+  return [];
 }
 
 function savePosts(posts) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
 }
 
-// ===== TOAST =====
+// TOAST NOTIFIKASI
 function showToast(msg, error = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -195,7 +181,7 @@ function showToast(msg, error = false) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// ===== LOGIN LOGIC =====
+// LOGIN
 const lockScreen = document.getElementById('lockScreen');
 const adminContent = document.getElementById('adminContent');
 const btnUnlock = document.getElementById('btnUnlock');
@@ -218,20 +204,20 @@ passwordInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') btnUnlock.click();
 });
 
-// ===== DATE =====
+// TANGGAL
 function setTanggalHariIni() {
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('tanggal').value = today;
 }
 
-// ===== RENDER LIST =====
+// RENDER LIST DRAF
 function loadPostsList() {
   const posts = loadPosts();
   document.getElementById('postCount').textContent = posts.length;
 
   const list = document.getElementById('postList');
   if (posts.length === 0) {
-    list.innerHTML = '<div class="empty">Belum ada artikel.</div>';
+    list.innerHTML = '<div class="empty" style="color:var(--muted);font-size:0.85rem;">Belum ada artikel baru yang dibuat.</div>';
     return;
   }
 
@@ -240,21 +226,54 @@ function loadPostsList() {
       <h3>${p.judul}</h3>
       <div class="meta">📁 ${p.kategori} · 📅 ${p.tanggal}</div>
       <div class="actions">
-        <button class="btn btn-ghost btn-sm" data-edit="${p.id}">✏️ Edit</button>
+        <button class="btn btn-ghost btn-sm" data-copy="${p.id}">📋 Copy Kode</button>
         <button class="btn btn-danger btn-sm" data-hapus="${p.id}">🗑️ Hapus</button>
       </div>
     </div>
   `).join('');
 
-  list.querySelectorAll('[data-edit]').forEach(btn => {
-    btn.addEventListener('click', () => editPost(btn.dataset.edit));
+  // Tombol Copy di Daftar
+  list.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.copy;
+      const post = posts.find(p => p.id === id);
+      if (post) generateCode(post);
+    });
   });
+
+  // Tombol Hapus
   list.querySelectorAll('[data-hapus]').forEach(btn => {
-    btn.addEventListener('click', () => hapusPost(btn.dataset.hapus));
+    btn.addEventListener('click', () => {
+      if(confirm('Hapus draf ini?')) {
+        let updated = posts.filter(p => p.id !== btn.dataset.hapus);
+        savePosts(updated);
+        loadPostsList();
+        showToast('🗑️ Draf dihapus.');
+      }
+    });
   });
 }
 
-// ===== SIMPAN & BUAT KODE =====
+// FUNGSI BUAT KODE & COPY
+function generateCode(post) {
+  const kodeArtikel = `
+  {
+    id: "${post.id}",
+    judul: "${post.judul}",
+    kategori: "${post.kategori}",
+    tanggal: "${post.tanggal}",
+    excerpt: "${post.excerpt}",
+    konten: \`${post.konten}\`
+  },`;
+
+  navigator.clipboard.writeText(kodeArtikel).then(() => {
+    alert("✅ KODE ARTIKEL BERHASIL DI-COPY!\n\nLangkah Terakhir:\n1. Buka file 'blog.html' di editor (VS Code/Notepad).\n2. Cari tulisan: const daftarArtikel = [\n3. Tempel kode yang sudah dicopy tadi di bawah tanda kurung siku.\n4. Simpan dan upload ke GitHub.");
+  }).catch(err => {
+    prompt("Gagal copy otomatis. Copy manual kode di bawah ini:", kodeArtikel);
+  });
+}
+
+// SIMPAN DRAF & COPY KODE
 document.getElementById('btnSave').addEventListener('click', () => {
   const judul = document.getElementById('judul').value.trim();
   const kategori = document.getElementById('kategori').value;
@@ -276,16 +295,25 @@ document.getElementById('btnSave').addEventListener('click', () => {
   posts.unshift(newPost);
   savePosts(posts);
   
-  // Tampilkan Kode untuk di-copy
-  const kodeArtikel = `
-  {
-    id: "${newPost.id}",
-    judul: "${newPost.judul}",
-    kategori: "${newPost.kategori}",
-    tanggal: "${newPost.tanggal}",
-    excerpt: "${newPost.excerpt}",
-    konten: \`${newPost.konten}\`
-  },`;
+  // Buat kode dan Copy
+  generateCode(newPost);
+  
+  // Bersihkan Form
+  document.getElementById('judul').value = '';
+  document.getElementById('excerpt').value = '';
+  document.getElementById('konten').value = '';
+  setTanggalHariIni();
+  
+  loadPostsList();
+});
 
-  navigator.clipboard.writeText(kodeArtikel).then(() => {
-    alert("✅ KODE ARTIKEL BERHASIL DI-COPY!\n\nLangkah terakhir:\n1. Buka file 'blog.html' di editor kamu.\n2. Cari 'const daftarArtikel = ['\n3. Tempel kode yang sudah dicopy tadi di bawahnya.\n4. Simpan dan Upload
+// CLEAR FORM
+document.getElementById('btnClear').addEventListener('click', () => {
+  document.getElementById('judul').value = '';
+  document.getElementById('excerpt').value = '';
+  document.getElementById('konten').value = '';
+  setTanggalHariIni();
+});
+</script>
+</body>
+</html>
