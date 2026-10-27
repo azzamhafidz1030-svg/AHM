@@ -468,37 +468,342 @@
 const artikelData = [
   // ... (14 data lama kamu biarkan saja, jangan dihapus) ...
   
-  // LANJUTAN DATA 30 ARTIKEL BARU (Indeks 14 - 43)
-  { kategori:"Perang", title:"Perang Napoleon: Ambisi Mengguncang Eropa", tanggal:"1 Jan 2024", isi:`<p>Perang Napoleon (1803–1815) mengubah wajah Eropa secara drastis.</p>` },
-  { kategori:"Sejarah", title:"Revolusi Prancis: Runtuhnya Feodalisme", tanggal:"15 Jan 2024", isi:`<p>Revolusi Prancis (1789–1799) mengakhiri monarki absolut.</p>` },
-  { kategori:"Militer", title:"Pertempuran Thermopylae: 300 Spartan", tanggal:"20 Jan 2024", isi:`<p>Pertempuran Thermopylae (480 SM) adalah simbol keberanian melawan tirani.</p>` },
-  { kategori:"Perang", title:"Perang Salib: Perebutan Tanah Suci", tanggal:"2 Feb 2024", isi:`<p>Perang Salib berlangsung dari abad ke-11 hingga ke-13.</p>` },
-  { kategori:"Sejarah", title:"Revolusi Rusia 1917: Lahirnya Uni Soviet", tanggal:"10 Feb 2024", isi:`<p>Revolusi Rusia menggulingkan Tsar Nicholas II.</p>` },
-  { kategori:"Perang", title:"Pengeboman Pearl Harbor: Bangkitnya AS", tanggal:"12 Feb 2024", isi:`<p>Pada 7 Desember 1941, Angkatan Laut Jepang menyerang pangkalan AS di Hawaii.</p>` },
-  { kategori:"Perang", title:"Pertempuran Stalingrad: Titik Balik PD II", tanggal:"15 Feb 2024", isi:`<p>Pertempuran Stalingrad (1942–1943) adalah perang kota brutal.</p>` },
-  { kategori:"Sejarah", title:"Pendaratan Normandia (D-Day)", tanggal:"20 Feb 2024", isi:`<p>D-Day terjadi pada 6 Juni 1944 di pantai Normandia, Prancis.</p>` },
-  { kategori:"Senjata", title:"Bom Atom Hiroshima dan Nagasaki", tanggal:"25 Feb 2024", isi:`<p>Pada Agustus 1945, AS menjatuhkan bom atom di Hiroshima dan Nagasaki.</p>` },
-  { kategori:"Perang", title:"Perang Korea: Konflik Tak Berakhir", tanggal:"1 Mar 2024", isi:`<p>Perang Korea (1950–1953) melibatkan PBB dan AS.</p>` },
-  { kategori:"Perang", title:"Perang Vietnam: Neraka di Hutan", tanggal:"5 Mar 2024", isi:`<p>Perang Vietnam (1955–1975) terjadi antara Vietnam Utara dan Selatan.</p>` },
-  { kategori:"Sejarah", title:"Reformasi Protestan: Guncangan Gereja", tanggal:"10 Mar 2024", isi:`<p>Reformasi Protestan memicu perpecahan besar dalam agama Kristen.</p>` },
-  { kategori:"Militer", title:"Genghis Khan dan Kekaisaran Mongol", tanggal:"15 Mar 2024", isi:`<p>Genghis Khan menyatukan suku-suku Mongol.</p>` },
-  { kategori:"Sejarah", title:"Penemuan Benua Amerika oleh Columbus", tanggal:"20 Mar 2024", isi:`<p>Christopher Columbus berlayar mencari jalur ke Asia.</p>` },
-  { kategori:"Militer", title:"Pasukan Spartacus: Pemberontakan Gladiator", tanggal:"25 Mar 2024", isi:`<p>Pada 73 SM, Spartacus memimpin pemberontakan budak.</p>` },
-  { kategori:"Perang", title:"Perang Tiga Puluh Tahun", tanggal:"1 Apr 2024", isi:`<p>Perang Tiga Puluh Tahun (1618–1648) melibatkan hampir semua negara Eropa.</p>` },
-  { kategori:"Sejarah", title:"Peradaban Mesir Kuno dan Piramida", tanggal:"5 Apr 2024", isi:`<p>Mesir Kuno berkembang di sepanjang Sungai Nil.</p>` },
-  { kategori:"Sejarah", title:"Kekaisaran Romawi: Kejayaan dan Keruntuhan", tanggal:"10 Apr 2024", isi:`<p>Kekaisaran Romawi adalah salah satu kekaisaran terbesar.</p>` },
-  { kategori:"Perang", title:"Perang Troya: Mitos atau Nyata?", tanggal:"15 Apr 2024", isi:`<p>Perang Troya menjadi salah satu kisah epik paling terkenal.</p>` },
-  { kategori:"Militer", title:"Alexander Agung: Penakluk Dunia", tanggal:"20 Apr 2024", isi:`<p>Alexander Agung (356–323 SM) menciptakan salah satu kekaisaran terbesar.</p>` },
-  { kategori:"Sejarah", title:"Peradaban Lembah Indus", tanggal:"25 Apr 2024", isi:`<p>Peradaban Lembah Indus (3300–1300 SM) adalah salah satu peradaban tertua.</p>` },
-  { kategori:"Militer", title:"Pasukan Janissari: Pengawal Elit Ottoman", tanggal:"1 Mei 2024", isi:`<p>Janissari adalah pasukan elit yang menjadi tulang punggung militer Ottoman.</p>` },
-  { kategori:"Perang", title:"Perang Seratus Tahun", tanggal:"5 Mei 2024", isi:`<p>Perang Seratus Tahun (1337–1453) adalah serangkaian konflik.</p>` },
-  { kategori:"Sejarah", title:"Revolusi Industri: Awal Dunia Modern", tanggal:"10 Mei 2024", isi:`<p>Revolusi Industri dimulai di Inggris pada abad ke-18.</p>` },
-  { kategori:"Perang", title:"Perang Candu: Inggris vs Tiongkok", tanggal:"15 Mei 2024", isi:`<p>Perang Candu (1839–1842) dipicu oleh upaya Tiongkok menghentikan opium.</p>` },
-  { kategori:"Militer", title:"Pasukan Gurkha: Tentara Legendaris Nepal", tanggal:"20 Mei 2024", isi:`<p>Gurkha dikenal karena keberanian dan kemampuan tempur mereka.</p>` },
-  { kategori:"Sejarah", title:"Peradaban Maya: Astronomi dan Matematika", tanggal:"25 Mei 2024", isi:`<p>Maya berkembang di Meksiko selatan dan Amerika Tengah.</p>` },
-  { kategori:"Perang", title:"Perang Boer: Perlawanan Afrika Selatan", tanggal:"30 Mei 2024", isi:`<p>Perang Boer (1899–1902) adalah konflik atas kendali tambang emas.</p>` },
-  { kategori:"Militer", title:"Pasukan Terakota: Pasukan Bawah Tanah", tanggal:"5 Jun 2024", isi:`<p>Lebih dari 8.000 patung tentara ditemukan di dekat makam Kaisar Qin.</p>` },
-  { kategori:"Sejarah", title:"Perpustakaan Alexandria: Pusat Ilmu Dunia", tanggal:"10 Jun 2024", isi:`<p>Perpustakaan ini berada di kota Alexandria, Mesir.</p>` }
+  // --- 30 ARTIKEL BARU DENGAN ISI PANJANG & DETAIL ---
+  { kategori:"Perang", title:"Perang Napoleon: Ambisi Mengguncang Eropa", tanggal:"1 Jan 2024", isi:`
+    <p>Perang Napoleon (1803–1815) adalah serangkaian konflik besar yang melibatkan Kekaisaran Prancis di bawah Napoleon Bonaparte melawan berbagai koalisi kekuatan Eropa. Perang ini mengubah wajah benua secara drastis.</p>
+    <h3>Kebangkitan Napoleon</h3>
+    <p>Setelah Revolusi Prancis, Napoleon dengan cepat naik pangkat menjadi jenderal brilian. Ia berhasil menguasai sebagian besar Eropa Barat dan Tengah melalui taktik militer yang inovatif.</p>
+    <h3>Invasi ke Rusia</h3>
+    <p>Pada tahun 1812, Napoleon memimpin invasi besar-besaran ke Rusia. Namun, musim dingin yang ekstrem dan taktik bumi hangus dari tentara Rusia menghancurkan Grand Armée-nya.</p>
+    <h3>Kekalahan di Waterloo</h3>
+    <p>Setelah kekalahan di Rusia, Napoleon dipaksa mundur. Ia kembali berkuasa selama 100 hari sebelum akhirnya dikalahkan secara telak oleh Duke of Wellington dan Blücher di Pertempuran Waterloo pada tahun 1815.</p>
+    <h3>Dampak</h3>
+    <p>Kongres Wina diadakan untuk memulihkan keseimbangan kekuatan Eropa, yang memicu lahirnya gerakan nasionalisme di berbagai negara.</p>
+  `},
+  { kategori:"Sejarah", title:"Revolusi Prancis: Runtuhnya Feodalisme", tanggal:"15 Jan 2024", isi:`
+    <p>Revolusi Prancis (1789–1799) adalah periode perubahan sosial dan politik yang radikal di Prancis. Raja Louis XVI digulingkan dan dieksekusi, mengakhiri monarki absolut.</p>
+    <h3>Penyebab</h3>
+    <p>Ketidaksetaraan sosial (sistem tiga kelas), krisis keuangan akibat perang, dan gagal panen membuat rakyat kelaparan. Ketika kabar tentang pengepungan Bastille menyebar, rakyat mulai bangkit.</p>
+    <h3>Deklarasi Hak Asasi Manusia</h3>
+    <p>Revolusi melahirkan <i>Declaration of the Rights of Man and of the Citizen</i>, sebuah dokumen fundamental yang menekankan kebebasan, kesetaraan, dan persaudaraan.</p>
+    <h3>Era Teror</h3>
+    <p>Di bawah pimpinan Robespierre, ribuan orang dieksekusi dengan guillotine dalam masa yang dikenal sebagai Reign of Terror (Era Teror).</p>
+    <h3>Warisan</h3>
+    <p>Revolusi ini menyebarkan ide-ide demokrasi dan sekularisme ke seluruh Eropa, menjadi fondasi bagi negara-negara modern.</p>
+  `},
+  { kategori:"Militer", title:"Pertempuran Thermopylae: 300 Spartan", tanggal:"20 Jan 2024", isi:`
+    <p>Pertempuran Thermopylae (480 SM) adalah salah satu pertempuran paling legendaris dalam sejarah. Raja Leonidas dari Sparta memimpin pasukan kecil Yunani melawan invasi besar-besaran Kekaisaran Persia.</p>
+    <h3>Strategi Yunani</h3>
+    <p>Yunani memanfaatkan celah sempit di pegunungan Thermopylae untuk menetralisir keunggulan jumlah pasukan Persia. Phalanx hoplite Spartan yang disiplin menghancurkan gelombang serangan Persia.</p>
+    <h3>Pengkhianatan</h3>
+    <p>Seorang penduduk lokal bernama Ephialtes mengkhianati Yunani dengan menunjukkan jalan rahasia kepada Persia. Pasukan Yunani pun akhirnya dikepung.</p>
+    <h3>Pengorbanan</h3>
+    <p>Leonidas dan 300 Spartan memilih bertahan dan bertarung sampai mati untuk memberi waktu pasukan Yunani lainnya mundur.</p>
+    <h3>Warisan</h3>
+    <p>Kisah ini menjadi simbol keberanian, pengorbanan, dan semangat pantang menyerah melawan tirani.</p>
+  `},
+  { kategori:"Perang", title:"Perang Salib: Perebutan Tanah Suci", tanggal:"2 Feb 2024", isi:`
+    <p>Perang Salib adalah serangkaian ekspedisi militer yang dilakukan oleh umat Kristen Eropa pada Abad Pertengahan (abad ke-11 hingga ke-13) untuk merebut kembali Yerusalem dan Tanah Suci dari kekuasaan Muslim.</p>
+    <h3>Awal Mula</h3>
+    <p>Pada tahun 1095, Paus Urbanus II menyerukan Perang Salib Pertama untuk membantu Kekaisaran Bizantium yang diserang oleh Seljuk Turki, sekaligus membebaskan Yerusalem.</p>
+    <h3>Perang Salib Pertama</h3>
+    <p>Pasukan Salib berhasil merebut Yerusalem pada tahun 1099 dengan pembantaian besar-besaran. Berdirilah Negara-negara Salib di Timur Tengah.</p>
+    <h3>Salahuddin Al-Ayyubi</h3>
+    <p>Pada tahun 1187, Salahuddin Al-Ayyubi memenangkan Pertempuran Hattin dan berhasil merebut kembali Yerusalem, memicu Perang Salib Ketiga.</p>
+    <h3>Dampak</h3>
+    <p>Selain konflik berdarah, Perang Salib juga membuka jalur perdagangan dan pertukaran budaya antara Timur dan Barat.</p>
+  `},
+  { kategori:"Sejarah", title:"Revolusi Rusia 1917: Lahirnya Uni Soviet", tanggal:"10 Feb 2024", isi:`
+    <p>Revolusi Rusia pada tahun 1917 adalah salah satu peristiwa paling penting di abad ke-20. Revolusi ini menggulingkan monarki Tsar dan melahirkan negara komunis pertama di dunia, Uni Soviet.</p>
+    <h3>Revolusi Februari</h3>
+    <p>Kekecewaan terhadap Perang Dunia I dan kelaparan meluas memicu unjuk rasa di Petrograd. Tsar Nicholas II dipaksa turun tahta.</p>
+    <h3>Revolusi Oktober</h3>
+    <p>Kelompok Bolshevik yang dipimpin oleh Vladimir Lenin mengambil alih kekuasaan melalui kudeta. Mereka menjanjikan "Damai, Roti, dan Tanah" kepada rakyat.</p>
+    <h3>Perang Sipil Rusia</h3>
+    <p>Terjadi perang saudara brutal antara Tentara Merah (Bolshevik) melawan Tentara Putih (oposisi) yang berlangsung hingga tahun 1922.</p>
+    <h3>Dampak Global</h3>
+    <p>Berdirinya Uni Soviet mengubah peta geopolitik dunia dan memicu ketakutan terhadap penyebaran komunisme (Red Scare) di negara-negara kapitalis.</p>
+  `},
+  { kategori:"Perang", title:"Pengeboman Pearl Harbor: Bangkitnya AS", tanggal:"12 Feb 2024", isi:`
+    <p>Serangan Pearl Harbor terjadi pada 7 Desember 1941, ketika Angkatan Laut Kekaisaran Jepang melancarkan serangan mendadak terhadap pangkalan Angkatan Laut AS di Hawaii.</p>
+    <h3>Latar Belakang</h3>
+    <p>Ketegangan antara AS dan Jepang meningkat akibat sanksi ekonomi AS terhadap Jepang. Jepang melihat serangan ini sebagai cara untuk melumpuhkan armada Pasifik AS.</p>
+    <h3>Serangan Mendadak</h3>
+    <p>Lebih dari 350 pesawat tempur Jepang menyerang dalam dua gelombang. Delapan kapal perang AS rusak atau tenggelam, dan lebih dari 2.400 orang Amerika tewas.</p>
+    <h3>Deklarasi Perang</h3>
+    <p>Keesokan harinya, Presiden Franklin D. Roosevelt berpidato dan menyebut tanggal tersebut sebagai "tanggal yang akan hidup dalam keburukan". Kongres menyatakan perang terhadap Jepang.</p>
+    <h3>Konsekuensi</h3>
+    <p>Peristiwa ini menyeret AS secara langsung dan penuh ke dalam Perang Dunia II, yang akhirnya mengubah keseimbangan kekuatan dunia.</p>
+  `},
+  { kategori:"Perang", title:"Pertempuran Stalingrad: Titik Balik PD II", tanggal:"15 Feb 2024", isi:`
+    <p>Pertempuran Stalingrad (1942–1943) adalah salah satu pertempuran paling berdarah dalam sejarah manusia, sekaligus menjadi titik balik Perang Dunia II di Front Timur.</p>
+    <h3>Pertarungan Kota</h3>
+    <p>Jerman menyerang kota Stalingrad (sekarang Volgograd). Pertempuran berubah menjadi perang kota yang brutal, dengan pertempuran dari rumah ke rumah, bahkan dari ruangan ke ruangan.</p>
+    <h3>Operasi Uranus</h3>
+    <p>Soviet melancarkan Operasi Uranus, sebuah serangan besar-besaran untuk mengepung Tentara Keenam Jerman yang dipimpin Jenderal Paulus.</p>
+    <h3>Pengepungan</h3>
+    <p>Jerman terjebak dalam cuaca musim dingin Rusia yang ekstrem tanpa pasokan yang cukup. Hitler melarang Paulus untuk menyerah.</p>
+    <h3>Akhir Pertempuran</h3>
+    <p>Paulus akhirnya menyerah pada 2 Februari 1943. Ini adalah kekalahan pertama yang diakui oleh Nazi Jerman dalam perang, yang mematahkan mitos tak terkalahkan mereka.</p>
+  `},
+  { kategori:"Sejarah", title:"Pendaratan Normandia (D-Day)", tanggal:"20 Feb 2024", isi:`
+    <p>Operasi Overlord atau yang lebih dikenal sebagai D-Day adalah pendaratan amfibi terbesar dalam sejarah, yang terjadi pada 6 Juni 1944 di pantai Normandia, Prancis.</p>
+    <h3>Persiapan Sekutu</h3>
+    <p>Dipimpin oleh Jenderal Dwight D. Eisenhower, Sekutu mengumpulkan lebih dari 150.000 tentara, 5.000 kapal, dan ribuan pesawat tempur.</p>
+    <h3>Pantai Pendaratan</h3>
+    <p>Pendaratan terbagi menjadi lima pantai: Utah, Omaha, Gold, Juno, dan Sword. Pantai Omaha adalah yang paling berdarah bagi tentara Amerika.</p>
+    <h3>Terobosan</h3>
+    <p>Meskipun menghadapi tembakan senapan mesin berat dan cuaca buruk, Sekutu berhasil mendobrak pertahanan Tembok Atlantik Jerman.</p>
+    <h3>Pembebasan Eropa</h3>
+    <p>D-Day menjadi awal dari pembebasan Eropa Barat dari pendudukan Nazi dan mempercepat berakhirnya Perang Dunia II.</p>
+  `},
+  { kategori:"Senjata", title:"Bom Atom Hiroshima dan Nagasaki", tanggal:"25 Feb 2024", isi:`
+    <p>Pada Agustus 1945, Amerika Serikat menjatuhkan bom atom di kota Hiroshima dan Nagasaki, Jepang. Ini adalah satu-satunya penggunaan senjata nuklir dalam perang di sejarah manusia.</p>
+    <h3>Proyek Manhattan</h3>
+    <p>Bom ini adalah hasil dari Proyek Manhattan, proyek rahasia AS yang dipimpin oleh fisikawan J. Robert Oppenheimer.</p>
+    <h3>Serangan</h3>
+    <p>Bom uranium "Little Boy" dijatuhkan di Hiroshima pada 6 Agustus. Tiga hari kemudian, bom plutonium "Fat Man" dijatuhkan di Nagasaki.</p>
+    <h3>Korban</h3>
+    <p>Sekitar 100.000 hingga 200.000 orang tewas seketika atau dalam beberapa bulan berikutnya akibat luka bakar, radiasi, dan penyakit.</p>
+    <h3>Menyerahnya Jepang</h3>
+    <p>Pada 15 Agustus 1945, Kaisar Hirohito mengumumkan penyerahan Jepang, yang secara resmi mengakhiri Perang Dunia II.</p>
+  `},
+  { kategori:"Perang", title:"Perang Korea: Konflik Tak Berakhir", tanggal:"1 Mar 2024", isi:`
+    <p>Perang Korea (1950–1953) adalah perang antara Korea Utara (didukung China dan Uni Soviet) melawan Korea Selatan (didukung PBB dan AS).</p>
+    <h3>Pecahnya Konflik</h3>
+    <p>Setelah Perang Dunia II, Korea terbagi dua di garis paralel ke-38. Pada 25 Juni 1950, Korea Utara melancarkan invasi besar-besaran ke selatan.</p>
+    <h3>Intervensi PBB</h3>
+    <p>Dewan Keamanan PBB mengutuk invasi dan mengirim pasukan multinasional yang dipimpin Jenderal Douglas MacArthur.</p>
+    <h3>Perang Dingin</h3>
+    <p>Perang ini menjadi simbol Perang Dingin, di mana kekuatan komunis dan kapitalis bertarung secara proksi.</p>
+    <h3>Gencatan Senjata</h3>
+    <p>Perang berakhir dengan gencatan senjata pada 27 Juli 1953 di Panmunjom, namun secara resmi kedua negara masih dalam keadaan perang hingga saat ini.</p>
+  `},
+  { kategori:"Perang", title:"Perang Vietnam: Neraka di Hutan", tanggal:"5 Mar 2024", isi:`
+    <p>Perang Vietnam (1955–1975) adalah konflik panjang dan berdarah antara Vietnam Utara (komunis) melawan Vietnam Selatan (didukung AS).</p>
+    <h3>Teori Domino</h3>
+    <p>AS masuk ke perang ini karena kekhawatiran jika Vietnam jatuh ke tangan komunis, negara-negara Asia Tenggara lainnya akan mengikutinya.</p>
+    <h3>Taktik Gerilya</h3>
+    <p>Viet Cong (gerilyawan komunis) menggunakan taktik perang gerilya di hutan rimba, membuat pasukan AS yang memiliki teknologi canggih kesulitan.</p>
+    <h3>Gegar Budaya</h3>
+    <p>Perang ini sangat tidak populer di AS, memicu protes besar-besaran dan gerakan anti-perang di kalangan anak muda.</p>
+    <h3>Penarikan Pasukan</h3>
+    <p>AS menarik pasukannya pada tahun 1973, dan pada tahun 1975 Saigon jatuh ke tangan Vietnam Utara, menyatukan Vietnam di bawah bendera komunis.</p>
+  `},
+  { kategori:"Sejarah", title:"Reformasi Protestan: Guncangan Gereja", tanggal:"10 Mar 2024", isi:`
+    <p>Reformasi Protestan adalah gerakan keagamaan pada abad ke-16 yang menantang otoritas Gereja Katolik Roma dan Paus, yang berujung pada perpecahan besar dalam agama Kristen.</p>
+    <h3>Martin Luther</h3>
+    <p>Seorang biarawan Jerman, Martin Luther, memprotes praktik penjualan indulgensi (surat pengampunan dosa) oleh Gereja. Pada tahun 1517, ia memakukan 95 Tesis di pintu gereja di Wittenberg.</p>
+    <h3>Penyebaran</h3>
+    <p>Dengan bantuan mesin cetak Gutenberg, ide-ide Luther menyebar dengan cepat ke seluruh Eropa, memicu lahirnya gereja-gereja Protestan.</p>
+    <h3>Kontra-Reformasi</h3>
+    <p>Gereja Katolik merespons dengan Konsili Trent, yang melakukan reformasi internal dan menegaskan kembali doktrin-doktrin mereka.</p>
+    <h3>Dampak Politik</h3>
+    <p>Reformasi memicu perang agama di Eropa, termasuk Perang Tiga Puluh Tahun, yang berakhir dengan Perdamaian Westfalen pada 1648.</p>
+  `},
+  { kategori:"Militer", title:"Genghis Khan dan Kekaisaran Mongol", tanggal:"15 Mar 2024", isi:`
+    <p>Genghis Khan (1162–1227) adalah pendiri Kekaisaran Mongol, kekaisaran darat terbesar dalam sejarah yang membentang dari Asia Timur hingga Eropa Timur.</p>
+    <h3>Penyatuan Suku</h3>
+    <p>Lahir dengan nama Temüjin, ia berhasil menyatukan suku-suku Mongol yang bertikai dan diproklamasikan sebagai "Khan Agung" pada tahun 1206.</p>
+    <h3>Taktik Perang</h3>
+    <p>Pasukan Mongol terkenal dengan kavaleri pemanahnya yang bergerak cepat, disiplin, dan taktik psikologis yang mengerikan (menghancurkan kota yang menolak menyerah).</p>
+    <h3>Jalur Sutra</h3>
+    <p>Meskipun ditakuti, pemerintahan Mongol menciptakan stabilitas politik yang memungkinkan Jalur Sutra berkembang pesat dan terjadinya pertukaran budaya.</p>
+    <h3>Kematian</h3>
+    <p>Genghis Khan meninggal pada tahun 1227. Kekaisarannya kemudian dibagi kepada anak-anaknya dan terus berkembang di bawah kepemimpinan cucunya, Kublai Khan.</p>
+  `},
+  { kategori:"Sejarah", title:"Penemuan Benua Amerika oleh Columbus", tanggal:"20 Mar 2024", isi:`
+    <p>Pada tahun 1492, penjelajah Italia Christopher Columbus, yang disponsori oleh Kerajaan Spanyol, melakukan pelayaran melintasi Samudra Atlantik dan mencapai benua Amerika.</p>
+    <h3>Mencari Jalur ke Asia</h3>
+    <p>Columbus sebenarnya berlayar untuk mencari jalur laut ke India dan Asia Timur, namun ia salah menghitung ukuran bumi dan malah menemukan benua baru.</p>
+    <h3>Pendaratan Pertama</h3>
+    <p>Ia mendarat di pulau yang ia beri nama San Salvador (sekarang Bahama), dan kemudian menjelajahi Kuba serta Hispaniola.</p>
+    <h3>Dampak Kolonialisme</h3>
+    <p>Penemuan ini membuka pintu bagi eksplorasi dan kolonisasi Eropa di Amerika, yang membawa perubahan drastis bagi penduduk asli (suku Indian).</p>
+    <h3>Pertukaran Columbian</h3>
+    <p>Terjadi pertukaran tanaman, hewan, dan penyakit antara Dunia Lama (Eropa) dan Dunia Baru (Amerika) yang mengubah sejarah demografi dunia.</p>
+  `},
+  { kategori:"Militer", title:"Pasukan Spartacus: Pemberontakan Gladiator", tanggal:"25 Mar 2024", isi:`
+    <p>Pada tahun 73 SM, Spartacus, seorang gladiator Trakia yang diperbudak, memimpin pemberontakan besar melawan Republik Romawi.</p>
+    <h3>Awal Pemberontakan</h3>
+    <p>Spartacus dan sekitar 70 gladiator lainnya melarikan diri dari sekolah gladiator di Capua menggunakan peralatan dapur. Mereka membangun pasukan di Gunung Vesuvius.</p>
+    <h3>Kemenangan Awal</h3>
+    <p>Pasukan budak Spartacus mengejutkan Roma dengan mengalahkan beberapa legiun Romawi, sehingga jumlah mereka membengkak menjadi puluhan ribu orang.</p>
+    <h3>Pemberontakan Berakhir</h3>
+    <p>Jenderal Romawi Marcus Licinius Crassus akhirnya memimpin pasukan besar dan berhasil mengalahkan Spartacus pada tahun 71 SM.</p>
+    <h3>Simbol Perlawanan</h3>
+    <p>Spartacus dan para pemberontak disalib di sepanjang Jalan Appia, tetapi kisah mereka menjadi simbol abadi perjuangan melawan penindasan dan perbudakan.</p>
+  `},
+  { kategori:"Perang", title:"Perang Tiga Puluh Tahun", tanggal:"1 Apr 2024", isi:`
+    <p>Perang Tiga Puluh Tahun (1618–1648) adalah perang besar yang melibatkan hampir semua negara Eropa, awalnya dipicu oleh konflik agama antara Katolik dan Protestan.</p>
+    <h3>Perang Agama</h3>
+    <p>Perang dimulai sebagai pemberontakan Protestan di Bohemia melawan kekuasaan Katolik Kaisar Romawi Suci, namun berubah menjadi perebutan kekuasaan dinasti.</p>
+    <h3>Kehancuran Eropa</h3>
+    <p>Perang ini sangat merusak, khususnya di Jerman. Tentara bayaran berkeliaran, menjarah desa-desa, dan menyebabkan kelaparan serta penyakit. Populasi Jerman turun drastis.</p>
+    <h3>Perdamaian Westfalen</h3>
+    <p>Perang berakhir dengan Perjanjian Westfalen pada tahun 1648, yang mengakui kedaulatan negara-negara dan menjadi dasar bagi sistem negara modern.</p>
+    <h3>Pergeseran Kekuatan</h3>
+    <p>Setelah perang, Prancis muncul sebagai kekuatan dominan di Eropa, sementara Kekaisaran Romawi Suci melemah.</p>
+  `},
+  { kategori:"Sejarah", title:"Peradaban Mesir Kuno dan Piramida", tanggal:"5 Apr 2024", isi:`
+    <p>Mesir Kuno adalah salah satu peradaban paling maju dan bertahan lama dalam sejarah manusia, berkembang di sepanjang lembah Sungai Nil selama lebih dari 3.000 tahun.</p>
+    <h3>Sungai Nil</h3>
+    <p>Banjir tahunan Sungai Nil menyuburkan tanah pertanian, memungkinkan berdirinya peradaban agraris yang kaya dan stabil.</p>
+    <h3>Piramida Giza</h3>
+    <p>Piramida Agung Giza dibangun sebagai makam Firaun Khufu. Ini adalah satu-satunya Keajaiban Dunia Kuno yang masih berdiri hingga kini.</p>
+    <h3>Sistem Kepercayaan</h3>
+    <p>Orang Mesir percaya pada kehidupan setelah mati, sehingga mereka mumifikasi jasad dan membekali makam dengan harta benda.</p>
+    <h3>Hieroglif</h3>
+    <p>Sistem tulisan gambar Mesir Kuno menjadi kunci bagi kita untuk memahami sejarah dan budaya mereka.</p>
+  `},
+  { kategori:"Sejarah", title:"Kekaisaran Romawi: Kejayaan dan Keruntuhan", tanggal:"10 Apr 2024", isi:`
+    <p>Kekaisaran Romawi adalah salah satu kekaisaran terbesar dan paling berpengaruh dalam sejarah, yang pada puncaknya menguasai wilayah luas di Eropa, Afrika Utara, dan Timur Tengah.</p>
+    <h3>Dari Republik ke Kekaisaran</h3>
+    <p>Setelah pembunuhan Julius Caesar dan perang saudara, Augustus menjadi Kaisar pertama Romawi pada tahun 27 SM.</p>
+    <h3>Pax Romana</h3>
+    <p>Periode perdamaian dan stabilitas yang berlangsung sekitar 200 tahun, di mana perdagangan dan arsitektur berkembang pesat.</p>
+    <h3>Faktor Keruntuhan</h3>
+    <p>Krisis ekonomi, korupsi politik, invasi suku-suku barbar, dan pembagian kekaisaran menjadi dua (Timur dan Barat) melemahkan Roma.</p>
+    <h3>Akhir Kekaisaran Barat</h3>
+    <p>Pada tahun 476 M, Kaisar terakhir Romawi Barat digulingkan oleh Odoacer, menandai berakhirnya era Romawi Kuno di Eropa Barat.</p>
+  `},
+  { kategori:"Perang", title:"Perang Troya: Mitos atau Nyata?", tanggal:"15 Apr 2024", isi:`
+    <p>Perang Troya adalah salah satu konflik paling terkenal dalam mitologi Yunani, diabadikan dalam puisi epik Homer, *Iliad*.</p>
+    <h3>Penyebab Perang</h3>
+    <p>Perang dipicu oleh penculikan Helen dari Sparta oleh Paris dari Troya, yang melanggar hukum keramahan dan memicu sumpah para raja Yunani.</p>
+    <h3>Kuda Troya</h3>
+    <p>Setelah pengepungan selama 10 tahun, Yunani menggunakan taktik licik: bersembunyi di dalam kuda kayu raksasa yang ditinggalkan di gerbang kota.</p>
+    <h3>Bukti Arkeologi</h3>
+    <p>Pada abad ke-19, arkeolog Heinrich Schliemann menemukan reruntuhan kota yang diyakini sebagai Troya di Hisarlik, Turki modern.</p>
+    <h3>Warisan</h3>
+    <p>Kisah Perang Troya mengajarkan tentang kesombongan (hubris), pengkhianatan, dan kehancuran yang dibawa oleh perang.</p>
+  `},
+  { kategori:"Militer", title:"Alexander Agung: Penakluk Dunia", tanggal:"20 Apr 2024", isi:`
+    <p>Alexander III dari Makedonia, yang dikenal sebagai Alexander Agung (356–323 SM), adalah salah satu komandan militer paling sukses dalam sejarah.</p>
+    <h3>Awal Penaklukan</h3>
+    <p>Setelah naik takhta pada usia 20 tahun, ia segera menundukkan kota-kota Yunani yang memberontak dan memulai invasi ke Kekaisaran Persia.</p>
+    <h3>Menaklukkan Persia</h3>
+    <p>Dalam pertempuran Issus dan Gaugamela, Alexander mengalahkan pasukan Persia yang jauh lebih besar di bawah Raja Darius III.</p>
+    <h3>Hingga ke India</h3>
+    <p>Ambisi Alexander membawanya hingga ke sungai Indus di India. Pasukannya yang kelelahan akhirnya memaksa ia untuk kembali ke Babilonia.</p>
+    <h3>Kematian dan Warisan</h3>
+    <p>Alexander meninggal secara misterius pada usia 32 tahun di Babilonia. Kekaisarannya terpecah, namun ia meninggalkan warisan penyebaran budaya Yunani (Hellenisme) ke seluruh Timur Tengah dan Asia.</p>
+  `},
+  { kategori:"Sejarah", title:"Peradaban Lembah Indus", tanggal:"25 Apr 2024", isi:`
+    <p>Peradaban Lembah Indus (sekitar 3300–1300 SM) adalah salah satu peradaban paling awal di dunia, berkembang di wilayah yang sekarang menjadi Pakistan dan India barat laut.</p>
+    <h3>Kota Terencana</h3>
+    <p>Berbeda dengan peradaban lain, kota-kota seperti Mohenjo-daro dan Harappa dibangun dengan tata letak grid yang sangat terorganisir.</p>
+    <h3>Sistem Sanitasi</h3>
+    <p>Peradaban ini memiliki sistem drainase dan saluran air limbah yang canggih, jauh mendahului zamannya.</p>
+    <h3>Tulisan yang Belum Terpecahkan</h3>
+    <p>Mereka menggunakan simbol-simbol yang diukir pada segel batu, namun hingga kini tulisan Indus belum berhasil diuraikan oleh para ahli.</p>
+    <h3>Misteri Kemunduran</h3>
+    <p>Kemunduran peradaban ini secara misterius dikaitkan dengan perubahan iklim, banjir, atau invasi bangsa Arya.</p>
+  `},
+  { kategori:"Militer", title:"Pasukan Janissari: Pengawal Elit Ottoman", tanggal:"1 Mei 2024", isi:`
+    <p>Janissari (Yeniçeri) adalah pasukan infanteri elit Kekaisaran Ottoman yang menjadi tulang punggung penaklukan Ottoman di Eropa, Asia, dan Afrika.</p>
+    <h3>Sistem Devshirme</h3>
+    <p>Pasukan ini direkrut melalui sistem Devshirme, di mana anak-anak muda Kristen dari wilayah taklukan diambil, diislamkan, dan dilatih secara militer.</p>
+    <h3>Disiplin dan Kekuatan</h3>
+    <p>Janissari adalah salah satu pasukan pertama yang menggunakan senjata api (musket) secara massal dan sangat disiplin dalam pertempuran.</p>
+    <h3>Kekuasaan yang Berlebihan</h3>
+    <p>Seiring berjalannya waktu, Janissari menjadi sangat kuat dan mulai ikut campur dalam urusan politik serta melakukan kudeta terhadap Sultan.</p>
+    <h3>Pembubaran</h3>
+    <p>Karena dianggap sebagai ancaman, Sultan Mahmud II membubarkan korps Janissari secara kejam dalam "Insiden yang Menguntungkan" pada tahun 1826.</p>
+  `},
+  { kategori:"Perang", title:"Perang Seratus Tahun", tanggal:"5 Mei 2024", isi:`
+    <p>Perang Seratus Tahun (1337–1453) adalah serangkaian konflik bersenjata antara Kerajaan Inggris dan Kerajaan Prancis yang berlangsung lebih dari satu abad.</p>
+    <h3>Penyebab Konflik</h3>
+    <p>Perang dipicu oleh persaingan dinasti atas takhta Prancis serta perebutan wilayah strategis seperti Flanders yang kaya akan industri wol.</p>
+    <h3>Keunggulan Busur Panjang</h3>
+    <p>Inggris memenangkan beberapa pertempuran besar (seperti Crécy dan Agincourt) berkat penggunaan busur panjang (longbow) yang mampu menembus baju baja ksatria Prancis.</p>
+    <h3>Joan of Arc</h3>
+    <p>Seorang gadis petani Prancis, Joan of Arc, mengklaim mendapat wahyu ilahi. Ia memimpin pasukan Prancis meraih kemenangan penting di Orléans.</p>
+    <h3>Akhir Perang</h3>
+    <p>Prancis akhirnya memenangkan perang, merebut kembali sebagian besar wilayahnya. Perang ini mempercepat transisi dari pasukan ksatria feodal ke tentara nasional yang profesional.</p>
+  `},
+  { kategori:"Sejarah", title:"Revolusi Industri: Awal Dunia Modern", tanggal:"10 Mei 2024", isi:`
+    <p>Revolusi Industri adalah periode transisi dari ekonomi agraris ke ekonomi industri, yang dimulai di Inggris pada abad ke-18 dan menyebar ke seluruh dunia.</p>
+    <h3>Mesin Uap</h3>
+    <p>Penemuan mesin uap oleh James Watt menjadi katalis utama, mengubah tenaga manusia dan hewan menjadi tenaga mesin yang tak terbatas.</p>
+    <h3>Pabrik dan Urbanisasi</h3>
+    <p>Produksi beralih dari rumah ke pabrik-pabrik besar. Hal ini memicu urbanisasi masif, di mana jutaan orang pindah dari desa ke kota untuk mencari kerja.</p>
+    <h3>Kondisi Kerja yang Buruk</h3>
+    <p>Revolusi Industri awal ditandai dengan eksploitasi buruh, termasuk penggunaan tenaga kerja anak-anak, jam kerja yang panjang, dan lingkungan kerja yang berbahaya.</p>
+    <h3>Dampak Jangka Panjang</h3>
+    <p>Revolusi ini mengubah struktur sosial, melahirkan kelas menengah dan kelas pekerja, serta memicu kemajuan pesat dalam transportasi (kereta api) dan komunikasi.</p>
+  `},
+  { kategori:"Perang", title:"Perang Candu: Inggris vs Tiongkok", tanggal:"15 Mei 2024", isi:`
+    <p>Perang Candu Pertama (1839–1842) adalah konflik militer antara Inggris dan Dinasti Qing Tiongkok, yang dipicu oleh upaya Tiongkok menghentikan perdagangan opium.</p>
+    <h3>Masalah Opium</h3>
+    <p>Inggris mengekspor opium dari India ke Tiongkok untuk menyeimbangkan defisit perdagangan teh. Akibatnya, terjadi krisis kecanduan opium di Tiongkok.</p>
+    <h3>Penghancuran Opium</h3>
+    <p>Komisaris Tiongkok, Lin Zexu, menyita dan menghancurkan berton-ton opium milik pedagang Inggris di Kanton.</p>
+    <h3>Keunggulan Angkatan Laut Inggris</h3>
+    <p>Inggris merespons dengan mengirim armada laut modern. Tiongkok yang masih menggunakan teknologi abad pertengahan tidak mampu membendung kekuatan Inggris.</p>
+    <h3>Perjanjian Nanjing</h3>
+    <p>Tiongkok terpaksa menandatangani Perjanjian Nanjing yang tidak setara, menyerahkan Hong Kong kepada Inggris dan membuka pelabuhan untuk pedagang asing. Ini menandai awal "Abad Penghinaan" bagi Tiongkok.</p>
+  `},
+   { kategori:"Militer", title:"Pasukan Gurkha: Tentara Legendaris Nepal", tanggal:"20 Mei 2024", isi:`
+    <p>Pasukan Gurkha adalah tentara dari Nepal yang terkenal karena keberanian, ketangguhan, dan loyalitas mereka dalam pertempuran. Mereka telah bertempur untuk Kerajaan Inggris dan India selama hampir 200 tahun.</p>
+    <h3>Sejarah Perekrutan</h3>
+    <p>Setelah Perang Inggris-Nepal (1814–1816), Inggris sangat terkesan dengan kemampuan tempur prajurit Nepal. Sejak saat itu, mereka mulai merekrut orang-orang Gurkha ke dalam pasukan Inggris.</p>
+    <h3>Pisau Kukri</h3>
+    <p>Senjata ikonik mereka adalah Kukri, sebilah pisau melengkung yang sangat tajam. Kukri digunakan untuk memotong tanaman, memasak, sekaligus sebagai senjata mematikan jarak dekat.</p>
+    <h3>Keberanian di Medan Perang</h3>
+    <p>Selama Perang Dunia I dan II, pasukan Gurkha menunjukkan keberanian luar biasa. Di medan perang yang sulit seperti hutan rimba dan pegunungan, mereka sering menjadi pasukan pemimpin.</p>
+    <h3>Penghargaan Victoria Cross</h3>
+    <p>Banyak prajurit Gurkha yang menerima Victoria Cross, penghargaan militer tertinggi Inggris, atas tindakan kepahlawanan mereka di luar kewajiban.</p>
+    <h3>Legenda yang Abadi</h3>
+    <p>Hingga saat ini, pasukan Gurkha masih bertugas di berbagai misi perdamaian dan operasi militer di seluruh dunia, mempertahankan reputasi mereka sebagai salah satu tentara paling ditakuti di dunia.</p>
+  `},
+  { kategori:"Sejarah", title:"Peradaban Maya: Astronomi dan Matematika", tanggal:"25 Mei 2024", isi:`
+    <p>Peradaban Maya berkembang di wilayah Meksiko selatan, Guatemala, Belize, dan Honduras. Mereka mencapai puncak kejayaannya antara tahun 250 hingga 900 Masehi.</p>
+    <h3>Kota-Kota Megah</h3>
+    <p>Maya membangun kota-kota besar dengan piramida megah, kuil, dan istana, seperti Tikal, Palenque, dan Chichen Itza, yang menjadi pusat perdagangan dan agama.</p>
+    <h3>Keahlian Astronomi</h3>
+    <p>Maya adalah astronom yang sangat hebat. Mereka mengamati pergerakan matahari, bulan, dan planet Venus dengan akurasi yang menakjubkan, jauh sebelum teleskop ditemukan.</p>
+    <h3>Kalender Maya</h3>
+    <p>Mereka menciptakan sistem kalender yang sangat kompleks, termasuk Kalender Hitung Panjang dan Tzolk'in. Kalender ini sangat akurat dalam menghitung siklus waktu.</p>
+    <h3>Konsep Angka Nol</h3>
+    <p>Maya adalah salah satu peradaban awal di dunia yang secara mandiri mengembangkan konsep matematika "nol" (zero) dan menggunakan sistem vigesimal (basis 20).</p>
+    <h3>Keruntuhan</h3>
+    <p>Secara misterius, peradaban Maya di dataran rendah runtuh pada abad ke-9, kemungkinan besar akibat kekeringan parah, perang saudara, dan kerusakan lingkungan.</p>
+  `},
+  { kategori:"Perang", title:"Perang Boer: Perlawanan Afrika Selatan", tanggal:"30 Mei 2024", isi:`
+    <p>Perang Boer (1899–1902) adalah perang antara Kekaisaran Inggris melawan dua republik Boer merdeka, yaitu Republik Afrika Selatan (Transvaal) dan Negara Bebas Oranye.</p>
+    <h3>Penyebab Perang</h3>
+    <p>Penemuan tambang emas dan berlian besar di wilayah Boer memicu ambisi Inggris untuk menguasai seluruh Afrika Selatan (Imperialisme).</p>
+    <h3>Taktik Gerilya Boer</h3>
+    <p>Meskipun kalah jumlah, petani Boer (komando) bertempur dengan sangat gigih. Mereka menggunakan taktik menembak dari jarak jauh, menunggang kuda, dan perang gerilya di medan terbuka.</p>
+    <h3>Kamp Konsentrasi</h3>
+    <p>Untuk memutus dukungan rakyat terhadap gerilyawan Boer, pasukan Inggris membumihanguskan peternakan dan menempatkan wanita serta anak-anak Boer ke dalam kamp konsentrasi. Ribuan orang meninggal akibat kelaparan dan penyakit.</p>
+    <h3>Perjanjian Vereeniging</h3>
+    <p>Perang berakhir pada tahun 1902 dengan Perjanjian Vereeniging. Republik Boer harus menyerah dan bergabung dengan Uni Afrika Selatan di bawah kekuasaan Inggris.</p>
+  `},
+  { kategori:"Militer", title:"Pasukan Terakota: Pasukan Bawah Tanah", tanggal:"5 Jun 2024", isi:`
+    <p>Pasukan Terakota adalah koleksi patung yang menggambarkan tentara Kaisar Qin Shi Huang, kaisar pertama Tiongkok. Patung-patung ini ditemukan pada tahun 1974 oleh petani lokal yang sedang menggali sumur.</p>
+    <h3>Tujuan Dibuat</h3>
+    <p>Kaisar Qin membangun pasukan ini sebagai bekal di alam baka. Ia percaya bahwa pasukan tanah liat ini akan melindunginya di akhirat, layaknya pasukan sungguhan.</p>
+    <h3>Skala Megah</h3>
+    <p>Diperkirakan terdapat lebih dari 8.000 patung tentara, 130 kereta kuda, dan 520 kuda, yang dikubur dalam formasi perang yang sangat rapi di area seluas 56 kilometer persegi.</p>
+    <h3>Detail Luar Biasa</h3>
+    <p>Keajaiban dari patung ini adalah wajah mereka yang unik. Tidak ada dua patung yang wajahnya sama persis. Mereka juga membawa senjata asli dan mengenakan seragam sesuai pangkat militer mereka.</p>
+    <h3>Warisan UNESCO</h3>
+    <p>Saat ini, situs Mausoleum Kaisar Qin telah menjadi Situs Warisan Dunia UNESCO dan salah satu penemuan arkeologi paling penting abad ke-20.</p>
+  `},
+  { kategori:"Sejarah", title:"Perpustakaan Alexandria: Pusat Ilmu Dunia", tanggal:"10 Jun 2024", isi:`
+    <p>Perpustakaan Alexandria di Mesir kuno adalah salah satu perpustakaan terbesar dan paling penting di dunia kuno. Perpustakaan ini merupakan bagian dari Mouseion, sebuah lembaga penelitian yang didedikasikan untuk para Muses.</p>
+    <h3>Pusat Pengetahuan</h3>
+    <p>Didirikan pada abad ke-3 SM pada masa Dinasti Ptolemeus, perpustakaan ini bertujuan untuk mengumpulkan seluruh pengetahuan dunia. Kapal-kapal yang berlabuh di Alexandria konon harus menyerahkan buku mereka untuk disalin.</p>
+    <h3>Koleksi Gulungan</h3>
+    <p>Perpustakaan ini menampung ratusan ribu gulungan papirus, mencakup karya sastra, matematika, astronomi, kedokteran, dan filsafat dari Yunani, Mesir, Persia, dan India.</p>
+    <h3>Kehancuran yang Misterius</h3>
+    <p>Nasib perpustakaan ini masih menjadi misteri. Ada teori kebakaran akibat perang saudara di bawah Julius Caesar, serangan pasukan Aurelian, atau penghancuran oleh Khalifah Umar. Yang pasti, peradaban besar ini perlahan punya akhir yang tragis.</p>
+    <h3>Simbol Pencerahan</h3>
+    <p>Meskipun telah hilang, Perpustakaan Alexandria tetap menjadi simbol universal dari pencarian manusia akan pengetahuan dan pentingnya melestarikan ilmu untuk generasi mendatang.</p>
+  `}
+];
 ];
 
 // FUNGSI SISA (BAWAAN KODE ASLI KAMU)
