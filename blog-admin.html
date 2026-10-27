@@ -22,10 +22,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .lock-card h2{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.3rem}
 .lock-card p{color:var(--muted);font-size:0.85rem;margin-bottom:1.5rem}
-.lock-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;color:var(--text);font-family:inherit;font-size:1rem;text-align:center;margin-bottom:1rem;letter-spacing:0.3em;transition:border-color 0.2s}
+.lock-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;color:var(--text);font-family:inherit;font-size:1rem;text-align:center;margin-bottom:1rem;letter-spacing:0.3em}
 .lock-input:focus{outline:none;border-color:var(--accent)}
 .lock-btn{width:100%;padding:0.9rem 1.5rem;background:var(--accent);color:#0C0C0E;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all 0.2s}
-.lock-btn:hover{background:#a7f3d0;transform:scale(1.02)}
+.lock-btn:hover{background:#a7f3d0}
 
 #adminContent{display:none;padding-top:4rem}
 .wrap{max-width:800px;margin:0 auto;padding:2rem 1.5rem 3rem}
@@ -34,12 +34,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .page-head p{color:var(--muted);font-size:0.9rem}
 
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
-.card h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
+.card h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
 
 .form-group{margin-bottom:1rem}
-.form-group label{display:block;font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;font-weight:600;margin-bottom:0.4rem}
-.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.7rem 1rem;color:var(--text);font-family:inherit;font-size:0.9rem;transition:border-color 0.2s}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+.form-group label{display:block;font-size:0.72rem;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:0.4rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.7rem 1rem;color:var(--text);font-family:inherit;font-size:0.9rem}
 .form-group textarea{resize:vertical;min-height:200px;line-height:1.6}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 
@@ -50,25 +49,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
 .btn-sm{padding:0.4rem 0.8rem;font-size:0.75rem}
-.btn-row{display:flex;gap:0.5rem;flex-wrap:wrap}
+.btn-row{display:flex;gap:0.5rem;flex-wrap:wrap; margin-bottom: 1rem;}
 
 .post-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:0.8rem}
 .post-item h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.3rem}
 .post-item .meta{font-size:0.75rem;color:var(--muted);margin-bottom:0.6rem}
-.post-item .actions{display:flex;gap:0.4rem;flex-wrap:wrap}
+.post-item .actions{display:flex;gap:0.4rem;}
 
 .info-box{background:rgba(110,231,183,0.08);border:1px solid rgba(110,231,183,0.3);border-radius:10px;padding:0.8rem 1rem;font-size:0.8rem;color:var(--accent);margin-bottom:1.5rem;line-height:1.6}
 
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);color:#0C0C0E;padding:0.8rem 1.5rem;border-radius:10px;font-weight:600;font-size:0.85rem;box-shadow:0 8px 24px rgba(0,0,0,0.5);transition:transform 0.3s;z-index:999;opacity:0}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);color:#0C0C0E;padding:0.8rem 1.5rem;border-radius:10px;font-weight:600;font-size:0.85rem;transition:transform 0.3s;z-index:999;opacity:0}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.error{background:var(--danger);color:#fff}
-
-@media(max-width:600px){.wrap{padding:1.5rem 1rem 2rem}.form-row{grid-template-columns:1fr}.card{padding:1rem}}
 </style>
 </head>
 <body>
 
-<!-- LOCK SCREEN -->
 <div class="lock-screen" id="lockScreen">
   <div class="lock-card">
     <div class="lock-icon">🔒</div>
@@ -76,11 +72,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <p>Masukkan password untuk mengelola artikel.</p>
     <input type="password" class="lock-input" id="passwordInput" placeholder="••••••" />
     <button class="lock-btn" id="btnUnlock">🔓 Buka Admin</button>
-    <p style="margin-top:1rem;font-size:0.7rem;color:var(--muted);">Password ada di dalam kode HTML ini.</p>
   </div>
 </div>
 
-<!-- ADMIN CONTENT -->
 <div id="adminContent">
   <nav>
     <a href="index.html" class="nav-logo">AHM.</a>
@@ -89,20 +83,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
   <div class="wrap">
     <div class="page-head">
-      <h1>✏️ Admin Blog</h1>
-      <p>Tulis artikel, lalu copy kodenya ke blog.html</p>
+      <h1>✏️ Admin Blog CRUD</h1>
+      <p>Buat, Edit, dan Hapus artikel dengan mudah.</p>
     </div>
 
     <div class="info-box">
-      💡 <strong>Penting:</strong> Karena web ini berjalan tanpa database server, artikel yang kamu simpan di sini akan menghasilkan <strong>kode khusus</strong>. Kamu harus copy kode itu dan tempel ke file <code>blog.html</code> biar artikelnya muncul di publik!
+      💡 <strong>Cara Kerja:</strong> Setiap kali kamu nambah/edit/hapus artikel, klik tombol <strong>"Generate Kode Baru"</strong>. Lalu <strong>copy kode yang muncul</strong> dan tempel ke dalam file <code>blog.html</code> di bagian <code>const daftarArtikel = [ ... ]</code>.
     </div>
 
-    <!-- FORM EDITOR -->
     <div class="card">
       <h2>📝 <span id="editorTitle">Tulis Artikel Baru</span></h2>
+      <input type="hidden" id="editId" />
       <div class="form-group">
         <label>Judul Artikel</label>
-        <input type="text" id="judul" placeholder="Contoh: Mengapa Perang Dunia II Dimulai?" />
+        <input type="text" id="judul" placeholder="Judul artikel..." />
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -111,9 +105,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
             <option value="Umum">Umum</option>
             <option value="Sejarah">Sejarah</option>
             <option value="Militer">Militer</option>
-            <option value="Bahasa">Bahasa</option>
             <option value="Coding">Coding</option>
-            <option value="Seni">Seni</option>
           </select>
         </div>
         <div class="form-group">
@@ -122,31 +114,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
         </div>
       </div>
       <div class="form-group">
-        <label>Ringkasan (Excerpt)</label>
-        <textarea id="excerpt" rows="2" placeholder="Ringkasan singkat 1-2 kalimat..." style="min-height:60px;"></textarea>
+        <label>Ringkasan Singkat</label>
+        <textarea id="excerpt" rows="2" style="min-height:60px;" placeholder="Ringkasan..."></textarea>
       </div>
       <div class="form-group">
         <label>Isi Artikel (HTML)</label>
-        <textarea id="konten" placeholder="&lt;p&gt;Paragraf pertama...&lt;/p&gt;"></textarea>
+        <textarea id="konten" placeholder="&lt;p&gt;Isi artikel...&lt;/p&gt;"></textarea>
       </div>
       <div class="btn-row">
-        <button class="btn btn-primary" id="btnSave">💾 Simpan & Copy Kode</button>
-        <button class="btn btn-ghost" id="btnClear">🧹 Bersihkan Form</button>
+        <button class="btn btn-primary" id="btnSave">💾 Simpan Artikel</button>
+        <button class="btn btn-ghost" id="btnClear">🧹 Bersihkan</button>
       </div>
     </div>
 
-    <!-- GANTI PASSWORD -->
     <div class="card">
-      <h2>🔑 Ganti Password (Panduan)</h2>
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">
-        Untuk mengganti password, buka file <code>blog-admin.html</code> di editor teks kamu (VS Code/Notepad), lalu cari tulisan <code>const PASSWORD_SAAT_INI = "azzam123";</code> dan ganti kata <code>azzam123</code> dengan password barumu. Simpan dan upload ke GitHub.
-      </p>
-    </div>
-
-    <!-- DAFTAR ARTIKEL -->
-    <div class="card">
-      <h2>📚 Daftar Artikel Dibuat (<span id="postCount">0</span>)</h2>
-      <div id="postList"></div>
+      <h2>📚 Daftar Artikel (<span id="postCount">0</span>)</h2>
+      <div id="postList" style="margin-bottom: 1.5rem;"></div>
+      
+      <!-- TOMBOL GENERATE KODE -->
+      <button class="btn btn-primary" id="btnGenerate" style="width: 100%;">📋 Generate & Copy Kode untuk blog.html</button>
     </div>
   </div>
 </div>
@@ -155,25 +141,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 <script>
 // ================================================================
-// KONFIGURASI PASSWORD ADMIN
+// KONFIGURASI & DATA
 // ================================================================
 const PASSWORD_SAAT_INI = "azzam123"; 
-const STORAGE_KEY = 'ahm_blog_draft'; // Hanya menyimpan draf sementara
+const STORAGE_KEY = 'ahm_blog_crud';
 
-// Memuat draf dari browser
+let daftarArtikel = [
+  {
+    id: "welcome",
+    judul: "Selamat Datang di Blog Saya!",
+    kategori: "Umum",
+    tanggal: "2024-12-01",
+    excerpt: "Halo! Ini artikel pertama di blog saya.",
+    konten: `<p>Halo teman-teman! 👋</p><p>Selamat datang di blog pribadi saya.</p>`
+  }
+];
+
+// Load dari LocalStorage
 function loadPosts() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
+    if (stored) {
+      daftarArtikel = JSON.parse(stored);
+    } else {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(daftarArtikel));
+    }
   } catch (e) {}
-  return [];
 }
 
-function savePosts(posts) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+function savePosts() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(daftarArtikel));
 }
 
-// TOAST NOTIFIKASI
 function showToast(msg, error = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -181,7 +180,9 @@ function showToast(msg, error = false) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
+// ================================================================
 // LOGIN
+// ================================================================
 const lockScreen = document.getElementById('lockScreen');
 const adminContent = document.getElementById('adminContent');
 const btnUnlock = document.getElementById('btnUnlock');
@@ -191,90 +192,48 @@ btnUnlock.addEventListener('click', () => {
   if (passwordInput.value === PASSWORD_SAAT_INI) {
     lockScreen.style.display = 'none';
     adminContent.style.display = 'block';
+    loadPosts();
     loadPostsList();
     setTanggalHariIni();
-    showToast('✅ Selamat datang, Admin!');
   } else {
     passwordInput.value = '';
     showToast('❌ Password salah!', true);
   }
 });
+passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') btnUnlock.click(); });
 
-passwordInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') btnUnlock.click();
-});
-
-// TANGGAL
+// ================================================================
+// FUNGSI CRUD
+// ================================================================
 function setTanggalHariIni() {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('tanggal').value = today;
+  document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
 }
 
-// RENDER LIST DRAF
+// RENDER LIST
 function loadPostsList() {
-  const posts = loadPosts();
-  document.getElementById('postCount').textContent = posts.length;
-
+  document.getElementById('postCount').textContent = daftarArtikel.length;
   const list = document.getElementById('postList');
-  if (posts.length === 0) {
-    list.innerHTML = '<div class="empty" style="color:var(--muted);font-size:0.85rem;">Belum ada artikel baru yang dibuat.</div>';
+  
+  if (daftarArtikel.length === 0) {
+    list.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">Belum ada artikel.</p>';
     return;
   }
 
-  list.innerHTML = posts.map(p => `
+  list.innerHTML = daftarArtikel.map(p => `
     <div class="post-item">
       <h3>${p.judul}</h3>
       <div class="meta">📁 ${p.kategori} · 📅 ${p.tanggal}</div>
       <div class="actions">
-        <button class="btn btn-ghost btn-sm" data-copy="${p.id}">📋 Copy Kode</button>
-        <button class="btn btn-danger btn-sm" data-hapus="${p.id}">🗑️ Hapus</button>
+        <button class="btn btn-ghost btn-sm" onclick="editPost('${p.id}')">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="hapusPost('${p.id}')">🗑️ Hapus</button>
       </div>
     </div>
   `).join('');
-
-  // Tombol Copy di Daftar
-  list.querySelectorAll('[data-copy]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.copy;
-      const post = posts.find(p => p.id === id);
-      if (post) generateCode(post);
-    });
-  });
-
-  // Tombol Hapus
-  list.querySelectorAll('[data-hapus]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if(confirm('Hapus draf ini?')) {
-        let updated = posts.filter(p => p.id !== btn.dataset.hapus);
-        savePosts(updated);
-        loadPostsList();
-        showToast('🗑️ Draf dihapus.');
-      }
-    });
-  });
 }
 
-// FUNGSI BUAT KODE & COPY
-function generateCode(post) {
-  const kodeArtikel = `
-  {
-    id: "${post.id}",
-    judul: "${post.judul}",
-    kategori: "${post.kategori}",
-    tanggal: "${post.tanggal}",
-    excerpt: "${post.excerpt}",
-    konten: \`${post.konten}\`
-  },`;
-
-  navigator.clipboard.writeText(kodeArtikel).then(() => {
-    alert("✅ KODE ARTIKEL BERHASIL DI-COPY!\n\nLangkah Terakhir:\n1. Buka file 'blog.html' di editor (VS Code/Notepad).\n2. Cari tulisan: const daftarArtikel = [\n3. Tempel kode yang sudah dicopy tadi di bawah tanda kurung siku.\n4. Simpan dan upload ke GitHub.");
-  }).catch(err => {
-    prompt("Gagal copy otomatis. Copy manual kode di bawah ini:", kodeArtikel);
-  });
-}
-
-// SIMPAN DRAF & COPY KODE
+// CREATE & UPDATE
 document.getElementById('btnSave').addEventListener('click', () => {
+  const id = document.getElementById('editId').value;
   const judul = document.getElementById('judul').value.trim();
   const kategori = document.getElementById('kategori').value;
   const tanggal = document.getElementById('tanggal').value;
@@ -282,37 +241,81 @@ document.getElementById('btnSave').addEventListener('click', () => {
   const konten = document.getElementById('konten').value.trim();
 
   if (!judul || !konten) {
-    showToast('⚠️ Judul dan isi artikel wajib diisi!', true);
+    showToast('⚠️ Judul dan isi wajib diisi!', true);
     return;
   }
 
-  const posts = loadPosts();
-  const newPost = {
-    id: 'post_' + Date.now(),
-    judul, kategori, tanggal, excerpt, konten
-  };
-  
-  posts.unshift(newPost);
-  savePosts(posts);
-  
-  // Buat kode dan Copy
-  generateCode(newPost);
-  
-  // Bersihkan Form
-  document.getElementById('judul').value = '';
-  document.getElementById('excerpt').value = '';
-  document.getElementById('konten').value = '';
-  setTanggalHariIni();
-  
+  if (id) {
+    // Mode Edit (Update)
+    const index = daftarArtikel.findIndex(p => p.id === id);
+    if (index !== -1) {
+      daftarArtikel[index] = { id, judul, kategori, tanggal, excerpt, konten };
+      showToast('✅ Artikel berhasil diperbarui!');
+    }
+  } else {
+    // Mode Tambah (Create)
+    const newPost = {
+      id: 'post_' + Date.now(),
+      judul, kategori, tanggal, excerpt, konten
+    };
+    daftarArtikel.unshift(newPost);
+    showToast('✅ Artikel berhasil ditambahkan!');
+  }
+
+  savePosts();
+  clearForm();
   loadPostsList();
 });
 
+// EDIT (Load data ke form)
+window.editPost = function(id) {
+  const post = daftarArtikel.find(p => p.id === id);
+  if (!post) return;
+  
+  document.getElementById('editId').value = post.id;
+  document.getElementById('judul').value = post.judul;
+  document.getElementById('kategori').value = post.kategori;
+  document.getElementById('tanggal').value = post.tanggal;
+  document.getElementById('excerpt').value = post.excerpt;
+  document.getElementById('konten').value = post.konten;
+  
+  document.getElementById('editorTitle').textContent = 'Edit Artikel';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// HAPUS (Delete)
+window.hapusPost = function(id) {
+  if (!confirm('Yakin mau hapus artikel ini?')) return;
+  daftarArtikel = daftarArtikel.filter(p => p.id !== id);
+  savePosts();
+  loadPostsList();
+  showToast('🗑️ Artikel dihapus!');
+};
+
 // CLEAR FORM
-document.getElementById('btnClear').addEventListener('click', () => {
+document.getElementById('btnClear').addEventListener('click', clearForm);
+
+function clearForm() {
+  document.getElementById('editId').value = '';
   document.getElementById('judul').value = '';
   document.getElementById('excerpt').value = '';
   document.getElementById('konten').value = '';
   setTanggalHariIni();
+  document.getElementById('editorTitle').textContent = 'Tulis Artikel Baru';
+}
+
+// ================================================================
+// GENERATE KODE UNTUK blog.html
+// ================================================================
+document.getElementById('btnGenerate').addEventListener('click', () => {
+  // Ubah array jadi string JavaScript yang rapi
+  const kodeString = "const daftarArtikel = " + JSON.stringify(daftarArtikel, null, 2) + ";";
+
+  navigator.clipboard.writeText(kodeString).then(() => {
+    alert("✅ KODE BERHASIL DI-COPY!\n\nLangkah terakhir:\n1. Buka file 'blog.html'.\n2. Hapus semua kode 'const daftarArtikel = [ ... ];' yang lama.\n3. Paste (Ctrl+V) kode yang baru dicopy tadi.\n4. Simpan dan upload ke GitHub.");
+  }).catch(err => {
+    prompt("Gagal copy otomatis. Copy manual kode di bawah ini lalu paste ke blog.html:", kodeString);
+  });
 });
 </script>
 </body>
