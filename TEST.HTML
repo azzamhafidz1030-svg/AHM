@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
-<body style="background:black; color:white; text-align:center; padding-top:50px; font-family:sans-serif;">
-  <h1>TES BERHASIL!</h1>
-  <button onclick="alert('Tombol Jalan!')" style="padding:20px; font-size:20px;">Klik Saya</button>
+<body style="background:black; color:white; text-align:center; padding:50px; font-family:sans-serif;">
+  <h2>Cek Password</h2>
+  <input type="password" id="pass" placeholder="Ketik admin123" style="padding:10px;">
+  <button onclick="cek()" style="padding:10px;">Masuk</button>
+  <script>
+    function cek() {
+      var p = document.getElementById('pass').value;
+      if (p === 'admin123') {
+        alert('BENER! Kamu berhasil masuk.');
+      } else {
+        alert('SALAH! Yang kamu ketik: ' + p);
+      }
+    }
+  </script>
 </body>
 </html>
