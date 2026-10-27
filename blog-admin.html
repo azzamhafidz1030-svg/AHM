@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🔒 Admin Blog — Azzam</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0C0C0E;--surface:#141416;--border:#222226;--accent:#6EE7B7;--accent2:#818CF8;--text:#E4E4E7;--muted:#71717A;--gold:#fbbf24;--danger:#f87171}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;min-height:100vh}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 6vw;backdrop-filter:blur(12px);border-bottom:1px solid var(--border);background:rgba(12,12,14,.8)}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--accent);text-decoration:none}
+.nav-back{color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-back:hover{color:var(--accent)}
+
+/* LOCK SCREEN */
+.lock-screen{position:fixed;inset:0;z-index:200;background:linear-gradient(135deg,#0C0C0E,#141420);display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.lock-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem 2rem;max-width:400px;width:100%;text-align:center;box-shadow:0 30px 60px rgba(0,0,0,0.6)}
+.lock-icon{font-size:3.5rem;margin-bottom:1rem;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.lock-card h2{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.3rem}
+.lock-card p{color:var(--muted);font-size:0.85rem;margin-bottom:1.5rem}
+.lock-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;color:var(--text);font-family:inherit;font-size:1rem;text-align:center;margin-bottom:1rem;letter-spacing:0.3em;transition:border-color 0.2s}
+.lock-input:focus{outline:none;border-color:var(--accent)}
+.lock-btn{width:100%;padding:0.9rem 1.5rem;background:var(--accent);color:#0C0C0E;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all 0.2s}
+.lock-btn:hover{background:#a7f3d0;transform:scale(1.02)}
+.lock-btn:active{transform:scale(0.98)}
+.lock-hint{margin-top:1.2rem;font-size:0.7rem;color:var(--muted)}
+.lock-hint code{background:var(--bg);padding:0.15rem 0.4rem;border-radius:4px;color:var(--accent);font-family:monospace}
+
+/* ADMIN CONTENT */
+#adminContent{display:none;padding-top:4rem}
+.wrap{max-width:800px;margin:0 auto;padding:2rem 1.5rem 3rem}
+.page-head{margin-bottom:2rem;text-align:center}
+.page-head h1{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:0.3rem}
+.page-head p{color:var(--muted);font-size:0.9rem}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
+
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;font-weight:600;margin-bottom:0.4rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.7rem 1rem;color:var(--text);font-family:inherit;font-size:0.9rem;transition:border-color 0.2s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:200px;line-height:1.6}
+.form-group .hint{font-size:0.7rem;color:var(--muted);margin-top:0.3rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.8rem 1.8rem;border-radius:8px;font-weight:700;font-family:'Syne',sans-serif;font-size:0.9rem;cursor:pointer;transition:all 0.2s;border:none}
+.btn-primary{background:var(--accent);color:#0C0C0E}
+.btn-primary:hover{background:#a7f3d0}
+.btn-danger{background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.5);color:var(--danger)}
+.btn-danger:hover{background:rgba(248,113,113,0.25)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm{padding:0.4rem 0.8rem;font-size:0.75rem}
+.btn-row{display:flex;gap:0.5rem;flex-wrap:wrap}
+
+.post-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:0.8rem}
+.post-item h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.3rem}
+.post-item .meta{font-size:0.75rem;color:var(--muted);margin-bottom:0.6rem}
+.post-item .actions{display:flex;gap:0.4rem;flex-wrap:wrap}
+
+.empty{padding:2rem;text-align:center;color:var(--muted);font-size:0.9rem}
+
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);color:#0C0C0E;padding:0.8rem 1.5rem;border-radius:10px;font-weight:600;font-size:0.85rem;box-shadow:0 8px 24px rgba(0,0,0,0.5);transition:transform 0.3s;z-index:999;opacity:0}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.error{background:var(--danger);color:#fff}
+
+.info-box{background:rgba(110,231,183,0.08);border:1px solid rgba(110,231,183,0.3);border-radius:10px;padding:0.8rem 1rem;font-size:0.8rem;color:var(--accent);margin-bottom:1.5rem}
+
+@media(max-width:600px){.wrap{padding:1.5rem 1rem 2rem}.form-row{grid-template-columns:1fr}.card{padding:1rem}}
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-icon">🔒</div>
+    <h2>Admin Blog</h2>
+    <p>Masukkan password untuk mengelola artikel.</p>
+    <input type="password" class="lock-input" id="passwordInput" placeholder="••••••" autocomplete="current-password" />
+    <button class="lock-btn" id="btnUnlock">🔓 Buka Admin</button>
+    <div class="lock-hint">Password default: <code>azzam123</code><br>Bisa diganti setelah masuk.</div>
+  </div>
+</div>
+
+<!-- ADMIN CONTENT -->
+<div id="adminContent">
+  <nav>
+    <a href="index.html" class="nav-logo">AHM.</a>
+    <a href="blog.html" class="nav-back">← Lihat Blog</a>
+  </nav>
+
+  <div class="wrap">
+    <div class="page-head">
+      <h1>✏️ Admin Blog</h1>
+      <p>Tulis, edit, dan hapus artikel blog kamu.</p>
+    </div>
+
+    <div class="info-box">
+      🔐 Kamu login sebagai <strong>Admin</strong>. Jangan bagikan halaman ini ke orang lain. <a href="#" id="btnLogout" style="color:var(--accent);font-weight:700;margin-left:0.3rem;">Logout</a>
+    </div>
+
+    <!-- FORM EDITOR -->
+    <div class="card">
+      <h2>📝 <span id="editorTitle">Tulis Artikel Baru</span></h2>
+      <input type="hidden" id="editId" />
+      <div class="form-group">
+        <label>Judul Artikel</label>
+        <input type="text" id="judul" placeholder="Contoh: Mengapa Perang Dunia II Dimulai?" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="kategori">
+            <option value="Umum">Umum</option>
+            <option value="Sejarah">Sejarah</option>
+            <option value="Militer">Militer</option>
+            <option value="Bahasa">Bahasa</option>
+            <option value="Coding">Coding</option>
+            <option value="Seni">Seni</option>
+            <option value="Pemikiran">Pemikiran</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tanggal</label>
+          <input type="date" id="tanggal" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Ringkasan (Excerpt)</label>
+        <textarea id="excerpt" rows="2" placeholder="Ringkasan singkat 1-2 kalimat..." style="min-height:60px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Isi Artikel (HTML)</label>
+        <textarea id="konten" placeholder="&lt;p&gt;Paragraf pertama...&lt;/p&gt;&#10;&lt;h3&gt;Sub judul&lt;/h3&gt;&#10;&lt;p&gt;Paragraf berikutnya...&lt;/p&gt;"></textarea>
+        <div class="hint">💡 Tag HTML: <code>&lt;p&gt;</code> paragraf, <code>&lt;h3&gt;</code> subjudul, <code>&lt;strong&gt;</code> bold, <code>&lt;ul&gt;&lt;li&gt;</code> list</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnSave">💾 Simpan Artikel</button>
+        <button class="btn btn-ghost" id="btnClear">🧹 Bersihkan Form</button>
+      </div>
+    </div>
+
+    <!-- GANTI PASSWORD -->
+    <div class="card">
+      <h2>🔑 Ganti Password</h2>
+      <div class="form-group">
+        <label>Password Lama</label>
+        <input type="password" id="oldPass" placeholder="••••••" />
+      </div>
+      <div class="form-group">
+        <label>Password Baru (min. 6 karakter)</label>
+        <input type="password" id="newPass" placeholder="••••••" />
+      </div>
+      <button class="btn btn-ghost" id="btnChangePass">🔑 Ganti Password</button>
+    </div>
+
+    <!-- DAFTAR ARTIKEL -->
+    <div class="card">
+      <h2>📚 Daftar Artikel (<span id="postCount">0</span>)</h2>
+      <div id="postList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ================================================================
+// ADMIN BLOG — DENGAN PASSWORD
+// ================================================================
+const STORAGE_KEY = 'ahm_blog_posts';
+const PASSWORD_KEY = 'ahm_blog_password';
+const SESSION_KEY = 'ahm_blog_session';
+const DEFAULT_PASSWORD = 'azzam123';
+
+// ===== PASSWORD HELPER =====
+function getPassword() {
+  return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+}
+function setPassword(p) {
+  localStorage.setItem(PASSWORD_KEY, p);
+}
+function isLoggedIn() {
+  return sessionStorage.getItem(SESSION_KEY) === 'true';
+}
+function setLoggedIn() {
+  sessionStorage.setItem(SESSION_KEY, 'true');
+}
+function setLoggedOut() {
+  sessionStorage.removeItem(SESSION_KEY);
+}
+
+// ===== TOAST =====
+function showToast(msg, error = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (error ? ' error' : '');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ===== LOCK SCREEN =====
+const lockScreen = document.getElementById('lockScreen');
+const adminContent = document.getElementById('adminContent');
+const btnUnlock = document.getElementById('btnUnlock');
+const passwordInput = document.getElementById('passwordInput');
+
+function unlockAdmin() {
+  lockScreen.style.display = 'none';
+  adminContent.style.display = 'block';
+  loadPostsList();
+  setTanggalHariIni();
+}
+
+if (isLoggedIn()) {
+  unlockAdmin();
+}
+
+btnUnlock.addEventListener('click', () => {
+  const input = passwordInput.value;
+  if (!input) {
+    showToast('⚠️ Masukkan password!', true);
+    return;
+  }
+  if (input === getPassword()) {
+    setLoggedIn();
+    unlockAdmin();
+    showToast('✅ Selamat datang, Admin!');
+  } else {
+    passwordInput.value = '';
+    showToast('❌ Password salah!', true);
+    passwordInput.focus();
+  }
+});
+
+passwordInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') btnUnlock.click();
+});
+
+// Logout
+document.getElementById('btnLogout').addEventListener('click', (e) => {
+  e.preventDefault();
+  setLoggedOut();
+  location.reload();
+});
+
+// ===== DATA =====
+function loadPosts() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch (e) { return []; }
+}
+function savePosts(posts) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+}
+
+// ===== DATE =====
+function setTanggalHariIni() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('tanggal').value = today;
+}
+
+// ===== RENDER LIST =====
+function loadPostsList() {
+  const posts = loadPosts();
+  document.getElementById('postCount').textContent = posts.length;
+
+  const list = document.getElementById('postList');
+  if (posts.length === 0) {
+    list.innerHTML = '<div class="empty">Belum ada artikel. Tulis di atas! ✍️</div>';
+    return;
+  }
+
+  list.innerHTML = posts.map(p => `
+    <div class="post-item">
+      <h3>${escapeHtml(p.judul)}</h3>
+      <div class="meta">📁 ${escapeHtml(p.kategori)} · 📅 ${escapeHtml(p.tanggal)}</div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm" data-edit="${p.id}">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" data-hapus="${p.id}">🗑️ Hapus</button>
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('[data-edit]').forEach(btn => {
+    btn.addEventListener('click', () => editPost(btn.dataset.edit));
+  });
+  list.querySelectorAll('[data-hapus]').forEach(btn => {
+    btn.addEventListener('click', () => hapusPost(btn.dataset.hapus));
+  });
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// ===== SIMPAN =====
+document.getElementById('btnSave').addEventListener('click', () => {
+  const id = document.getElementById('editId').value;
+  const judul = document.getElementById('judul').value.trim();
+  const kategori = document.getElementById('kategori').value;
+  const tanggal = document.getElementById('tanggal').value;
+  const excerpt = document.getElementById('excerpt').value.trim();
+  const konten = document.getElementById('konten').value.trim();
+
+  if (!judul || !konten) {
+    showToast('⚠️ Judul dan isi artikel wajib diisi!', true);
+    return;
+  }
+
+  const posts = loadPosts();
+
+  if (id) {
+    const idx = posts.findIndex(p => p.id === id);
+    if (idx !== -1) {
+      posts[idx] = { ...posts[idx], judul, kategori, tanggal, excerpt, konten };
+      savePosts(posts);
+      showToast('✅ Artikel berhasil diperbarui!');
+    }
+  } else {
+    const newPost = {
+      id: 'post_' + Date.now(),
+      judul, kategori, tanggal, excerpt, konten
+    };
+    posts.unshift(newPost);
+    savePosts(posts);
+    showToast('✅ Artikel berhasil disimpan!');
+  }
+
+  clearForm();
+  loadPostsList();
+});
+
+// ===== CLEAR FORM =====
+function clearForm() {
+  document.getElementById('editId').value = '';
+  document.getElementById('judul').value = '';
+  document.getElementById('kategori').value = 'Umum';
+  setTanggalHariIni();
+  document.getElementById('excerpt').value = '';
+  document.getElementById('konten').value = '';
+  document.getElementById('editorTitle').textContent = 'Tulis Artikel Baru';
+}
+
+document.getElementById('btnClear').addEventListener('click', clearForm);
+
+// ===== EDIT =====
+function editPost(id) {
+  const posts = loadPosts();
+  const p = posts.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('editId').value = p.id;
+  document.getElementById('judul').value = p.judul;
+  document.getElementById('kategori').value = p.kategori;
+  document.getElementById('tanggal').value = p.tanggal;
+  document.getElementById('excerpt').value = p.excerpt;
+  document.getElementById('konten').value = p.konten;
+  document.getElementById('editorTitle').textContent = 'Edit Artikel';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showToast('✏️ Mode edit aktif. Ubah lalu simpan.');
+}
+
+// ===== HAPUS =====
+function hapusPost(id) {
+  if (!confirm('Yakin mau hapus artikel ini? Tidak bisa dibatalkan.')) return;
+  let posts = loadPosts();
+  posts = posts.filter(p => p.id !== id);
+  savePosts(posts);
+  loadPostsList();
+  showToast('🗑️ Artikel dihapus.');
+}
+
+// ===== GANTI PASSWORD =====
+document.getElementById('btnChangePass').addEventListener('click', () => {
+  const oldPass = document.getElementById('oldPass').value;
+  const newPass = document.getElementById('newPass').value;
+
+  if (oldPass !== getPassword()) {
+    showToast('❌ Password lama salah!', true);
+    return;
+  }
+  if (newPass.length < 6) {
+    showToast('⚠️ Password baru minimal 6 karakter!', true);
+    return;
+  }
+
+  setPassword(newPass);
+  document.getElementById('oldPass').value = '';
+  document.getElementById('newPass').value = '';
+  showToast('✅ Password berhasil diganti!');
+});
+</script>
+</body>
+</html>
