@@ -57,17 +57,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .modal-date{font-size:0.8rem;color:var(--muted)}
 .modal-body{padding:2rem;color:var(--muted);font-size:0.95rem;line-height:1.8}
 .modal-body h2,.modal-body h3{color:var(--text);font-family:'Syne',sans-serif;margin:1.5rem 0 0.75rem}
-.modal-body h2{font-size:1.4rem}
-.modal-body h3{font-size:1.1rem}
 .modal-body p{margin-bottom:1rem}
 .modal-body ul,.modal-body ol{padding-left:1.5rem;margin-bottom:1rem}
-.modal-body li{margin-bottom:0.4rem}
 .modal-body strong{color:var(--text)}
-.modal-body a{color:var(--accent)}
 
 footer{border-top:1px solid var(--border);padding:2rem 6vw;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted);flex-wrap:wrap;gap:1rem}
 footer a{color:var(--muted);text-decoration:none;transition:color .2s}
-footer a:hover{color:var(--accent)}
 
 @media(max-width:768px){
   .page-hero{padding:7rem 1.5rem 2rem}
@@ -119,11 +114,9 @@ footer a:hover{color:var(--accent)}
 
 <script>
 // ================================================================
-// BLOG — BACA ARTIKEL DARI LOCALSTORAGE
+// DATA ARTIKEL BLOG (BISA DITAMBAH MANUAL DI SINI)
 // ================================================================
-const STORAGE_KEY = 'ahm_blog_posts';
-
-const defaultPosts = [
+const daftarArtikel = [
   {
     id: 'welcome',
     judul: 'Selamat Datang di Blog Saya!',
@@ -134,12 +127,10 @@ const defaultPosts = [
 <p>Selamat datang di blog pribadi saya. Lewat blog ini, saya ingin berbagi cerita, pengetahuan, dan pemikiran seputar:</p>
 <ul>
   <li>📜 Sejarah dunia & militer</li>
-  <li>🗣️ Bahasa asing (Inggris, Arab, Turki, Rusia, Jerman, Jepang)</li>
+  <li>🗣️ Bahasa asing</li>
   <li>💻 Coding & web development</li>
-  <li>🎨 Seni & ilustrasi</li>
 </ul>
-<p>Semoga tulisan-tulisan di sini bermanfaat untuk kita semua. Jangan ragu untuk menghubungi saya kalau ada pertanyaan!</p>
-<p>Salam,<br><strong>Azzam Hafidz Murobbi</strong></p>`
+<p>Semoga tulisan-tulisan di sini bermanfaat untuk kita semua!</p>`
   },
   {
     id: 'perang-dunia-2',
@@ -147,26 +138,19 @@ const defaultPosts = [
     kategori: 'Sejarah',
     tanggal: '2024-12-05',
     excerpt: 'Perang Dunia II adalah konflik terbesar dalam sejarah. Tapi apa sebenarnya yang memicunya?',
-    konten: `<p>Perang Dunia II (1939–1945) adalah konflik militer terbesar dalam sejarah manusia. Ada beberapa faktor yang memicunya:</p>
+    konten: `<p>Perang Dunia II (1939–1945) adalah konflik militer terbesar dalam sejarah manusia.</p>
 <h3>1. Perjanjian Versailles yang Keras</h3>
 <p>Perjanjian Versailles (1919) membebani Jerman dengan reparasi besar, kehilangan wilayah, dan rasa malu nasional. Ini memicu kebangkitan Nazi.</p>
 <h3>2. Ambisi Nazi Jerman</h3>
 <p>Adolf Hitler berambisi menguasai Eropa dan menciptakan "Lebensraum" (ruang hidup) untuk bangsa Jerman.</p>
 <h3>3. Invasi Polandia</h3>
-<p>Pada 1 September 1939, Jerman menginvasi Polandia. Inggris dan Prancis merespons dengan deklarasi perang.</p>
-<h3>4. Ekspansi Jepang di Asia</h3>
-<p>Jepang juga memperluas wilayahnya di Asia, memicu konflik dengan Amerika Serikat (Pearl Harbor, 1941).</p>
-<p>Perang ini mengubah tatanan dunia, melahirkan PBB, dan memulai Perang Dingin.</p>`
+<p>Pada 1 September 1939, Jerman menginvasi Polandia. Inggris dan Prancis merespons dengan deklarasi perang.</p>`
   }
 ];
 
-function loadPosts() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch (e) {}
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultPosts));
-  return defaultPosts;
+// Fungsi Baca Data (Bisa diubah nanti kalau pakai database)
+function ambilDataBlog() {
+  return daftarArtikel;
 }
 
 function formatDate(iso) {
@@ -184,7 +168,7 @@ function escapeHtml(str) {
 }
 
 function renderBlog(query = '') {
-  const posts = loadPosts();
+  const posts = ambilDataBlog();
   const q = query.toLowerCase().trim();
 
   let filtered = posts;
@@ -192,8 +176,7 @@ function renderBlog(query = '') {
     filtered = posts.filter(p =>
       (p.judul || '').toLowerCase().includes(q) ||
       (p.kategori || '').toLowerCase().includes(q) ||
-      (p.excerpt || '').toLowerCase().includes(q) ||
-      (p.konten || '').toLowerCase().includes(q)
+      (p.excerpt || '').toLowerCase().includes(q)
     );
   }
 
@@ -235,7 +218,7 @@ function renderBlog(query = '') {
 }
 
 function bukaArtikel(id) {
-  const posts = loadPosts();
+  const posts = ambilDataBlog();
   const post = posts.find(p => p.id === id);
   if (!post) return;
 
