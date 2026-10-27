@@ -7,12 +7,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg:#0C0C0E; --surface:#141416; --border:#222226; --accent:#6EE7B7; --accent2:#818CF8; --text:#E4E4E7; --muted:#71717A; }
+    :root {
+      --bg:#0C0C0E; --surface:#141416; --border:#222226;
+      --accent:#6EE7B7; --accent2:#818CF8; --text:#E4E4E7; --muted:#71717A;
+    }
     html { scroll-behavior: smooth; }
     body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; font-size:16px; line-height:1.6; overflow-x:hidden; }
-    
-    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.25rem 6vw; backdrop-filter:blur(12px); border-bottom:1px solid var(--border); background:rgba(12,12,14,.7); }
-    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--accent); text-decoration:none; }
+
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.25rem 6vw; backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border); background:rgba(12,12,14,.7);
+    }
+    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--accent); letter-spacing:.04em; text-decoration:none; }
     .nav-back { color:var(--muted); text-decoration:none; font-size:.875rem; font-weight:500; display:flex; align-items:center; gap:.5rem; transition:color .2s; }
     .nav-back:hover { color:var(--accent); }
 
@@ -23,44 +31,52 @@
     .page-hero p { color:var(--muted); max-width:50ch; font-weight:300; font-size:1.05rem; }
 
     .filter-bar { padding:2rem 6vw; display:flex; gap:.75rem; flex-wrap:wrap; border-bottom:1px solid var(--border); }
-    .filter-btn { padding:.4rem 1rem; border:1px solid var(--border); border-radius:100px; background:transparent; color:var(--muted); font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s; }
+    .filter-btn { padding:.4rem 1rem; border:1px solid var(--border); border-radius:100px; background:transparent; color:var(--muted); font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s; font-family:'Inter',sans-serif; }
     .filter-btn:hover, .filter-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(110,231,183,.05); }
 
     .artikel-wrap { padding:3rem 6vw 6rem; }
     .artikel-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:1.5rem; }
-    .artikel-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; transition:transform .2s; cursor:pointer; display:flex; flex-direction:column; }
-    .artikel-card:hover { border-color:rgba(110,231,183,.4); transform:translateY(-4px); }
-    
-    /* CSS GAMBAR & FALLBACK */
-    .artikel-thumb { width:100%; height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:#1a1a2e; }
-    .artikel-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-    .artikel-thumb .emoji-bg { width:100%; height:100%; display:none; align-items:center; justify-content:center; font-size:3rem; background:linear-gradient(135deg,#1a1a2e,#16213e); }
 
-    .artikel-body { padding:1.25rem; flex:1; display:flex; flex-direction:column; }
+    .artikel-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; transition:border-color .2s,transform .2s; cursor:pointer; }
+    .artikel-card:hover { border-color:rgba(110,231,183,.4); transform:translateY(-4px); }
+
+    .artikel-thumb { width:100%; height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); }
+    .artikel-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+    .artikel-thumb .emoji-bg { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:3rem; }
+
+    .a1{background:linear-gradient(135deg,#1a0a0a,#3d1515);}
+    .a2{background:linear-gradient(135deg,#0a1a0a,#153d15);}
+    .a3{background:linear-gradient(135deg,#0a0a1a,#15153d);}
+    .a4{background:linear-gradient(135deg,#1a1a0a,#3d3d15);}
+    .a5{background:linear-gradient(135deg,#1a0a1a,#3d153d);}
+    .a6{background:linear-gradient(135deg,#0a1a1a,#153d3d);}
+
+    .artikel-body { padding:1.25rem; }
     .artikel-meta { display:flex; align-items:center; gap:.75rem; margin-bottom:.75rem; flex-wrap:wrap; }
     .artikel-kategori { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; padding:.2rem .6rem; border:1px solid rgba(110,231,183,.3); border-radius:100px; }
     .artikel-tanggal { font-size:.75rem; color:var(--muted); }
     .artikel-title { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; margin-bottom:.5rem; line-height:1.3; }
-    .artikel-desc { font-size:.85rem; color:var(--muted); margin-bottom:1rem; flex:1; }
-    .artikel-link { font-size:.8rem; font-weight:600; color:var(--accent); }
+    .artikel-desc { font-size:.85rem; color:var(--muted); font-weight:300; margin-bottom:1rem; line-height:1.6; }
+    .artikel-link { font-size:.8rem; font-weight:600; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:.3rem; transition:gap .2s; }
+    .artikel-link:hover { gap:.6rem; }
 
     .modal-overlay { position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.85); backdrop-filter:blur(8px); display:flex; align-items:flex-start; justify-content:center; padding:2rem 1rem; opacity:0; pointer-events:none; transition:opacity .3s; overflow-y:auto; }
     .modal-overlay.open { opacity:1; pointer-events:all; }
-    .modal { background:var(--surface); border:1px solid var(--border); border-radius:12px; width:100%; max-width:720px; transform:translateY(30px); transition:transform .3s; overflow:hidden; margin:auto; }
+    .modal { background:var(--surface); border:1px solid var(--border); border-radius:12px; width:100%; max-width:720px; transform:translateY(30px); transition:transform .3s; overflow:hidden; }
     .modal-overlay.open .modal { transform:translateY(0); }
-    .modal-header { padding:2rem; border-bottom:1px solid var(--border); position:relative; }
-    .modal-close { position:absolute; top:1.5rem; right:1.5rem; background:var(--border); border:none; color:var(--muted); width:32px; height:32px; border-radius:50%; cursor:pointer; }
+    .modal-header { padding:2rem 2rem 1.5rem; border-bottom:1px solid var(--border); position:relative; }
+    .modal-close { position:absolute; top:1.5rem; right:1.5rem; background:var(--border); border:none; color:var(--muted); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:all .2s; }
     .modal-close:hover { background:var(--accent); color:#0C0C0E; }
-    .modal-kategori { font-size:.7rem; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:.75rem; }
-    .modal-title { font-family:'Syne',sans-serif; font-size:clamp(1.4rem,3vw,2rem); font-weight:800; line-height:1.2; }
-    .modal-date { font-size:.8rem; color:var(--muted); margin-top:0.5rem; }
+    .modal-kategori { font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:.75rem; }
+    .modal-title { font-family:'Syne',sans-serif; font-size:clamp(1.4rem,3vw,2rem); font-weight:800; line-height:1.2; margin-bottom:.5rem; }
+    .modal-date { font-size:.8rem; color:var(--muted); }
     .modal-body { padding:2rem; }
-    .modal-body p { color:var(--muted); margin-bottom:1.25rem; line-height:1.8; font-size:.95rem; }
-    .modal-body h3 { font-family:'Syne',sans-serif; font-size:1.1rem; color:var(--text); margin:1.5rem 0 .75rem; }
+    .modal-body p { color:var(--muted); margin-bottom:1.25rem; font-weight:300; line-height:1.8; font-size:.95rem; }
+    .modal-body h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; color:var(--text); margin:1.5rem 0 .75rem; }
     .modal-body ul { padding-left:1.25rem; margin-bottom:1.25rem; }
-    .modal-body li { color:var(--muted); font-size:.95rem; margin-bottom:.4rem; }
-    
-    footer { border-top:1px solid var(--border); padding:2rem 6vw; display:flex; justify-content:space-between; font-size:.8rem; color:var(--muted); flex-wrap:wrap; gap:1rem; }
+    .modal-body ul li { color:var(--muted); font-size:.95rem; margin-bottom:.4rem; font-weight:300; }
+
+    footer { border-top:1px solid var(--border); padding:2rem 6vw; display:flex; justify-content:space-between; align-items:center; font-size:.8rem; color:var(--muted); flex-wrap:wrap; gap:1rem; }
     .reveal { opacity:0; transform:translateY(30px); transition:opacity .6s ease,transform .6s ease; }
     .reveal.visible { opacity:1; transform:none; }
     @media(max-width:768px){ .artikel-grid{grid-template-columns:1fr;} }
@@ -89,10 +105,348 @@
 
 <div class="artikel-wrap">
   <div class="artikel-grid" id="artikelGrid">
-    <!-- Kartu akan di-generate JS -->
+
+    <!-- 0: Perang Dunia II -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(0)">
+      <div class="artikel-thumb a1">
+        <img src="ww2 1.jpg" alt="Perang Dunia II" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">10 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Dunia II: Pertempuran yang Mengubah Dunia</h3>
+        <p class="artikel-desc">Mengenal kronologi, strategi, dan dampak Perang Dunia II yang menjadi konflik terbesar dalam sejarah manusia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 1: Sun Tzu -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(1)">
+      <div class="artikel-thumb a2">
+        <img src="sun tzu.jpg" alt="Sun Tzu" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">5 Jun 2024</span></div>
+        <h3 class="artikel-title">Strategi Perang Sun Tzu yang Masih Relevan</h3>
+        <p class="artikel-desc">Pelajaran dari kitab The Art of War karya Sun Tzu yang hingga kini dipakai oleh militer dan pemimpin dunia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 2: Ottoman -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(2)">
+      <div class="artikel-thumb a3">
+        <img src="kemal.jpg" alt="Ottoman" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">1 Jun 2024</span></div>
+        <h3 class="artikel-title">Kejatuhan Kekaisaran Ottoman</h3>
+        <p class="artikel-desc">Bagaimana kekaisaran yang pernah menguasai tiga benua akhirnya runtuh dan melahirkan Turki modern.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 3: Senjata Modern -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(3)">
+      <div class="artikel-thumb a4">
+        <img src="drone.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">28 Mei 2024</span></div>
+        <h3 class="artikel-title">Teknologi Senjata Modern yang Mengubah Peperangan</h3>
+        <p class="artikel-desc">Dari drone tempur hingga rudal hipersonik, teknologi militer modern yang mendefinisikan ulang strategi perang.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 4: Perang Dingin -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(4)">
+      <div class="artikel-thumb a5">
+        <img src="cold war.jpg" alt="Perang Dingin" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">20 Mei 2024</span></div>
+        <h3 class="artikel-title">Perang Dingin: Dua Kekuatan yang Mengancam Dunia</h3>
+        <p class="artikel-desc">Rivalitas Amerika Serikat dan Uni Soviet yang berlangsung puluhan tahun dan membentuk peta dunia modern.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 5: Perang Saudara Spanyol -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(5)">
+      <div class="artikel-thumb a4">
+        <img src="spaincivilwar.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">1 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Saudara Spanyol</h3>
+        <p class="artikel-desc">Konflik brutal 1936–1939 yang membelah Spanyol menjadi dua kubu dan menjadi pemanasan Perang Dunia II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 6: Perang Musim Dingin -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(6)">
+      <div class="artikel-thumb a4">
+        <img src="winterwr.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">3 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Musim Dingin Finlandia</h3>
+        <p class="artikel-desc">Bagaimana Finlandia kecil berhasil menahan serangan Uni Soviet yang jauh lebih besar selama musim dingin 1939.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 7: Object 775 -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(7)">
+      <div class="artikel-thumb a4">
+        <img src="objct7775.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">5 Jun 2024</span></div>
+        <h3 class="artikel-title">Tank Object 775</h3>
+        <p class="artikel-desc">Tank eksperimental Soviet dengan meriam roket unik yang tidak pernah diproduksi massal namun meninggalkan jejak sejarah.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 8: Tank Maus -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(8)">
+     <div class="artikel-thumb a4">
+        <img src="maus.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">7 Jun 2024</span></div>
+        <h3 class="artikel-title">Tank Maus — Monster Baja Nazi</h3>
+        <p class="artikel-desc">Tank terberat yang pernah dibuat manusia, 188 ton baja Jerman yang tidak pernah bertempur di medan perang.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 9: Attack of the Dead Men -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(9)">
+      <div class="artikel-thumb a4">
+        <img src="a.o.t.d.m..jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">9 Jun 2024</span></div>
+        <h3 class="artikel-title">Attack of the Dead Men</h3>
+        <p class="artikel-desc">100 tentara Rusia yang terkena gas klorin bangkit menyerang dan memukul mundur pasukan Jerman.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 10: Perang Rif -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(10)">
+      <div class="artikel-thumb a4">
+        <img src="rif.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">11 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Rif</h3>
+        <p class="artikel-desc">Perlawanan suku Berber Maroko melawan Spanyol dan Prancis 1921–1926 yang menginspirasi gerakan kemerdekaan dunia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 11: Perang Dunia I -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(11)">
+     <div class="artikel-thumb a4">
+        <img src="ww1.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">13 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Dunia I</h3>
+        <p class="artikel-desc">Konflik global 1914–1918 yang menghancurkan empat kekaisaran besar dan merenggut 20 juta jiwa manusia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 12: Divisi SS Handschar -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(12)">
+      <div class="artikel-thumb a4">
+        <img src="handschar.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">15 Jun 2024</span></div>
+        <h3 class="artikel-title">Divisi SS Handschar</h3>
+        <p class="artikel-desc">Divisi Waffen-SS unik yang terdiri dari Muslim Bosnia bertempur untuk Nazi Jerman di Balkan pada PD II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 13: Panzerfaust -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(13)">
+      <div class="artikel-thumb a4">
+        <img src="panzerfaust.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">17 Jun 2024</span></div>
+        <h3 class="artikel-title">Panzerfaust — Senjata Anti-Tank Jerman</h3>
+        <p class="artikel-desc">Senjata anti-tank sekali pakai yang murah dan mematikan, mimpi buruk pasukan lapis baja Sekutu di akhir PD II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 30 KARTU ARTIKEL BARU DITAMBAHKAN DI SINI -->
+    <!-- ============================================== -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(14)">
+      <div class="artikel-thumb a1"><img src="napoleon.jpg" alt="Perang Napoleon" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">1 Jan 2024</span></div><h3 class="artikel-title">Perang Napoleon: Ambisi Mengguncang Eropa</h3><p class="artikel-desc">Serangkaian konflik besar yang melibatkan Napoleon Bonaparte melawan koalisi kekuatan Eropa.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(15)">
+      <div class="artikel-thumb a2"><img src="revolution.jpg" alt="Revolusi Prancis" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">15 Jan 2024</span></div><h3 class="artikel-title">Revolusi Prancis: Runtuhnya Feodalisme</h3><p class="artikel-desc">Periode perubahan sosial radikal yang menggulingkan monarki absolut Prancis.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(16)">
+      <div class="artikel-thumb a3"><img src="spartan.jpg" alt="Thermopylae" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">🎖️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">20 Jan 2024</span></div><h3 class="artikel-title">Pertempuran Thermopylae: 300 Spartan</h3><p class="artikel-desc">Kisah legendaris Raja Leonidas memimpin pasukan kecil melawan Persia.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(17)">
+      <div class="artikel-thumb a4"><img src="crusade.jpg" alt="Perang Salib" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">2 Feb 2024</span></div><h3 class="artikel-title">Perang Salib: Perebutan Tanah Suci</h3><p class="artikel-desc">Ekspedisi militer umat Kristen Eropa untuk merebut Yerusalem.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(18)">
+      <div class="artikel-thumb a5"><img src="rusia.jpg" alt="Revolusi Rusia" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">10 Feb 2024</span></div><h3 class="artikel-title">Revolusi Rusia 1917: Lahirnya Uni Soviet</h3><p class="artikel-desc">Penggulingan monarki Tsar yang melahirkan negara komunis pertama.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(19)">
+      <div class="artikel-thumb a6"><img src="pearlharbor.jpg" alt="Pearl Harbor" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">12 Feb 2024</span></div><h3 class="artikel-title">Pengeboman Pearl Harbor: Bangkitnya AS</h3><p class="artikel-desc">Serangan mendadak Jepang yang menyeret AS ke dalam Perang Dunia II.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(20)">
+      <div class="artikel-thumb a1"><img src="stalingrad.jpg" alt="Stalingrad" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">15 Feb 2024</span></div><h3 class="artikel-title">Pertempuran Stalingrad: Titik Balik PD II</h3><p class="artikel-desc">Pertempuran paling berdarah yang mematahkan mitos Nazi Jerman.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(21)">
+      <div class="artikel-thumb a2"><img src="dday.jpg" alt="D-Day" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">20 Feb 2024</span></div><h3 class="artikel-title">Pendaratan Normandia (D-Day)</h3><p class="artikel-desc">Pendaratan amfibi terbesar dalam sejarah.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(22)">
+      <div class="artikel-thumb a3"><img src="hiroshima.jpg" alt="Bom Atom" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">🔫</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">25 Feb 2024</span></div><h3 class="artikel-title">Bom Atom Hiroshima dan Nagasaki</h3><p class="artikel-desc">Satu-satunya penggunaan senjata nuklir dalam perang.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(23)">
+      <div class="artikel-thumb a4"><img src="korea.jpg" alt="Perang Korea" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">1 Mar 2024</span></div><h
+             <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">1 Mar 2024</span></div><h3 class="artikel-title">Perang Korea: Konflik Tak Berakhir</h3><p class="artikel-desc">Perang proksi Perang Dingin antara Korea Utara dan Selatan.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(24)">
+      <div class="artikel-thumb a5"><img src="vietnam.jpg" alt="Perang Vietnam" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">5 Mar 2024</span></div><h3 class="artikel-title">Perang Vietnam: Neraka di Hutan</h3><p class="artikel-desc">Konflik panjang yang melibatkan taktik gerilya Viet Cong.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(25)">
+      <div class="artikel-thumb a6"><img src="luther.jpg" alt="Reformasi Protestan" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">10 Mar 2024</span></div><h3 class="artikel-title">Reformasi Protestan: Guncangan Gereja</h3><p class="artikel-desc">Gerakan Martin Luther yang menantang otoritas Gereja Katolik.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(26)">
+      <div class="artikel-thumb a1"><img src="mongol.jpg" alt="Genghis Khan" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">🎖️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">15 Mar 2024</span></div><h3 class="artikel-title">Genghis Khan dan Kekaisaran Mongol</h3><p class="artikel-desc">Pendiri kekaisaran darat terbesar dalam sejarah.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(27)">
+      <div class="artikel-thumb a2"><img src="columbus.jpg" alt="Columbus" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">20 Mar 2024</span></div><h3 class="artikel-title">Penemuan Benua Amerika oleh Columbus</h3><p class="artikel-desc">Pelayaran Columbus pada 1492 yang membuka pintu kolonialisme.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(28)">
+      <div class="artikel-thumb a3"><img src="spartacus.jpg" alt="Spartacus" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">🎖️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">25 Mar 2024</span></div><h3 class="artikel-title">Pasukan Spartacus: Pemberontakan Gladiator</h3><p class="artikel-desc">Pemberontakan budak terbesar melawan Republik Romawi.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(29)">
+      <div class="artikel-thumb a4"><img src="30years.jpg" alt="Perang 30 Tahun" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">1 Apr 2024</span></div><h3 class="artikel-title">Perang Tiga Puluh Tahun</h3><p class="artikel-desc">Perang besar Eropa yang awalnya dipicu konflik agama.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(30)">
+      <div class="artikel-thumb a5"><img src="egypt.jpg" alt="Mesir Kuno" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">5 Apr 2024</span></div><h3 class="artikel-title">Peradaban Mesir Kuno dan Piramida</h3><p class="artikel-desc">Salah satu peradaban tertua dengan peninggalan arsitektur luar biasa.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(31)">
+      <div class="artikel-thumb a6"><img src="rome.jpg" alt="Romawi" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">10 Apr 2024</span></div><h3 class="artikel-title">Kekaisaran Romawi: Kejayaan dan Keruntuhan</h3><p class="artikel-desc">Dari Republik menjadi Kekaisaran besar yang menguasai Eropa.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(32)">
+      <div class="artikel-thumb a1"><img src="troya.jpg" alt="Troya" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">15 Apr 2024</span></div><h3 class="artikel-title">Perang Troya: Mitos atau Nyata?</h3><p class="artikel-desc">Konflik legendaris antara Yunani dan Troya.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(33)">
+      <div class="artikel-thumb a2"><img src="alexander.jpg" alt="Alexander Agung" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">🎖️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">20 Apr 2024</span></div><h3 class="artikel-title">Alexander Agung: Penakluk Dunia</h3><p class="artikel-desc">Raja Makedonia yang menaklukkan Kekaisaran Persia hingga India.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(34)">
+      <div class="artikel-thumb a3"><img src="indus.jpg" alt="Lembah Indus" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">25 Apr 2024</span></div><h3 class="artikel-title">Peradaban Lembah Indus</h3><p class="artikel-desc">Peradaban maju kuno di Asia Selatan dengan sistem drainase canggih.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(35)">
+      <div class="artikel-thumb a4"><img src="janissary.jpg" alt="Janissari" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">🎖️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">1 Mei 2024</span></div><h3 class="artikel-title">Pasukan Janissari: Pengawal Elit Ottoman</h3><p class="artikel-desc">Pasukan infanteri elit Kekaisaran Ottoman yang dilatih sejak muda.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(36)">
+      <div class="artikel-thumb a5"><img src="100years.jpg" alt="Perang 100 Tahun" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">5 Mei 2024</span></div><h3 class="artikel-title">Perang Seratus Tahun</h3><p class="artikel-desc">Konflik berkepanjangan antara Inggris dan Prancis.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(37)">
+      <div class="artikel-thumb a6"><img src="industry.jpg" alt="Revolusi Industri" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">10 Mei 2024</span></div><h3 class="artikel-title">Revolusi Industri: Awal Dunia Modern</h3><p class="artikel-desc">Pergeseran besar dari tenaga manusia ke mesin.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(38)">
+      <div class="artikel-thumb a1"><img src="opium.jpg" alt="Perang Candu" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">15 Mei 2024</span></div><h3 class="artikel-title">Perang Candu: Inggris vs Tiongkok</h3><p class="artikel-desc">Konflik yang membuka pintu Tiongkok bagi imperialis Barat.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(39)">
+      <div class="artikel-thumb a2"><img src="gurkha.jpg" alt="Gurkha" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">🎖️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">20 Mei 2024</span></div><h3 class="artikel-title">Pasukan Gurkha: Tentara Legendaris Nepal</h3><p class="artikel-desc">Pasukan pemberani dari Nepal yang bertempur untuk Inggris.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(40)">
+      <div class="artikel-thumb a3"><img src="maya.jpg" alt="Maya" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">25 Mei 2024</span></div><h3 class="artikel-title">Peradaban Maya: Astronomi dan Matematika</h3><p class="artikel-desc">Peradaban Amerika Tengah yang menguasai astronomi.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(41)">
+      <div class="artikel-thumb a4"><img src="boer.jpg" alt="Perang Boer" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">⚔️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">30 Mei 2024</span></div><h3 class="artikel-title">Perang Boer: Perlawanan Afrika Selatan</h3><p class="artikel-desc">Perang antara Inggris melawan koloni Boer.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(42)">
+      <div class="artikel-thumb a5"><img src="terracotta.jpg" alt="Terakota" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">🎖️</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">5 Jun 2024</span></div><h3 class="artikel-title">Pasukan Terakota: Pasukan Bawah Tanah</h3><p class="artikel-desc">Pasukan tentara dari Dinasti Qin yang menjadi penemuan arkeologi.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(43)">
+      <div class="artikel-thumb a6"><img src="alexandria.jpg" alt="Alexandria" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="emoji-bg" style="display:none;">📜</div></div>
+      <div class="artikel-body"><div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">10 Jun 2024</span></div><h3 class="artikel-title">Perpustakaan Alexandria: Pusat Ilmu Dunia</h3><p class="artikel-desc">Perpustakaan terbesar di dunia kuno.</p><a class="artikel-link">Baca Selengkapnya →</a></div>
+    </div>
+    <!-- AKHIR DARI 30 KARTU BARU -->
+
   </div>
 </div>
 
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="tutupArtikel(event)">
   <div class="modal" id="modalBox">
     <div class="modal-header">
@@ -111,87 +465,43 @@
 </footer>
 
 <script>
-// ================================================================
-// DATABASE ARTIKEL (LENGKAP DENGAN GAMBAR)
-// ================================================================
 const artikelData = [
-  // --- 14 ARTIKEL LAMA ---
-  { img:"ww2 1.jpg", kategori:"Perang", title:"Perang Dunia II: Pertempuran yang Mengubah Dunia", tanggal:"10 Jun 2024", desc:"Mengenal kronologi, strategi, dan dampak Perang Dunia II yang menjadi konflik terbesar dalam sejarah manusia.", isi:`<p>Perang Dunia II (1939–1945) adalah konflik militer terbesar dalam sejarah manusia yang melibatkan lebih dari 70 negara dan menewaskan sekitar 70–85 juta jiwa.</p><h3>Latar Belakang</h3><p>Perang ini bermula dari ambisi ekspansif Nazi Jerman di bawah Adolf Hitler.</p><h3>Front Utama</h3><ul><li><strong>Front Eropa Barat</strong> — Jerman menduduki Prancis.</li><li><strong>Front Timur</strong> — Pertempuran Jerman vs Uni Soviet.</li></ul>` },
-  { img:"sun tzu.jpg", kategori:"Militer", title:"Strategi Perang Sun Tzu yang Masih Relevan", tanggal:"5 Jun 2024", desc:"Pelajaran dari kitab The Art of War karya Sun Tzu yang hingga kini dipakai oleh militer dan pemimpin dunia.", isi:`<p>Sun Tzu adalah seorang jenderal dan filsuf militer Tiongkok. Karyanya, The Art of War, menjadi salah satu buku strategi paling berpengaruh.</p><h3>Prinsip Utama</h3><ul><li>"Kenali dirimu dan kenali musuhmu"</li><li>"Perang terbaik adalah menang tanpa bertarung"</li></ul>` },
-  { img:"kemal.jpg", kategori:"Sejarah", title:"Kejatuhan Kekaisaran Ottoman", tanggal:"1 Jun 2024", desc:"Bagaimana kekaisaran yang pernah menguasai tiga benua akhirnya runtuh dan melahirkan Turki modern.", isi:`<p>Kekaisaran Ottoman berdiri selama lebih dari 600 tahun dan pada puncaknya menguasai wilayah dari Maroko hingga Persia.</p><h3>Faktor Kemunduran</h3><ul><li>Kekalahan dalam Perang Dunia I</li><li>Bangkitnya semangat nasionalisme</li></ul>` },
-  { img:"drone.jpg", kategori:"Militer", title:"Teknologi Senjata Modern yang Mengubah Peperangan", tanggal:"28 Mei 2024", desc:"Dari drone tempur hingga rudal hipersonik, teknologi militer modern yang mendefinisikan ulang strategi perang.", isi:`<p>Perkembangan teknologi militer abad ke-21 telah mendefinisikan ulang cara perang dilakukan.</p><h3>Drone Tempur</h3><p>Drone menjadi tulang punggung operasi militer modern dari pengintaian hingga serangan presisi.</p>` },
-  { img:"cold war.jpg", kategori:"Sejarah", title:"Perang Dingin: Dua Kekuatan yang Mengancam Dunia", tanggal:"20 Mei 2024", desc:"Rivalitas Amerika Serikat dan Uni Soviet yang berlangsung puluhan tahun.", isi:`<p>Perang Dingin (1947–1991) adalah persaingan geopolitik, ideologis, dan militer antara AS dan Uni Soviet.</p><h3>Mengapa Disebut "Dingin"?</h3><p>Karena kedua kekuatan tidak pernah bertempur secara langsung.</p>` },
-  { img:"spaincivilwar.jpg", kategori:"Perang", title:"Perang Saudara Spanyol", tanggal:"1 Jun 2024", desc:"Konflik brutal 1936–1939 yang membelah Spanyol menjadi dua kubu.", isi:`<p>Perang Saudara Spanyol adalah konflik antara pemerintah Republik Spanyol melawan pasukan nasionalis pimpinan Jenderal Francisco Franco.</p>` },
-  { img:"winterwr.jpg", kategori:"Perang", title:"Perang Musim Dingin Finlandia", tanggal:"3 Jun 2024", desc:"Bagaimana Finlandia kecil berhasil menahan serangan Uni Soviet yang jauh lebih besar.", isi:`<p>Perang Musim Dingin (30 November 1939 – 13 Maret 1940) adalah konflik antara Uni Soviet dan Finlandia.</p>` },
-  { img:"objct7775.jpg", kategori:"Senjata", title:"Tank Object 775", tanggal:"5 Jun 2024", desc:"Tank eksperimental Soviet dengan meriam roket unik yang tidak pernah diproduksi massal.", isi:`<p>Object 775 adalah tank eksperimental Soviet yang dikembangkan pada awal 1960-an dengan desain revolusioner.</p>` },
-  { img:"maus.jpg", kategori:"Senjata", title:"Tank Maus — Monster Baja Nazi", tanggal:"7 Jun 2024", desc:"Tank terberat yang pernah dibuat manusia, 188 ton baja Jerman.", isi:`<p>Panzerkampfwagen VIII Maus adalah tank terberat yang pernah dibuat dalam sejarah.</p>` },
-  { img:"a.o.t.d.m..jpg", kategori:"Sejarah", title:"Attack of the Dead Men", tanggal:"9 Jun 2024", desc:"100 tentara Rusia yang terkena gas klorin bangkit menyerang dan memukul mundur pasukan Jerman.", isi:`<p>"Serangan Orang Mati" terjadi pada 6 Agustus 1915 di Benteng Osowiec, Polandia.</p>` },
-  { img:"rif.jpg", kategori:"Perang", title:"Perang Rif", tanggal:"11 Jun 2024", desc:"Perlawanan suku Berber Maroko melawan Spanyol dan Prancis 1921–1926.", isi:`<p>Perang Rif adalah perlawanan suku Berber di pegunungan Rif, Maroko Utara, dipimpin oleh Abd el-Krim.</p>` },
-  { img:"ww1.jpg", kategori:"Perang", title:"Perang Dunia I", tanggal:"13 Jun 2024", desc:"Konflik global 1914–1918 yang menghancurkan empat kekaisaran besar.", isi:`<p>Perang Dunia I adalah konflik global yang menghancurkan empat kekaisaran besar.</p>` },
-  { img:"handschar.jpg", kategori:"Militer", title:"Divisi SS Handschar", tanggal:"15 Jun 2024", desc:"Divisi Waffen-SS unik yang terdiri dari Muslim Bosnia bertempur untuk Nazi Jerman.", isi:`<p>Divisi SS ke-13 "Handschar" adalah divisi Waffen-SS yang unik karena anggotanya adalah Muslim Bosnia.</p>` },
-  { img:"panzerfaust.jpg", kategori:"Senjata", title:"Panzerfaust — Senjata Anti-Tank Jerman", tanggal:"17 Jun 2024", desc:"Senjata anti-tank sekali pakai yang murah dan mematikan.", isi:`<p>Panzerfaust adalah senjata anti-tank sekali pakai yang dikembangkan Jerman pada Perang Dunia II.</p>` },
-
-  // --- 30 ARTIKEL BARU (GAMBAR DISESUAIKAN DENGAN YANG ADA DI FOLDER) ---
-  { img:"napoleon.jpg", kategori:"Perang", title:"Perang Napoleon: Ambisi Mengguncang Eropa", tanggal:"1 Jan 2024", desc:"Serangkaian konflik besar yang melibatkan Napoleon Bonaparte melawan koalisi Eropa.", isi:`<p>Perang Napoleon (1803–1815) mengubah wajah Eropa secara drastis.</p>` },
-  { img:"revolution.jpg", kategori:"Sejarah", title:"Revolusi Prancis: Runtuhnya Feodalisme", tanggal:"15 Jan 2024", desc:"Periode perubahan sosial radikal yang menggulingkan monarki absolut Prancis.", isi:`<p>Revolusi Prancis (1789–1799) mengakhiri monarki absolut.</p>` },
-  { img:"spartan.jpg", kategori:"Militer", title:"Pertempuran Thermopylae: 300 Spartan", tanggal:"20 Jan 2024", desc:"Kisah legendaris Raja Leonidas memimpin pasukan kecil melawan Persia.", isi:`<p>Pertempuran Thermopylae (480 SM) adalah simbol keberanian melawan tirani.</p>` },
-  { img:"crusade.jpg", kategori:"Perang", title:"Perang Salib: Perebutan Tanah Suci", tanggal:"2 Feb 2024", desc:"Ekspedisi militer umat Kristen Eropa untuk merebut Yerusalem.", isi:`<p>Perang Salib berlangsung dari abad ke-11 hingga ke-13.</p>` },
-  { img:"rusia.jpg", kategori:"Sejarah", title:"Revolusi Rusia 1917: Lahirnya Uni Soviet", tanggal:"10 Feb 2024", desc:"Penggulingan monarki Tsar yang melahirkan negara komunis pertama.", isi:`<p>Revolusi Rusia menggulingkan Tsar Nicholas II.</p>` },
-  { img:"pearlharbor.jpg", kategori:"Perang", title:"Pengeboman Pearl Harbor: Bangkitnya AS", tanggal:"12 Feb 2024", desc:"Serangan mendadak Jepang yang menyeret AS ke dalam Perang Dunia II.", isi:`<p>Pada 7 Desember 1941, Angkatan Laut Jepang menyerang pangkalan AS di Hawaii.</p>` },
-  { img:"stalingrad.jpg", kategori:"Perang", title:"Pertempuran Stalingrad: Titik Balik PD II", tanggal:"15 Feb 2024", desc:"Pertempuran paling berdarah yang mematahkan mitos Nazi Jerman.", isi:`<p>Pertempuran Stalingrad (1942–1943) adalah perang kota brutal.</p>` },
-  { img:"dday.jpg", kategori:"Sejarah", title:"Pendaratan Normandia (D-Day)", tanggal:"20 Feb 2024", desc:"Pendaratan amfibi terbesar dalam sejarah.", isi:`<p>D-Day terjadi pada 6 Juni 1944 di pantai Normandia, Prancis.</p>` },
-  { img:"hiroshima.jpg", kategori:"Senjata", title:"Bom Atom Hiroshima dan Nagasaki", tanggal:"25 Feb 2024", desc:"Satu-satunya penggunaan senjata nuklir dalam perang.", isi:`<p>Pada Agustus 1945, AS menjatuhkan bom atom di Hiroshima dan Nagasaki.</p>` },
-  { img:"korea.jpg", kategori:"Perang", title:"Perang Korea: Konflik Tak Berakhir", tanggal:"1 Mar 2024", desc:"Perang proksi Perang Dingin antara Korea Utara dan Selatan.", isi:`<p>Perang Korea (1950–1953) melibatkan PBB dan AS.</p>` },
-  { img:"vietnam.jpg", kategori:"Perang", title:"Perang Vietnam: Neraka di Hutan", tanggal:"5 Mar 2024", desc:"Konflik panjang yang melibatkan taktik gerilya Viet Cong.", isi:`<p>Perang Vietnam (1955–1975) terjadi antara Vietnam Utara dan Selatan.</p>` },
-  { img:"luther.jpg", kategori:"Sejarah", title:"Reformasi Protestan: Guncangan Gereja", tanggal:"10 Mar 2024", desc:"Gerakan Martin Luther yang menantang otoritas Gereja Katolik.", isi:`<p>Reformasi Protestan memicu perpecahan besar dalam agama Kristen.</p>` },
-  { img:"mongol.jpg", kategori:"Militer", title:"Genghis Khan dan Kekaisaran Mongol", tanggal:"15 Mar 2024", desc:"Pendiri kekaisaran darat terbesar dalam sejarah.", isi:`<p>Genghis Khan menyatukan suku-suku Mongol.</p>` },
-  { img:"columbus.jpg", kategori:"Sejarah", title:"Penemuan Benua Amerika oleh Columbus", tanggal:"20 Mar 2024", desc:"Pelayaran Columbus pada 1492 yang membuka pintu kolonialisme.", isi:`<p>Christopher Columbus berlayar mencari jalur ke Asia.</p>` },
-  { img:"spartacus.jpg", kategori:"Militer", title:"Pasukan Spartacus: Pemberontakan Gladiator", tanggal:"25 Mar 2024", desc:"Pemberontakan budak terbesar melawan Republik Romawi.", isi:`<p>Pada 73 SM, Spartacus memimpin pemberontakan budak.</p>` },
-  { img:"30years.jpg", kategori:"Perang", title:"Perang Tiga Puluh Tahun", tanggal:"1 Apr 2024", desc:"Perang besar Eropa yang awalnya dipicu konflik agama.", isi:`<p>Perang Tiga Puluh Tahun (1618–1648) melibatkan hampir semua negara Eropa.</p>` },
-  { img:"egypt.jpg", kategori:"Sejarah", title:"Peradaban Mesir Kuno dan Piramida", tanggal:"5 Apr 2024", desc:"Salah satu peradaban tertua dengan peninggalan arsitektur luar biasa.", isi:`<p>Mesir Kuno berkembang di sepanjang Sungai Nil.</p>` },
-  { img:"rome.jpg", kategori:"Sejarah", title:"Kekaisaran Romawi: Kejayaan dan Keruntuhan", tanggal:"10 Apr 2024", desc:"Dari Republik menjadi Kekaisaran besar yang menguasai Eropa.", isi:`<p>Kekaisaran Romawi adalah salah satu kekaisaran terbesar.</p>` },
-  { img:"troya.jpg", kategori:"Perang", title:"Perang Troya: Mitos atau Nyata?", tanggal:"15 Apr 2024", desc:"Konflik legendaris antara Yunani dan Troya.", isi:`<p>Perang Troya menjadi salah satu kisah epik paling terkenal.</p>` },
-  { img:"alexander.jpg", kategori:"Militer", title:"Alexander Agung: Penakluk Dunia", tanggal:"20 Apr 2024", desc:"Raja Makedonia yang menaklukkan Kekaisaran Persia hingga India.", isi:`<p>Alexander Agung (356–323 SM) menciptakan salah satu kekaisaran terbesar.</p>` },
-  { img:"indus.jpg", kategori:"Sejarah", title:"Peradaban Lembah Indus", tanggal:"25 Apr 2024", desc:"Peradaban maju kuno di Asia Selatan dengan sistem drainase canggih.", isi:`<p>Peradaban Lembah Indus (3300–1300 SM) adalah salah satu peradaban tertua.</p>` },
-  { img:"janissary.jpg", kategori:"Militer", title:"Pasukan Janissari: Pengawal Elit Ottoman", tanggal:"1 Mei 2024", desc:"Pasukan infanteri elit Kekaisaran Ottoman yang dilatih sejak muda.", isi:`<p>Janissari adalah pasukan elit yang menjadi tulang punggung militer Ottoman.</p>` },
-  { img:"100years.jpg", kategori:"Perang", title:"Perang Seratus Tahun", tanggal:"5 Mei 2024", desc:"Konflik berkepanjangan antara Inggris dan Prancis.", isi:`<p>Perang Seratus Tahun (1337–1453) adalah serangkaian konflik.</p>` },
-  { img:"industry.jpg", kategori:"Sejarah", title:"Revolusi Industri: Awal Dunia Modern", tanggal:"10 Mei 2024", desc:"Pergeseran besar dari tenaga manusia ke mesin.", isi:`<p>Revolusi Industri dimulai di Inggris pada abad ke-18.</p>` },
-  { img:"opium.jpg", kategori:"Perang", title:"Perang Candu: Inggris vs Tiongkok", tanggal:"15 Mei 2024", desc:"Konflik yang membuka pintu Tiongkok bagi imperialis Barat.", isi:`<p>Perang Candu (1839–1842) dipicu oleh upaya Tiongkok menghentikan opium.</p>` },
-  { img:"gurkha.jpg", kategori:"Militer", title:"Pasukan Gurkha: Tentara Legendaris Nepal", tanggal:"20 Mei 2024", desc:"Pasukan pemberani dari Nepal yang bertempur untuk Inggris.", isi:`<p>Gurkha dikenal karena keberanian dan kemampuan tempur mereka.</p>` },
-  { img:"maya.jpg", kategori:"Sejarah", title:"Peradaban Maya: Astronomi dan Matematika", tanggal:"25 Mei 2024", desc:"Peradaban Amerika Tengah yang menguasai astronomi.", isi:`<p>Maya berkembang di Meksiko selatan dan Amerika Tengah.</p>` },
-  { img:"boer.jpg", kategori:"Perang", title:"Perang Boer: Perlawanan Afrika Selatan", tanggal:"30 Mei 2024", desc:"Perang antara Inggris melawan koloni Boer.", isi:`<p>Perang Boer (1899–1902) adalah konflik atas kendali tambang emas.</p>` },
-  { img:"terracotta.jpg", kategori:"Militer", title:"Pasukan Terakota: Pasukan Bawah Tanah", tanggal:"5 Jun 2024", desc:"Pasukan tentara dari Dinasti Qin yang menjadi penemuan arkeologi.", isi:`<p>Lebih dari 8.000 patung tentara ditemukan di dekat makam Kaisar Qin.</p>` },
-  { img:"alexandria.jpg", kategori:"Sejarah", title:"Perpustakaan Alexandria: Pusat Ilmu Dunia", tanggal:"10 Jun 2024", desc:"Perpustakaan terbesar di dunia kuno.", isi:`<p>Perpustakaan ini berada di kota Alexandria, Mesir.</p>` }
+  // ... (14 data lama kamu biarkan saja, jangan dihapus) ...
+  
+  // LANJUTAN DATA 30 ARTIKEL BARU (Indeks 14 - 43)
+  { kategori:"Perang", title:"Perang Napoleon: Ambisi Mengguncang Eropa", tanggal:"1 Jan 2024", isi:`<p>Perang Napoleon (1803–1815) mengubah wajah Eropa secara drastis.</p>` },
+  { kategori:"Sejarah", title:"Revolusi Prancis: Runtuhnya Feodalisme", tanggal:"15 Jan 2024", isi:`<p>Revolusi Prancis (1789–1799) mengakhiri monarki absolut.</p>` },
+  { kategori:"Militer", title:"Pertempuran Thermopylae: 300 Spartan", tanggal:"20 Jan 2024", isi:`<p>Pertempuran Thermopylae (480 SM) adalah simbol keberanian melawan tirani.</p>` },
+  { kategori:"Perang", title:"Perang Salib: Perebutan Tanah Suci", tanggal:"2 Feb 2024", isi:`<p>Perang Salib berlangsung dari abad ke-11 hingga ke-13.</p>` },
+  { kategori:"Sejarah", title:"Revolusi Rusia 1917: Lahirnya Uni Soviet", tanggal:"10 Feb 2024", isi:`<p>Revolusi Rusia menggulingkan Tsar Nicholas II.</p>` },
+  { kategori:"Perang", title:"Pengeboman Pearl Harbor: Bangkitnya AS", tanggal:"12 Feb 2024", isi:`<p>Pada 7 Desember 1941, Angkatan Laut Jepang menyerang pangkalan AS di Hawaii.</p>` },
+  { kategori:"Perang", title:"Pertempuran Stalingrad: Titik Balik PD II", tanggal:"15 Feb 2024", isi:`<p>Pertempuran Stalingrad (1942–1943) adalah perang kota brutal.</p>` },
+  { kategori:"Sejarah", title:"Pendaratan Normandia (D-Day)", tanggal:"20 Feb 2024", isi:`<p>D-Day terjadi pada 6 Juni 1944 di pantai Normandia, Prancis.</p>` },
+  { kategori:"Senjata", title:"Bom Atom Hiroshima dan Nagasaki", tanggal:"25 Feb 2024", isi:`<p>Pada Agustus 1945, AS menjatuhkan bom atom di Hiroshima dan Nagasaki.</p>` },
+  { kategori:"Perang", title:"Perang Korea: Konflik Tak Berakhir", tanggal:"1 Mar 2024", isi:`<p>Perang Korea (1950–1953) melibatkan PBB dan AS.</p>` },
+  { kategori:"Perang", title:"Perang Vietnam: Neraka di Hutan", tanggal:"5 Mar 2024", isi:`<p>Perang Vietnam (1955–1975) terjadi antara Vietnam Utara dan Selatan.</p>` },
+  { kategori:"Sejarah", title:"Reformasi Protestan: Guncangan Gereja", tanggal:"10 Mar 2024", isi:`<p>Reformasi Protestan memicu perpecahan besar dalam agama Kristen.</p>` },
+  { kategori:"Militer", title:"Genghis Khan dan Kekaisaran Mongol", tanggal:"15 Mar 2024", isi:`<p>Genghis Khan menyatukan suku-suku Mongol.</p>` },
+  { kategori:"Sejarah", title:"Penemuan Benua Amerika oleh Columbus", tanggal:"20 Mar 2024", isi:`<p>Christopher Columbus berlayar mencari jalur ke Asia.</p>` },
+  { kategori:"Militer", title:"Pasukan Spartacus: Pemberontakan Gladiator", tanggal:"25 Mar 2024", isi:`<p>Pada 73 SM, Spartacus memimpin pemberontakan budak.</p>` },
+  { kategori:"Perang", title:"Perang Tiga Puluh Tahun", tanggal:"1 Apr 2024", isi:`<p>Perang Tiga Puluh Tahun (1618–1648) melibatkan hampir semua negara Eropa.</p>` },
+  { kategori:"Sejarah", title:"Peradaban Mesir Kuno dan Piramida", tanggal:"5 Apr 2024", isi:`<p>Mesir Kuno berkembang di sepanjang Sungai Nil.</p>` },
+  { kategori:"Sejarah", title:"Kekaisaran Romawi: Kejayaan dan Keruntuhan", tanggal:"10 Apr 2024", isi:`<p>Kekaisaran Romawi adalah salah satu kekaisaran terbesar.</p>` },
+  { kategori:"Perang", title:"Perang Troya: Mitos atau Nyata?", tanggal:"15 Apr 2024", isi:`<p>Perang Troya menjadi salah satu kisah epik paling terkenal.</p>` },
+  { kategori:"Militer", title:"Alexander Agung: Penakluk Dunia", tanggal:"20 Apr 2024", isi:`<p>Alexander Agung (356–323 SM) menciptakan salah satu kekaisaran terbesar.</p>` },
+  { kategori:"Sejarah", title:"Peradaban Lembah Indus", tanggal:"25 Apr 2024", isi:`<p>Peradaban Lembah Indus (3300–1300 SM) adalah salah satu peradaban tertua.</p>` },
+  { kategori:"Militer", title:"Pasukan Janissari: Pengawal Elit Ottoman", tanggal:"1 Mei 2024", isi:`<p>Janissari adalah pasukan elit yang menjadi tulang punggung militer Ottoman.</p>` },
+  { kategori:"Perang", title:"Perang Seratus Tahun", tanggal:"5 Mei 2024", isi:`<p>Perang Seratus Tahun (1337–1453) adalah serangkaian konflik.</p>` },
+  { kategori:"Sejarah", title:"Revolusi Industri: Awal Dunia Modern", tanggal:"10 Mei 2024", isi:`<p>Revolusi Industri dimulai di Inggris pada abad ke-18.</p>` },
+  { kategori:"Perang", title:"Perang Candu: Inggris vs Tiongkok", tanggal:"15 Mei 2024", isi:`<p>Perang Candu (1839–1842) dipicu oleh upaya Tiongkok menghentikan opium.</p>` },
+  { kategori:"Militer", title:"Pasukan Gurkha: Tentara Legendaris Nepal", tanggal:"20 Mei 2024", isi:`<p>Gurkha dikenal karena keberanian dan kemampuan tempur mereka.</p>` },
+  { kategori:"Sejarah", title:"Peradaban Maya: Astronomi dan Matematika", tanggal:"25 Mei 2024", isi:`<p>Maya berkembang di Meksiko selatan dan Amerika Tengah.</p>` },
+  { kategori:"Perang", title:"Perang Boer: Perlawanan Afrika Selatan", tanggal:"30 Mei 2024", isi:`<p>Perang Boer (1899–1902) adalah konflik atas kendali tambang emas.</p>` },
+  { kategori:"Militer", title:"Pasukan Terakota: Pasukan Bawah Tanah", tanggal:"5 Jun 2024", isi:`<p>Lebih dari 8.000 patung tentara ditemukan di dekat makam Kaisar Qin.</p>` },
+  { kategori:"Sejarah", title:"Perpustakaan Alexandria: Pusat Ilmu Dunia", tanggal:"10 Jun 2024", isi:`<p>Perpustakaan ini berada di kota Alexandria, Mesir.</p>` }
 ];
 
-// ================================================================
-// FUNGSI RENDER & MODAL (DENGAN FALLBACK GAMBAR)
-// ================================================================
-const grid = document.getElementById('artikelGrid');
-const emojiMap = { "Perang":"⚔️", "Sejarah":"📜", "Militer":"🎖️", "Senjata":"🔫" };
-
-artikelData.forEach((art, index) => {
-  const emoji = emojiMap[art.kategori] || "📖";
-  // Logika: Tampilkan img, jika error (gambar ga ada), panggil fungsi gantiEmoji
-  grid.innerHTML += `
-    <div class="artikel-card reveal" data-kategori="${art.kategori.toLowerCase()}" onclick="bukaArtikel(${index})">
-      <div class="artikel-thumb">
-        <img src="${art.img}" alt="${art.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="emoji-bg">${emoji}</div>
-      </div>
-      <div class="artikel-body">
-        <div class="artikel-meta">
-          <span class="artikel-kategori">${art.kategori}</span>
-          <span class="artikel-tanggal">${art.tanggal}</span>
-        </div>
-        <h3 class="artikel-title">${art.title}</h3>
-        <p class="artikel-desc">${art.desc}</p>
-        <a class="artikel-link">Baca Selengkapnya →</a>
-      </div>
-    </div>
-  `;
-});
-
+// FUNGSI SISA (BAWAAN KODE ASLI KAMU)
 function bukaArtikel(index) {
   const a = artikelData[index];
   document.getElementById('modalKategori').textContent = a.kategori;
@@ -227,4 +537,4 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
-</html>
+</html>                                                                                                                                                      
