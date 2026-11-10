@@ -357,6 +357,201 @@
       font-variant-numeric: tabular-nums;
     }
 
+    /* ========================================================= */
+    /* ===== AI CHATBOT WIDGET (DIPASANG DI ATAS MP3 PLAYER) ===== */
+    /* ========================================================= */
+    .ai-chatbot {
+      position: fixed;
+      bottom: 6rem; /* Dipasang tepat di atas tombol pemutar musik */
+      right: 2rem;
+      z-index: 999;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    /* Tombol Asisten Bulat */
+    .ai-avatar-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border: 2px solid var(--accent);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(129, 140, 248, 0.4);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .ai-avatar-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 32px rgba(129, 140, 248, 0.6);
+    }
+    .ai-avatar-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .ai-avatar-btn .avatar-fallback {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    /* Panel Chatbot */
+    .ai-chat-panel {
+      position: absolute;
+      bottom: 72px;
+      right: 0;
+      width: 340px;
+      height: 460px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.8);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.9) translateY(12px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      transform-origin: bottom right;
+      overflow: hidden;
+    }
+    .ai-chat-panel.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Chat Header */
+    .ai-chat-header {
+      padding: 0.9rem 1.2rem;
+      background: rgba(20, 20, 22, 0.8);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ai-chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .ai-chat-header-info .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .ai-chat-header h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .ai-chat-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .ai-chat-close:hover { color: var(--text); }
+
+    /* Chat Messages Box */
+    .ai-chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .msg {
+      max-width: 85%;
+      padding: 0.6rem 0.9rem;
+      border-radius: 12px;
+      font-size: 0.825rem;
+      line-height: 1.45;
+    }
+    .msg.bot {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+    .msg.user {
+      background: var(--accent2);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    /* Suggested Questions Area */
+    .ai-suggestions {
+      padding: 0.5rem 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      background: rgba(12, 12, 14, 0.5);
+      border-top: 1px solid var(--border);
+    }
+    .sug-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sug-chip:hover {
+      border-color: var(--accent);
+      background: var(--border);
+    }
+
+    /* Chat Input Form */
+    .ai-chat-input-area {
+      padding: 0.75rem 0.8rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.4rem;
+      background: var(--surface);
+    }
+    .ai-chat-input-area input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      color: var(--text);
+      font-size: 0.8rem;
+      outline: none;
+    }
+    .ai-chat-input-area input:focus {
+      border-color: var(--accent2);
+    }
+    .ai-chat-input-area button {
+      background: var(--accent2);
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .ai-chat-input-area button:hover {
+      opacity: 0.9;
+    }
+    /* ========================================================= */
+
     @media (max-width: 768px) {
       .about-grid { grid-template-columns: 1fr; }
       .about-img-wrap { display: none; }
@@ -371,6 +566,14 @@
         padding: 0.4rem 1rem;
         font-size: 0.75rem;
         gap: 0.5rem;
+      }
+      .ai-chatbot {
+        bottom: 6rem;
+        right: 1rem;
+      }
+      .ai-chat-panel {
+        width: 300px;
+        right: -8px;
       }
     }
   </style>
@@ -639,6 +842,48 @@
   <span>Dirancang & Dikembangkan sendiri</span>
 </footer>
 
+<!-- ========================================================= -->
+<!-- ===== AI CHATBOT WIDGET (BULAT DI ATAS MP3 PLAYER) ===== -->
+<!-- ========================================================= -->
+<div class="ai-chatbot" id="aiChatbot">
+  <!-- Tombol Profil Bulat untuk Asisten -->
+  <button class="ai-avatar-btn" id="aiToggle" aria-label="Buka Chatbot Asisten">
+    <!-- Nanti kalau ada foto assistant.jpg, tag img di bawah ini yang dipakai -->
+    <img src="assistant.jpg" alt="Asisten AI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='block';" />
+    <span class="avatar-fallback" id="avatarFallback" style="display:none;">🤖</span>
+  </button>
+
+  <!-- Panel Chatbot -->
+  <div class="ai-chat-panel" id="aiPanel">
+    <div class="ai-chat-header">
+      <div class="ai-chat-header-info">
+        <span class="status-dot"></span>
+        <h4>Asisten Virtual Azzam</h4>
+      </div>
+      <button class="ai-chat-close" id="aiClose">✕</button>
+    </div>
+
+    <!-- Area Pesan Chat -->
+    <div class="ai-chat-messages" id="aiMessages">
+      <div class="msg bot">Halo! 👋 Saya asisten virtual Azzam. Ada yang bisa saya bantu seputar portofolio dan karyanya?</div>
+    </div>
+
+    <!-- Suggested Questions Chips -->
+    <div class="ai-suggestions" id="aiSuggestions">
+      <button class="sug-chip" onclick="askSuggested('Siapa Azzam?')">👤 Siapa Azzam?</button>
+      <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek unggulan?</button>
+      <button class="sug-chip" onclick="askSuggested('Bahasa apa yang dipelajari?')">🌐 Bahasa dipelajari?</button>
+      <button class="sug-chip" onclick="askSuggested('Apa hobinya?')">🎨 Hobi & Minat?</button>
+    </div>
+
+    <!-- Free Question Input Area -->
+    <form class="ai-chat-input-area" id="aiForm">
+      <input type="text" id="aiInput" placeholder="Tanyakan sesuatu..." autocomplete="off" />
+      <button type="submit">➤</button>
+    </form>
+  </div>
+</div>
+
 <!-- MUSIC PLAYER WIDGET (FLOATING) -->
 <div class="music-player" id="musicPlayer">
   <button class="music-toggle" id="musicToggle" aria-label="Buka pemutar musik">🎵</button>
@@ -791,6 +1036,78 @@
   }
   updateClock();
   setInterval(updateClock, 1000);
+
+  // =========================================================
+  // ===== AI CHATBOT INTERACTIVE LOGIC =====
+  // =========================================================
+  const aiToggle = document.getElementById('aiToggle');
+  const aiPanel = document.getElementById('aiPanel');
+  const aiClose = document.getElementById('aiClose');
+  const aiForm = document.getElementById('aiForm');
+  const aiInput = document.getElementById('aiInput');
+  const aiMessages = document.getElementById('aiMessages');
+
+  // Toggle Chat Open/Close
+  aiToggle.addEventListener('click', () => {
+    aiPanel.classList.toggle('open');
+  });
+  aiClose.addEventListener('click', () => {
+    aiPanel.classList.remove('open');
+  });
+
+  // Handle Free Form Question Submission
+  aiForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const query = aiInput.value.trim();
+    if (!query) return;
+    
+    appendMessage(query, 'user');
+    aiInput.value = '';
+    
+    setTimeout(() => {
+      generateAiResponse(query);
+    }, 400);
+  });
+
+  // Function for Suggested Questions Chips
+  window.askSuggested = function(text) {
+    appendMessage(text, 'user');
+    setTimeout(() => {
+      generateAiResponse(text);
+    }, 400);
+  };
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('msg', sender);
+    msgDiv.textContent = text;
+    aiMessages.appendChild(msgDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  // Simple Auto Response Bot Logic
+  function generateAiResponse(input) {
+    const text = input.toLowerCase();
+    let reply = "";
+
+    if (text.includes("siapa") || text.includes("azzam") || text.includes("profil")) {
+      reply = "Azzam Hafidz Murobbi adalah seorang siswa SMPIT Assyifa Boarding School, artist otodidak, serta pengembang web yang suka belajar berbagai bahasa!";
+    } else if (text.includes("proyek") || text.includes("karya") || text.includes("project")) {
+      reply = "Azzam telah membuat berbagai proyek keren seperti Kuis Sejarah, Kamus Bahasa Turki, Geography Quiz, Pemutar Musik/Video, Kalkulator, dan Detektor Kiblat!";
+    } else if (text.includes("bahasa") || text.includes("language")) {
+      reply = "Saat ini Azzam aktif mempelajari 6 bahasa: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
+    } else if (text.includes("hobi") || text.includes("minat") || text.includes("suka")) {
+      reply = "Selain coding web, Azzam sangat hobi menggambar, mendalami sejarah dunia, serta strategi militer.";
+    } else if (text.includes("sekolah") || text.includes("assyifa")) {
+      reply = "Azzam bersekolah di SMPIT Assyifa Boarding School dan aktif mengikuti ekstrakulikuler coding di sana.";
+    } else if (text.includes("kontak") || text.includes("hubungi") || text.includes("email")) {
+      reply = "Kamu bisa menghubungi Azzam melalui email di azzam@email.com atau melihat profil LinkedIn & GitHub-nya di bagian bawah website.";
+    } else {
+      reply = "Terima kasih atas pertanyaannya! Silakan jelajahi portofolio Azzam atau pilih pertanyaan yang disarankan di atas ya. 😊";
+    }
+
+    appendMessage(reply, 'bot');
+  }
 </script>
 </body>
 </html>
