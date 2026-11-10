@@ -357,18 +357,15 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* ========================================================= */
-    /* ===== AI CHATBOT WIDGET (DIPASANG DI ATAS MP3 PLAYER) ===== */
-    /* ========================================================= */
+    /* AI CHATBOT WIDGET */
     .ai-chatbot {
       position: fixed;
-      bottom: 6rem; /* Dipasang tepat di atas tombol pemutar musik */
+      bottom: 6rem;
       right: 2rem;
       z-index: 999;
       font-family: 'Inter', sans-serif;
     }
     
-    /* Tombol Asisten Bulat */
     .ai-avatar-btn {
       width: 56px;
       height: 56px;
@@ -399,7 +396,6 @@
       line-height: 1;
     }
 
-    /* Panel Chatbot */
     .ai-chat-panel {
       position: absolute;
       bottom: 72px;
@@ -426,7 +422,6 @@
       visibility: visible;
     }
 
-    /* Chat Header */
     .ai-chat-header {
       padding: 0.9rem 1.2rem;
       background: rgba(20, 20, 22, 0.8);
@@ -461,7 +456,6 @@
     }
     .ai-chat-close:hover { color: var(--text); }
 
-    /* Chat Messages Box */
     .ai-chat-messages {
       flex: 1;
       padding: 1rem;
@@ -492,7 +486,6 @@
       border-bottom-right-radius: 2px;
     }
 
-    /* Suggested Questions Area */
     .ai-suggestions {
       padding: 0.5rem 0.8rem;
       display: flex;
@@ -516,7 +509,6 @@
       background: var(--border);
     }
 
-    /* Chat Input Form */
     .ai-chat-input-area {
       padding: 0.75rem 0.8rem;
       border-top: 1px solid var(--border);
@@ -550,7 +542,6 @@
     .ai-chat-input-area button:hover {
       opacity: 0.9;
     }
-    /* ========================================================= */
 
     @media (max-width: 768px) {
       .about-grid { grid-template-columns: 1fr; }
@@ -842,18 +833,13 @@
   <span>Dirancang & Dikembangkan sendiri</span>
 </footer>
 
-<!-- ========================================================= -->
-<!-- ===== AI CHATBOT WIDGET (BULAT DI ATAS MP3 PLAYER) ===== -->
-<!-- ========================================================= -->
+<!-- AI CHATBOT WIDGET -->
 <div class="ai-chatbot" id="aiChatbot">
-  <!-- Tombol Profil Bulat untuk Asisten -->
   <button class="ai-avatar-btn" id="aiToggle" aria-label="Buka Chatbot Asisten">
-    <!-- Nanti kalau ada foto assistant.jpg, tag img di bawah ini yang dipakai -->
     <img src="assistant.jpg" alt="Asisten AI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='block';" />
     <span class="avatar-fallback" id="avatarFallback" style="display:none;">🤖</span>
   </button>
 
-  <!-- Panel Chatbot -->
   <div class="ai-chat-panel" id="aiPanel">
     <div class="ai-chat-header">
       <div class="ai-chat-header-info">
@@ -863,22 +849,19 @@
       <button class="ai-chat-close" id="aiClose">✕</button>
     </div>
 
-    <!-- Area Pesan Chat -->
     <div class="ai-chat-messages" id="aiMessages">
-      <div class="msg bot">Halo! 👋 Saya asisten virtual Azzam. Ada yang bisa saya bantu seputar portofolio dan karyanya?</div>
+      <div class="msg bot">Halo! 👋 Saya asisten virtual Azzam. Kamu bisa bertanya seputar profil Azzam, proyek web, bahasa, hingga sejarah & militer!</div>
     </div>
 
-    <!-- Suggested Questions Chips -->
     <div class="ai-suggestions" id="aiSuggestions">
       <button class="sug-chip" onclick="askSuggested('Siapa Azzam?')">👤 Siapa Azzam?</button>
       <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek unggulan?</button>
       <button class="sug-chip" onclick="askSuggested('Bahasa apa yang dipelajari?')">🌐 Bahasa dipelajari?</button>
-      <button class="sug-chip" onclick="askSuggested('Apa hobinya?')">🎨 Hobi & Minat?</button>
+      <button class="sug-chip" onclick="askSuggested('Ceritakan tentang sejarah Perang Dunia!')">⚔️ Topik Sejarah?</button>
     </div>
 
-    <!-- Free Question Input Area -->
     <form class="ai-chat-input-area" id="aiForm">
-      <input type="text" id="aiInput" placeholder="Tanyakan sesuatu..." autocomplete="off" />
+      <input type="text" id="aiInput" placeholder="Tanyakan seputar profil, bahasa, atau sejarah..." autocomplete="off" />
       <button type="submit">➤</button>
     </form>
   </div>
@@ -1037,9 +1020,7 @@
   updateClock();
   setInterval(updateClock, 1000);
 
-  // =========================================================
-  // ===== AI CHATBOT INTERACTIVE LOGIC =====
-  // =========================================================
+  // AI CHATBOT INTERACTIVE LOGIC
   const aiToggle = document.getElementById('aiToggle');
   const aiPanel = document.getElementById('aiPanel');
   const aiClose = document.getElementById('aiClose');
@@ -1047,7 +1028,6 @@
   const aiInput = document.getElementById('aiInput');
   const aiMessages = document.getElementById('aiMessages');
 
-  // Toggle Chat Open/Close
   aiToggle.addEventListener('click', () => {
     aiPanel.classList.toggle('open');
   });
@@ -1055,7 +1035,6 @@
     aiPanel.classList.remove('open');
   });
 
-  // Handle Free Form Question Submission
   aiForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const query = aiInput.value.trim();
@@ -1069,7 +1048,6 @@
     }, 400);
   });
 
-  // Function for Suggested Questions Chips
   window.askSuggested = function(text) {
     appendMessage(text, 'user');
     setTimeout(() => {
@@ -1085,25 +1063,68 @@
     aiMessages.scrollTop = aiMessages.scrollHeight;
   }
 
-  // Simple Auto Response Bot Logic
+  // LOGIKA AI CHATBOT: MENJAWAB PORTOFOLIO + BAHASA & SEJARAH, DILUAR ITU REFUSE
   function generateAiResponse(input) {
     const text = input.toLowerCase();
     let reply = "";
 
-    if (text.includes("siapa") || text.includes("azzam") || text.includes("profil")) {
-      reply = "Azzam Hafidz Murobbi adalah seorang siswa SMPIT Assyifa Boarding School, artist otodidak, serta pengembang web yang suka belajar berbagai bahasa!";
-    } else if (text.includes("proyek") || text.includes("karya") || text.includes("project")) {
-      reply = "Azzam telah membuat berbagai proyek keren seperti Kuis Sejarah, Kamus Bahasa Turki, Geography Quiz, Pemutar Musik/Video, Kalkulator, dan Detektor Kiblat!";
-    } else if (text.includes("bahasa") || text.includes("language")) {
-      reply = "Saat ini Azzam aktif mempelajari 6 bahasa: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
-    } else if (text.includes("hobi") || text.includes("minat") || text.includes("suka")) {
-      reply = "Selain coding web, Azzam sangat hobi menggambar, mendalami sejarah dunia, serta strategi militer.";
-    } else if (text.includes("sekolah") || text.includes("assyifa")) {
-      reply = "Azzam bersekolah di SMPIT Assyifa Boarding School dan aktif mengikuti ekstrakulikuler coding di sana.";
-    } else if (text.includes("kontak") || text.includes("hubungi") || text.includes("email")) {
-      reply = "Kamu bisa menghubungi Azzam melalui email di azzam@email.com atau melihat profil LinkedIn & GitHub-nya di bagian bawah website.";
-    } else {
-      reply = "Terima kasih atas pertanyaannya! Silakan jelajahi portofolio Azzam atau pilih pertanyaan yang disarankan di atas ya. 😊";
+    // 1. DATA ASLI PORTOFOLIO & PROFIL AZZAM
+    if (text.includes("siapa") || text.includes("azzam") || text.includes("profil") || text.includes("biodata") || text.includes("nama")) {
+      reply = "Azzam Hafidz Murobbi adalah siswa SMPIT Assyifa Boarding School yang mengikuti ekskul coding. Selain suka coding web, ia adalah seorang self-taught artist dan aktif belajar 6 bahasa asing.";
+    } 
+    else if (text.includes("sekolah") || text.includes("assyifa") || text.includes("smp") || text.includes("pendidikan")) {
+      reply = "Azzam menempuh pendidikan di SMPIT Assyifa Boarding School dan mengembangkan bakat web development lewat ekstrakulikuler coding.";
+    } 
+    else if (text.includes("proyek") || text.includes("karya") || text.includes("project") || text.includes("buat") || text.includes("bangun") || text.includes("aplikasi")) {
+      reply = "Proyek web yang dibangun Azzam antara lain: Artikel Militer & Sejarah, Geography Quiz, Kamus Turki, Kuis Sejarah 1814–1945, Music Player, A.H.Mtube (Video Player), Kalkulator Serbaguna, dan Deteksi Arah Kiblat.";
+    } 
+    else if (text.includes("hobi") || text.includes("minat") || text.includes("suka") || text.includes("gambar") || text.includes("melukis") || text.includes("lukis")) {
+      reply = "Saat tidak sedang memperdalam coding web, Azzam sangat hobi menggambar secara otodidak dan membagikan pengetahuannya tentang sejarah dunia dan militer.";
+    } 
+    else if (text.includes("kontak") || text.includes("hubungi") || text.includes("email") || text.includes("linkedin") || text.includes("github")) {
+      reply = "Kamu bisa terhubung dengan Azzam melalui email di azzam@email.com, atau mengunjungi LinkedIn (linkedin.com/in/azzamhafidz) dan GitHub-nya (github.com/azzamhafidz).";
+    }
+
+    // 2. PENGETAHUAN LUAS TENTANG BAHASA (Inggris, Arab, Turki, Rusia, Jerman, Jepang)
+    else if (text.includes("bahasa") || text.includes("language") || text.includes("turki") || text.includes("turkce") || text.includes("inggris") || text.includes("english") || text.includes("arab") || text.includes("rusia") || text.includes("jerman") || text.includes("jepang")) {
+      if (text.includes("turki")) {
+        reply = "Azzam sedang mempelajari bahasa Turki! Bahasa Turki menggunakan alfabet Latin dan memiliki tata bahasa berupa penempelan akhiran (aglutinatif), seperti 'Merhaba' (Halo) dan 'Teşekkür ederim' (Terima kasih). Azzam juga sudah membuat proyek Kamus Turki.";
+      } else if (text.includes("arab")) {
+        reply = "Bahasa Arab adalah salah satu dari 6 bahasa yang dipelajari Azzam. Bahasa ini memiliki sistem penulisan dari kanan ke kiri dan kaya akan tata bahasa (nahwu & sharaf).";
+      } else if (text.includes("rusia")) {
+        reply = "Bahasa Rusia menggunakan alfabet Kiril (Cyrillic). Salah satu kata dasarnya adalah 'Здравствуйте' (Zdravstvuyte) yang artinya Halo.";
+      } else if (text.includes("jerman")) {
+        reply = "Bahasa Jerman terkenal dengan penulisan kata benda yang diawali huruf kapital dan kata majemuk yang panjang. Contohnya: 'Guten Tag' (Selamat siang).";
+      } else if (text.includes("jepang")) {
+        reply = "Bahasa Jepang memiliki 3 sistem tulisan: Hiragana, Katakana, dan Kanji. Contoh sapaan dasarnya adalah 'Konnichiwa' (こんにちは).";
+      } else if (text.includes("inggris")) {
+        reply = "Bahasa Inggris merupakan salah satu bahasa internasional yang ditekuni Azzam untuk mendukung skill coding dan komunikasi globalnya.";
+      } else {
+        reply = "Azzam aktif mempelajari 6 bahasa secara mandiri, yaitu: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
+      }
+    }
+
+    // 3. PENGETAHUAN LUAS TENTANG SEJARAH & MILITER
+    else if (text.includes("sejarah") || text.includes("militer") || text.includes("perang") || text.includes("war") || text.includes("strategi") || text.includes("1814") || text.includes("1945") || text.includes("kongres wina") || text.includes("napoleon")) {
+      if (text.includes("1814") || text.includes("kongres wina") || text.includes("wina") || text.includes("napoleon")) {
+        reply = "Kongres Wina (1814-1815) diadakan untuk menata ulang peta politik Eropa setelah kekalahan Napoleon Bonaparte, demi menjaga keseimbangan kekuasaan (Balance of Power) di Eropa.";
+      } else if (text.includes("perang dunia 1") || text.includes("pd1") || text.includes("ww1")) {
+        reply = "Perang Dunia I (1914–1918) dipicu oleh terbunuhnya Archduke Franz Ferdinand dari Austria di Sarajevo, yang memicu perang parit besar antara Blok Sekutu dan Blok Sentral.";
+      } else if (text.includes("perang dunia 2") || text.includes("pd2") || text.includes("ww2") || text.includes("1945")) {
+        reply = "Perang Dunia II (1939–1945) berakhir pada tahun 1945 dengan kekalahan negara-negara Poros (Axis) dan menjadi momen penting kemerdekaan berbagai bangsa, termasuk Indonesia.";
+      } else {
+        reply = "Azzam sangat tertarik pada topik Sejarah Dunia dan Strategi Militer, khususnya periode 1814 (pasca-Napoleon) hingga akhir Perang Dunia II (1945). Azzam juga membuat proyek Artikel Militer dan Kuis Sejarah!";
+      }
+    }
+
+    // 4. GREETINGS UMUM
+    else if (text.includes("halo") || text.includes("hai") || text.includes("pagi") || text.includes("siang") || text.includes("malam") || text.includes("assalamualaikum")) {
+      reply = "Halo! 👋 Ada yang ingin kamu tanyakan seputar portofolio Azzam, bahasa asing, atau sejarah dunia?";
+    } 
+
+    // 5. JIKA DILUAR KONTEKS (Bukan Profil Azzam, Proyek Web, Bahasa, atau Sejarah/Militer)
+    else {
+      reply = "Saya tidak bisa menjawab pertanyaan di luar konteks portofolio Azzam.";
     }
 
     appendMessage(reply, 'bot');
