@@ -661,7 +661,7 @@
   <div class="about-grid reveal">
     <div class="about-img-wrap">
       <div class="about-img-placeholder">
-        <img src="p.jpg" alt="Foto Azzam Hafidz Murobbi" />
+        <img src="p.jpg" alt="Foto Portofolio" />
       </div>
       <div class="about-accent-box">1 Minggu <small>Pengalaman</small></div>
     </div>
@@ -909,18 +909,18 @@
     <div class="ai-chat-header">
       <div class="ai-chat-header-info">
         <span class="status-dot"></span>
-        <h4>Asisten Virtual Azzam</h4>
+        <h4>Asisten Virtual</h4>
       </div>
       <button class="ai-chat-close" id="aiClose">✕</button>
     </div>
 
     <div class="ai-chat-messages" id="aiMessages">
-      <div class="msg bot">Halo! 👋 Saya asisten virtual Azzam. Ada yang bisa saya bantu seputar profil Azzam, bahasa, sejarah, atau proyek coding-nya?</div>
+      <div class="msg bot">Halo! 👋 Saya asisten virtual website ini. Ada yang bisa saya bantu seputar profil pembuat, bahasa asing, sejarah, atau proyek coding-nya?</div>
     </div>
 
     <!-- Suggested Question Chips Dinamis -->
     <div class="ai-suggestions" id="aiSuggestions">
-      <button class="sug-chip" onclick="askSuggested('Siapa Azzam?')">👤 Profil Azzam</button>
+      <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
       <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
       <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang dipelajari?')">🌐 Belajar Bahasa</button>
       <button class="sug-chip" onclick="askSuggested('Ceritakan tentang Kongres Wina 1814!')">📜 Sejarah 1814</button>
@@ -1087,7 +1087,7 @@
   setInterval(updateClock, 1000);
 
   // =========================================================
-  // ===== AI CHATBOT INTERAKSI TINGGI & PROAKTIF LOGIC =====
+  // ===== AI CHATBOT INTERAKSI TINGGI & PRIVASI LENGKAP =====
   // =========================================================
   const aiToggle = document.getElementById('aiToggle');
   const aiPanel = document.getElementById('aiPanel');
@@ -1098,7 +1098,6 @@
   const greetingBubble = document.getElementById('greetingBubble');
   const aiSuggestions = document.getElementById('aiSuggestions');
 
-  // Pop-up sapaan otomatis setelah 3 detik
   setTimeout(() => {
     if (!aiPanel.classList.contains('open')) {
       greetingBubble.style.display = 'block';
@@ -1166,36 +1165,35 @@
     if (typingDiv) typingDiv.remove();
   }
 
-  // Update saran pertanyaan secara dinamis berdasarkan topik percakapan
   function updateSuggestions(chipsHtml) {
     aiSuggestions.innerHTML = chipsHtml;
   }
 
-  // LOGIKA AI ENGINE: KREATIF, LUAS, DAN AKTIF INTERAKTIF
+  // LOGIKA AI ENGINE: KREATIF & TANPA SEBUT NAMA PENGGUNA
   function generateAiResponse(input) {
     const text = input.toLowerCase();
     let reply = "";
     let nextChips = "";
 
-    // 1. PROFIL & BIODATA AZZAM
-    if (text.includes("siapa") || text.includes("azzam") || text.includes("profil") || text.includes("biodata") || text.includes("nama") || text.includes("tentang")) {
-      reply = "Azzam Hafidz Murobbi adalah seorang siswa di <strong>SMPIT Assyifa Boarding School</strong> yang aktif di ekstrakulikuler coding. Selain itu, ia adalah seorang <em>self-taught artist</em> dan pembelajar 6 bahasa asing!";
+    // 1. PROFIL & BIODATA PENGEMBANG
+    if (text.includes("siapa") || text.includes("profil") || text.includes("biodata") || text.includes("pembuat") || text.includes("pengembang") || text.includes("pemilik")) {
+      reply = "Pengembang website ini adalah seorang siswa di <strong>SMPIT Assyifa Boarding School</strong> yang aktif di ekstrakulikuler coding. Selain suka coding web, ia adalah seorang <em>self-taught artist</em> dan sedang memperdalam 6 bahasa asing!";
       nextChips = `
         <button class="sug-chip" onclick="askSuggested('Apa saja karyanya?')">🎨 Karya & Hobi</button>
         <button class="sug-chip" onclick="askSuggested('Apa proyek web terkerennya?')">💻 Proyek Web</button>
       `;
     } 
     else if (text.includes("sekolah") || text.includes("assyifa") || text.includes("smp") || text.includes("pendidikan") || text.includes("ekskul")) {
-      reply = "Azzam menempuh pendidikan menengah di <strong>SMPIT Assyifa Boarding School</strong>. Di sana ia mendalami dunia teknologi melalui ekstrakulikuler coding untuk membangun berbagai aplikasi web interaktif.";
+      reply = "Pengembang menempuh pendidikan menengah di <strong>SMPIT Assyifa Boarding School</strong>. Di sana ia mendalami dunia teknologi melalui ekstrakulikuler coding untuk membangun berbagai aplikasi web interaktif.";
       nextChips = `
         <button class="sug-chip" onclick="askSuggested('Bahasa pemrograman apa yang dipakai?')">💻 Skill Coding</button>
-        <button class="sug-chip" onclick="askSuggested('Bagaimana cara menghubungi Azzam?')">✉️ Kontak</button>
+        <button class="sug-chip" onclick="askSuggested('Bagaimana cara menghubungi pengembang?')">✉️ Kontak</button>
       `;
     }
 
     // 2. PROYEK WEB & APLIKASI
     else if (text.includes("proyek") || text.includes("karya") || text.includes("project") || text.includes("buat") || text.includes("bangun") || text.includes("aplikasi") || text.includes("game")) {
-      reply = "Azzam telah membangun 8 proyek unggulan:<br>1. <strong>Artikel Militer & Sejarah</strong><br>2. <strong>Geography Quiz</strong> (Game tebak 195 negara)<br>3. <strong>Kamus Turki</strong><br>4. <strong>Kuis Sejarah 1814–1945</strong><br>5. <strong>Music Player</strong> & <strong>A.H.Mtube</strong><br>6. <strong>Kalkulator Serbaguna</strong><br>7. <strong>Kompas Kiblat Visual</strong>.";
+      reply = "Terdapat 8 proyek unggulan yang telah dibangun di portofolio ini:<br>1. <strong>Artikel Militer & Sejarah</strong><br>2. <strong>Geography Quiz</strong> (Game tebak 195 negara)<br>3. <strong>Kamus Turki</strong><br>4. <strong>Kuis Sejarah 1814–1945</strong><br>5. <strong>Music Player</strong> & <strong>A.H.Mtube</strong><br>6. <strong>Kalkulator Serbaguna</strong><br>7. <strong>Kompas Kiblat Visual</strong>.";
       nextChips = `
         <button class="sug-chip" onclick="askSuggested('Jelaskan tentang Geography Quiz!')">🗺️ Geography Quiz</button>
         <button class="sug-chip" onclick="askSuggested('Jelaskan tentang Kamus Turki!')">🇹🇷 Kamus Turki</button>
@@ -1204,7 +1202,7 @@
 
     // 3. HOBI, SENI GAMBAR & MILITER
     else if (text.includes("hobi") || text.includes("minat") || text.includes("suka") || text.includes("gambar") || text.includes("lukis") || text.includes("art")) {
-      reply = "Saat tidak coding, Azzam menekuni seni menggambar secara otodidak. Ia juga memiliki passion mendalam terhadap <strong>Sejarah Dunia</strong> dan <strong>Strategi Militer</strong> yang sering dituangkannya ke dalam artikel.";
+      reply = "Saat tidak coding, pengembang sangat menyukai seni menggambar secara otodidak. Selain itu, ia memiliki passion mendalam terhadap <strong>Sejarah Dunia</strong> dan <strong>Strategi Militer</strong> yang sering dituangkan ke dalam artikel blog.";
       nextChips = `
         <button class="sug-chip" onclick="askSuggested('Ceritakan tentang taktik perang sejarah!')">⚔️ Taktik Militer</button>
         <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang ditekuni?')">🌐 Bahasa Asing</button>
@@ -1214,36 +1212,36 @@
     // 4. BAHASA ASING (Inggris, Arab, Turki, Rusia, Jerman, Jepang)
     else if (text.includes("bahasa") || text.includes("language") || text.includes("turki") || text.includes("inggris") || text.includes("arab") || text.includes("rusia") || text.includes("jerman") || text.includes("jepang")) {
       if (text.includes("turki")) {
-        reply = "Bahasa Turki adalah salah satu bahasa favorit Azzam! Bahasa ini unik karena mengusung tata bahasa aglutinatif (penambahan sufiks). Contoh: <em>'Merhaba'</em> (Halo) dan <em>'Nasılsın?'</em> (Apa kabar?).";
+        reply = "Bahasa Turki adalah salah satu bahasa pilihan favorit! Bahasa ini unik dengan struktur sufiks (aglutinatif). Contoh sapaan: <em>'Merhaba'</em> (Halo) dan <em>'Nasılsın?'</em> (Apa kabar?).";
       } else if (text.includes("arab")) {
-        reply = "Bahasa Arab ditekuni Azzam di lingkungan boarding school. Bahasa ini kaya akan akar kata (Jadwal/Sharaf) dan keindahan sastera tulisan kaligrafi.";
+        reply = "Bahasa Arab dipelajari secara aktif di lingkungan boarding school. Bahasa ini kaya akan tata bahasa (Nahwu & Sharaf) serta seni kaligrafi.";
       } else if (text.includes("rusia")) {
-        reply = "Bahasa Rusia menggunakan Alfabet Kiril (Cyrillic). Kata populer: <em>'Привет'</em> (Privet / Hai) dan <em>'Спасибо'</em> (Spasibo / Terima kasih).";
+        reply = "Bahasa Rusia menggunakan Alfabet Kiril (Cyrillic). Contoh kata populer: <em>'Привет'</em> (Privet / Hai) dan <em>'Спасибо'</em> (Spasibo / Terima kasih).";
       } else if (text.includes("jerman")) {
-        reply = "Bahasa Jerman memiliki struktur kata majemuk yang unik dan sistem gender kata benda (Der, Die, Das). Contoh: <em>'Guten Tag'</em> (Selamat siang).";
+        reply = "Bahasa Jerman memiliki sistem kata majemuk yang panjang serta penulisan kata benda berhuruf kapital. Contoh: <em>'Guten Tag'</em> (Selamat siang).";
       } else if (text.includes("jepang")) {
-        reply = "Bahasa Jepang dipelajari Azzam beserta sistem tulisannya (Hiragana, Katakana, & Kanji). Sapaan akrab: <em>'Konnichiwa'</em> (こんにちは).";
+        reply = "Bahasa Jepang dipelajari beserta sistem tulisannya (Hiragana, Katakana, & Kanji). Contoh sapaan: <em>'Konnichiwa'</em> (こんにちは).";
       } else if (text.includes("inggris")) {
-        reply = "Bahasa Inggris adalah fondasi utama Azzam untuk mempelajari dokumentasi pemograman web global dan memperluas jaringan rujukan.";
+        reply = "Bahasa Inggris dipelajari sebagai bahasa internasional untuk mendukung skill web development dan komunikasi global.";
       } else {
-        reply = "Azzam secara aktif belajar <strong>6 bahasa asing</strong> secara mandiri: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
+        reply = "Pengembang secara aktif mempelajari <strong>6 bahasa asing</strong> secara mandiri: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
       }
       nextChips = `
         <button class="sug-chip" onclick="askSuggested('Kamus Turki ada di website?')">📖 Kamus Turki</button>
-        <button class="sug-chip" onclick="askSuggested('Apa saran belajar bahasa?')">💡 Tips Bahasa</button>
+        <button class="sug-chip" onclick="askSuggested('Lihat proyek bahasa!')">🌐 Proyek Bahasa</button>
       `;
     }
 
-    // 5. SEJARAH DUNIA & STRATEGI MILITER (Luas)
+    // 5. SEJARAH DUNIA & STRATEGI MILITER
     else if (text.includes("sejarah") || text.includes("militer") || text.includes("perang") || text.includes("taktik") || text.includes("1814") || text.includes("1945") || text.includes("napoleon") || text.includes("wina")) {
       if (text.includes("1814") || text.includes("wina") || text.includes("napoleon")) {
-        reply = "<strong>Kongres Wina (1814–1815):</strong> Pertemuan akbar kekuatan Eropa untuk menata ulang peta geopolitik setelah jatuhnya kekaisaran Napoleon Bonaparte demi menjaga Keseimbangan Kekuatan (<em>Balance of Power</em>).";
+        reply = "<strong>Kongres Wina (1814–1815):</strong> Pertemuan diplomasi besar Eropa untuk menata ulang peta politik pasca-kekalahan Napoleon Bonaparte guna menciptakan Keseimbangan Kekuatan (<em>Balance of Power</em>).";
       } else if (text.includes("perang dunia 1") || text.includes("pd1") || text.includes("ww1")) {
-        reply = "<strong>Perang Dunia I (1914–1918):</strong> Dipicu insiden pembunuhan Archduke Franz Ferdinand di Sarajevo, yang berlanjut menjadi perang parit berskala masif antara Blok Sekutu dan Blok Sentral.";
+        reply = "<strong>Perang Dunia I (1914–1918):</strong> Dipicu oleh insiden pembunuhan Archduke Franz Ferdinand dari Austria di Sarajevo, memicu pertempuran parit masif Blok Sekutu vs Blok Sentral.";
       } else if (text.includes("perang dunia 2") || text.includes("pd2") || text.includes("ww2") || text.includes("1945")) {
-        reply = "<strong>Perang Dunia II (1939–1945):</strong> Konflik paling berdarah dalam sejarah peradaban manusia yang berakhir pada 1945, sekaligus memicu gelombang dekolonisasi bangsa-bangsa dunia.";
+        reply = "<strong>Perang Dunia II (1939–1945):</strong> Perang global terbesar dalam sejarah yang berakhir pada tahun 1945 dan memicu era kemerdekaan baru bagi berbagai bangsa di dunia.";
       } else {
-        reply = "Azzam sangat menyukai sejarah era 1814 hingga 1945. Pengetahuan ini ia tuangkan ke dalam artikel blog dan game <strong>Kuis Sejarah</strong> di website ini!";
+        reply = "Pengetahuan seputar Sejarah Dunia era 1814 hingga 1945 dituangkan ke dalam artikel blog serta game interaktif <strong>Kuis Sejarah</strong> di website ini!";
       }
       nextChips = `
         <button class="sug-chip" onclick="askSuggested('Main Kuis Sejarah!')">🎮 Kuis Sejarah</button>
@@ -1253,7 +1251,7 @@
 
     // 6. CODING & DEVELOPMENT
     else if (text.includes("coding") || text.includes("html") || text.includes("css") || text.includes("javascript") || text.includes("web") || text.includes("developer")) {
-      reply = "Website portofolio ini dibangun menggunakan standar **HTML5, CSS3, dan JavaScript murni (Vanilla JS)** dengan desain dark-mode modern, animasi smooth, serta widget interaktif!";
+      reply = "Website portofolio ini dirancang secara mandiri menggunakan **HTML5, CSS3, dan Javascript murni (Vanilla JS)** dengan tampilan dark theme yang bersih, responsif, dan kaya widget interaktif!";
       nextChips = `
         <button class="sug-chip" onclick="askSuggested('Lihat daftar proyek!')">🚀 Proyek Web</button>
       `;
@@ -1261,28 +1259,28 @@
 
     // 7. KONTAK & EMAIL
     else if (text.includes("kontak") || text.includes("hubungi") || text.includes("email") || text.includes("linkedin") || text.includes("github") || text.includes("pesan")) {
-      reply = "Ingin berkolaborasi atau menyapa Azzam?<br>✉️ Email: <strong>azzam@email.com</strong><br>💼 LinkedIn: linkedin.com/in/azzamhafidz<br>🐙 GitHub: github.com/azzamhafidz";
+      reply = "Silakan hubungi pengembang melalui saluran resmi berikut:<br>✉️ Email: <strong>azzam@email.com</strong><br>💼 LinkedIn: linkedin.com/in/azzamhafidz<br>🐙 GitHub: github.com/azzamhafidz";
       nextChips = `
-        <button class="sug-chip" onclick="askSuggested('Siapa Azzam?')">👤 Profil Azzam</button>
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
       `;
     }
 
     // 8. SAPAAN & INTERAKSI SOSIAL
     else if (text.includes("halo") || text.includes("hai") || text.includes("pagi") || text.includes("siang") || text.includes("malam") || text.includes("assalamualaikum") || text.includes("ping")) {
-      reply = "Halo juga! 👋 Senang bisa mengobrol denganmu. Ada yang ingin kamu tanyakan seputar portofolio Azzam, sejarah, bahasa asing, atau proyek coding-nya?";
+      reply = "Halo juga! 👋 Senang bisa mengobrol denganmu. Ada yang ingin kamu tanyakan seputar portofolio, sejarah, bahasa asing, atau proyek coding web di sini?";
       nextChips = `
-        <button class="sug-chip" onclick="askSuggested('Siapa Azzam?')">👤 Siapa Azzam?</button>
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
         <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
       `;
     }
 
-    // 9. JIKA DI LUAR BATAS KONTEKS RELEVAN
+    // 9. RESTRUKTURISASI BATAS KONTEKS (Bila di luar topik)
     else {
-      reply = "Maaf, saya tidak bisa menjawab pertanyaan di luar konteks portofolio Azzam, sejarah, bahasa, dan coding.";
+      reply = "Maaf, saya tidak bisa menjawab pertanyaan di luar konteks portofolio, sejarah, bahasa, dan coding.";
       nextChips = `
-        <button class="sug-chip" onclick="askSuggested('Siapa Azzam?')">👤 Profil Azzam</button>
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
         <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
-        <button class="sug-chip" onclick="askSuggested('Bahasa apa yang dipelajari?')">🌐 Belajar Bahasa</button>
+        <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang dipelajari?')">🌐 Belajar Bahasa</button>
       `;
     }
 
