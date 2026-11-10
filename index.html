@@ -132,7 +132,6 @@
     .project-thumb img {
       width: 100%; height: 100%; object-fit: cover; display: block;
     }
-    /* fallback jika gambar tidak ada */
     .project-thumb .fallback {
       font-size: 3rem;
       color: var(--muted);
@@ -184,7 +183,7 @@
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* MUSIC PLAYER WIDGET (floating) */
+    /* MUSIC PLAYER WIDGET */
     .music-player {
       position: fixed;
       bottom: 2rem;
@@ -325,9 +324,7 @@
       cursor: pointer;
     }
 
-    /* ========================================================= */
-    /* ===== CLOCK: FLOATING DIGITAL CLOCK (NEW) ===== */
-    /* ========================================================= */
+    /* FLOATING DIGITAL CLOCK */
     .floating-clock {
       position: fixed;
       bottom: 2rem;
@@ -349,30 +346,16 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.6);
       transition: border-color 0.3s ease, transform 0.2s ease;
       user-select: none;
-      pointer-events: none; /* biar gak menghalangi klik di bawahnya */
+      pointer-events: none;
     }
-    .floating-clock:hover {
-      border-color: var(--accent);
-    }
-    .clock-icon {
-      font-size: 1rem;
-      opacity: 0.8;
-    }
+    .floating-clock:hover { border-color: var(--accent); }
+    .clock-icon { font-size: 1rem; opacity: 0.8; }
     .clock-time {
       color: var(--accent);
       font-weight: 600;
       letter-spacing: 0.1em;
       font-variant-numeric: tabular-nums;
     }
-    .clock-separator {
-      animation: clockPulse 1s step-end infinite;
-      color: var(--muted);
-    }
-    @keyframes clockPulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    /* ========================================================= */
 
     @media (max-width: 768px) {
       .about-grid { grid-template-columns: 1fr; }
@@ -382,10 +365,8 @@
       .music-panel { width: 280px; right: -8px; }
       .music-controls .volume-wrap input[type="range"] { width: 40px; }
       .projects-grid { grid-template-columns: 1fr; }
-      
-      /* ===== CLOCK: responsive ===== */
       .floating-clock {
-        bottom: 6rem; /* naik sedikit biar gak ketutupan player */
+        bottom: 6rem;
         left: 1rem;
         padding: 0.4rem 1rem;
         font-size: 0.75rem;
@@ -427,7 +408,7 @@
   <div class="about-grid reveal">
     <div class="about-img-wrap">
       <div class="about-img-placeholder">
-        <img src="p.jpg" alt="Foto Saya" />
+        <img src="p.jpg" alt="Foto Azzam Hafidz Murobbi" />
       </div>
       <div class="about-accent-box">1 Minggu <small>Pengalaman</small></div>
     </div>
@@ -506,7 +487,7 @@
       </div>
     </a>
 
-    <!-- 5. Kuis Sejarah 1814–1945 -->
+    <!-- 4. Kuis Sejarah 1814–1945 -->
     <a href="kuis-sejarah-1814-1945.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -515,7 +496,7 @@
         <div class="project-body">
           <p class="project-tag">Kuis · Sejarah</p>
           <h3 class="project-title">Kuis Sejarah 1814–1945</h3>
-          <p class="project-desc">quiz tentang sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
+          <p class="project-desc">Quiz tentang sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
           <div class="project-links">
             <span class="project-link">↗ Mulai Kuis</span>
           </div>
@@ -523,7 +504,7 @@
       </div>
     </a>
 
-    <!-- 6. Music Player -->
+    <!-- 5. Music Player -->
     <a href="music-player.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -540,7 +521,7 @@
       </div>
     </a>
 
-    <!-- 7. A.H.Mtube (Video Player) -->
+    <!-- 6. A.H.Mtube (Video Player) -->
     <a href="ahmtube.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -556,12 +537,12 @@
         </div>
       </div>
     </a>
-<!-- 9. Kalkulator Serbaguna -->
-    <!-- Kalkulator Serbaguna -->
+
+    <!-- 7. Kalkulator Serbaguna -->
     <a href="kalkulator.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
-          <div class="fallback">🧮</div> <!-- Ini diganti emoji -->
+          <div class="fallback">🧮</div>
         </div>
         <div class="project-body">
           <p class="project-tag">Utility · Calculator</p>
@@ -574,17 +555,23 @@
       </div>
     </a>
 
-    <!-- Arah Kiblat -->
+    <!-- 8. Arah Kiblat -->
     <a href="kiblat.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
-          <div class="fallback">🕌</div> <!-- Ini diganti emoji -->
+          <div class="fallback">🕌</div>
         </div>
         <div class="project-body">
           <p class="project-tag">Utility · Islami</p>
           <h3 class="project-title">🕌 Arah Kiblat</h3>
           <p class="project-desc">Deteksi arah kiblat dari lokasimu dengan kompas visual akurat. Berdasarkan perhitungan geodesi ke Ka'bah.</p>
-          </a>
+          <div class="project-links">
+            <span class="project-link">↗ Buka Kompas Kiblat</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
   </div>
 </section>
 
@@ -652,7 +639,7 @@
   <span>Dirancang & Dikembangkan sendiri</span>
 </footer>
 
-<!-- ===== MUSIC PLAYER WIDGET (FLOATING) ===== -->
+<!-- MUSIC PLAYER WIDGET (FLOATING) -->
 <div class="music-player" id="musicPlayer">
   <button class="music-toggle" id="musicToggle" aria-label="Buka pemutar musik">🎵</button>
   <div class="music-panel" id="musicPanel">
@@ -664,30 +651,27 @@
       </label>
     </div>
     <div class="music-controls">
-      <button id="playBtn" title="Putar/Jeda">▶️</button>
+      <button id="playBtn" title="Putar/Jeda" aria-label="Play or Pause">▶️</button>
       <div class="progress-wrap" id="progressWrap">
         <div class="progress-bar" id="progressBar"></div>
       </div>
       <span class="time-label" id="timeLabel">0:00</span>
       <div class="volume-wrap">
-        <button id="muteBtn" title="Mute">🔊</button>
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" />
+        <button id="muteBtn" title="Mute" aria-label="Mute sound">🔊</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" aria-label="Volume Slider" />
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========================================================= -->
-<!-- ===== CLOCK: FLOATING DIGITAL CLOCK (NEW) ===== -->
-<!-- ========================================================= -->
+<!-- FLOATING DIGITAL CLOCK -->
 <div class="floating-clock">
   <span class="clock-icon">🕒</span>
   <span class="clock-time" id="clockDisplay">00:00:00</span>
 </div>
-<!-- ========================================================= -->
 
 <script>
-  // ===== REVEAL ANIMATION =====
+  // REVEAL ANIMATION
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
@@ -698,7 +682,7 @@
     el.style.transitionDelay = `${i * 0.08}s`;
   });
 
-  // ===== MUSIC PLAYER WIDGET LOGIC =====
+  // MUSIC PLAYER WIDGET LOGIC
   (function() {
     const toggle = document.getElementById('musicToggle');
     const panel = document.getElementById('musicPanel');
@@ -795,13 +779,9 @@
     window.addEventListener('beforeunload', () => {
       if (audio) URL.revokeObjectURL(audio.src);
     });
-
-    console.log('🎵 Music Player siap! Upload lagu dari file explorer.');
   })();
 
-  // =========================================================
-  // ===== CLOCK: DIGITAL CLOCK UPDATER (NEW) =====
-  // =========================================================
+  // DIGITAL CLOCK UPDATER
   function updateClock() {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
@@ -811,7 +791,6 @@
   }
   updateClock();
   setInterval(updateClock, 1000);
-  // =========================================================
 </script>
 </body>
 </html>
