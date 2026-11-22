@@ -20,448 +20,1268 @@
 
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg); color: var(--text);
       font-family: 'Inter', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
+      font-size: 16px; line-height: 1.6; overflow-x: hidden;
     }
 
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.1rem 6vw;
-      backdrop-filter: blur(14px);
+      padding: 1.25rem 6vw;
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      background: rgba(12,12,14,.78);
+      background: rgba(12,12,14,.7);
     }
     .nav-logo {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem;
       color: var(--accent); letter-spacing: .04em; text-decoration: none;
     }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted); text-decoration: none; font-size: .875rem; font-weight: 500;
-      transition: color .25s; position: relative;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
-      background: var(--accent); transition: width .3s ease;
-    }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; }
     .nav-links a:hover { color: var(--text); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.blog-link { color: var(--accent); font-weight: 700; }
 
     /* HERO */
     .hero {
       min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
-      padding: 8rem 6vw 5rem; position: relative;
+      padding: 8rem 6vw 4rem; position: relative;
     }
     .hero-tag {
       display: inline-flex; align-items: center; gap: .5rem;
-      font-size: .72rem; font-weight: 500; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 1.6rem;
-      opacity: 0; animation: fadeUp .7s ease forwards .15s;
+      font-size: .75rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem;
     }
-    .hero-tag span { width: 28px; height: 1px; background: var(--accent); display: block; }
+    .hero-tag span { width: 24px; height: 1px; background: var(--accent); display: block; }
     .hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.3rem, 6.5vw, 5.2rem);
-      font-weight: 800; line-height: 1.1; letter-spacing: -.02em;
-      margin-bottom: .7rem; max-width: 18ch;
+      font-size: clamp(2.2rem, 6vw, 5.5rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -.02em; margin-bottom: .5rem; max-width: 18ch;
     }
-    .hero h1 .name-word {
-      display: inline-block; opacity: 0; transform: translateY(42px);
-      animation: nameReveal .85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      margin-right: 0.22em;
-    }
-    .hero h1 .name-word.gradient {
+    .hero h1 em {
+      font-style: normal;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    @keyframes nameReveal { to { opacity: 1; transform: translateY(0); } }
     .hero-subtitle {
-      font-family: 'Syne', sans-serif; font-size: clamp(1rem, 2.4vw, 1.4rem);
-      font-weight: 600; color: var(--muted); letter-spacing: .18em;
+      font-family: 'Syne', sans-serif; font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 600; color: var(--muted); letter-spacing: .15em;
       text-transform: uppercase; margin-bottom: 1.5rem;
-      opacity: 0; animation: fadeUp .7s ease forwards 1.15s;
     }
-    .hero-sub {
-      font-size: 1.08rem; color: var(--muted); max-width: 42ch;
-      margin-bottom: 2.6rem; font-weight: 300;
-      opacity: 0; animation: fadeUp .7s ease forwards 1.35s;
-    }
-    .hero-cta {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      opacity: 0; animation: fadeUp .7s ease forwards 1.55s;
-    }
+    .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 42ch; margin-bottom: 2.5rem; font-weight: 300; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn {
-      display: inline-block; padding: .78rem 1.85rem; border-radius: 6px;
-      font-size: .875rem; font-weight: 500; text-decoration: none;
-      transition: all .28s ease; cursor: pointer; border: none;
+      display: inline-block; padding: .75rem 1.75rem; border-radius: 4px;
+      font-size: .875rem; font-weight: 500; text-decoration: none; transition: all .2s; cursor: pointer; border: none;
     }
     .btn-primary { background: var(--accent); color: #0C0C0E; }
-    .btn-primary:hover {
-      background: #a7f3d0; transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(110,231,183,.25);
-    }
+    .btn-primary:hover { background: #a7f3d0; }
     .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-    .blob { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: -1; }
-    .blob-1 {
-      width: 520px; height: 520px; background: rgba(110,231,183,.08);
-      top: 8%; right: -12%; animation: drift 14s ease-in-out infinite;
-    }
-    .blob-2 {
-      width: 400px; height: 400px; background: rgba(129,140,248,.07);
-      bottom: 5%; left: 3%; animation: drift 17s ease-in-out infinite reverse;
-    }
-    @keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(35px,-45px); } }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: -1; }
+    .blob-1 { width: 500px; height: 500px; background: rgba(110,231,183,.07); top: 10%; right: -10%; animation: drift 12s ease-in-out infinite; }
+    .blob-2 { width: 380px; height: 380px; background: rgba(129,140,248,.06); bottom: 0; left: 5%; animation: drift 15s ease-in-out infinite reverse; }
+    @keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(30px,-40px); } }
 
     /* SECTIONS */
-    section { padding: 6.5rem 6vw; }
+    section { padding: 6rem 6vw; }
     .section-label {
       display: inline-flex; align-items: center; gap: .5rem;
       font-size: .7rem; font-weight: 600; letter-spacing: .14em;
       text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
     }
-    .section-label::before { content: ''; width: 18px; height: 1px; background: var(--muted); }
+    .section-label::before { content: ''; width: 16px; height: 1px; background: var(--muted); }
     .section-title {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      font-size: clamp(1.8rem, 4vw, 3rem);
       font-weight: 700; letter-spacing: -.01em; margin-bottom: 3rem;
     }
 
-    /* ABOUT - FOTO LEBIH BESAR */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      gap: 4.5rem;
-      align-items: center;
-    }
-    .about-img-wrap { position: relative; padding-bottom: 40px; }
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-img-wrap { position: relative; padding-bottom: 60px; }
     .about-img-placeholder {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
+      width: 100%; aspect-ratio: 4/5; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; position: relative;
     }
-    .about-img-placeholder img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform .7s ease;
-    }
-    .about-img-wrap:hover .about-img-placeholder img { transform: scale(1.05); }
+    .about-img-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .about-accent-box {
-      position: absolute; bottom: 0; right: -1.2rem;
+      position: absolute; bottom: 0; right: -1rem;
       background: var(--accent); color: #0C0C0E;
-      padding: .8rem 1.3rem; border-radius: 8px;
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: .95rem;
-      line-height: 1.7; white-space: nowrap;
-      box-shadow: 0 12px 32px rgba(110,231,183,.28);
-      animation: floatBox 4s ease-in-out infinite;
+      padding: .75rem 1.25rem; border-radius: 6px;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: .95rem; line-height: 1.8; white-space: nowrap;
     }
-    .about-accent-box small { display: block; font-size: .65rem; font-weight: 500; opacity: .75; }
-    @keyframes floatBox { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    .about-text p { color: var(--muted); margin-bottom: 1.1rem; font-weight: 300; }
-    .skills-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.8rem; }
-    .chip {
-      padding: .32rem .85rem; border: 1px solid var(--border); border-radius: 100px;
-      font-size: .75rem; color: var(--muted); transition: all .25s;
-    }
-    .chip:hover {
-      border-color: var(--accent); color: var(--accent);
-      background: rgba(110,231,183,.07); transform: translateY(-2px);
-    }
+    .about-accent-box small { display: block; font-size: .65rem; font-weight: 500; opacity: .75; line-height: 1.4; }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-weight: 300; }
+    .skills-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+    .chip { padding: .3rem .8rem; border: 1px solid var(--border); border-radius: 100px; font-size: .75rem; color: var(--muted); transition: all .2s; }
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
 
     /* PROJECTS */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.6rem;
-    }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
     .project-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
-      overflow: hidden; text-decoration: none; color: inherit;
-      display: flex; flex-direction: column;
-      transition: border-color .3s, transform .4s cubic-bezier(0.16,1,0.3,1), box-shadow .4s;
-      opacity: 0; transform: translateY(50px);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color .2s, transform .2s; text-decoration: none; color: inherit; display: block;
     }
-    .project-card.visible { opacity: 1; transform: translateY(0); }
-    .project-card:hover {
-      border-color: rgba(110,231,183,.5); transform: translateY(-10px);
-      box-shadow: 0 22px 45px rgba(0,0,0,.45);
-    }
+    .project-card:hover { border-color: rgba(110,231,183,.4); transform: translateY(-4px); }
     .project-thumb {
-      aspect-ratio: 16/9; background: var(--bg); border-bottom: 1px solid var(--border);
-      overflow: hidden; display: flex; align-items: center; justify-content: center;
+      aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-size: 0; border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      overflow: hidden;
     }
     .project-thumb img {
-      width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease;
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
-    .project-card:hover .project-thumb img { transform: scale(1.08); }
-    .project-thumb .fallback { font-size: 2.8rem; color: var(--muted); transition: transform .4s, color .3s; }
-    .project-card:hover .project-thumb .fallback { transform: scale(1.15); color: var(--accent); }
-    .project-body { padding: 1.4rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
-    .project-tag {
-      font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--accent); font-weight: 600; margin-bottom: .45rem;
+    .project-thumb .fallback {
+      font-size: 3rem;
+      color: var(--muted);
     }
-    .project-title {
-      font-family: 'Syne', sans-serif; font-size: 1.18rem; font-weight: 700;
-      margin-bottom: .5rem; transition: color .25s;
-    }
-    .project-card:hover .project-title { color: var(--accent); }
-    .project-desc {
-      font-size: .875rem; color: var(--muted); font-weight: 300;
-      margin-bottom: 1.1rem; line-height: 1.55; flex: 1;
-    }
-    .project-link {
-      font-size: .78rem; font-weight: 500; color: var(--muted);
-      transition: color .25s, transform .25s; display: inline-flex; align-items: center; gap: .3rem;
-    }
-    .project-card:hover .project-link { color: var(--accent); transform: translateX(4px); }
+    .project-body { padding: 1.5rem; }
+    .project-tag { font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: .5rem; }
+    .project-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: .5rem; }
+    .project-desc { font-size: .875rem; color: var(--muted); font-weight: 300; margin-bottom: 1rem; }
+    .project-links { display: flex; gap: .75rem; }
+    .project-link { font-size: .75rem; font-weight: 500; color: var(--muted); text-decoration: none; display: inline-flex; align-items: center; gap: .3rem; transition: color .2s; }
+    .project-link:hover { color: var(--accent); }
 
     /* EXPERIENCE */
-    .exp-list { max-width: 700px; margin: 0 auto; position: relative; }
-    .exp-list::before {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
-      background: linear-gradient(to bottom, var(--accent), var(--border));
-    }
-    .exp-item {
-      display: grid; grid-template-columns: 150px 1fr; gap: 2rem;
-      padding: 1.9rem 0 1.9rem 2.6rem; position: relative;
-    }
-    .exp-item::before {
-      content: ''; position: absolute; left: -5px; top: 2.15rem;
-      width: 11px; height: 11px; border-radius: 50%;
-      background: var(--bg); border: 2px solid var(--accent);
-      box-shadow: 0 0 0 4px rgba(110,231,183,.15); transition: transform .3s, box-shadow .3s;
-    }
-    .exp-item:hover::before {
-      transform: scale(1.25); box-shadow: 0 0 0 6px rgba(110,231,183,.25);
-    }
-    .exp-year { font-size: .75rem; color: var(--muted); font-weight: 500; letter-spacing: .04em; padding-top: .15rem; }
-    .exp-role { font-family: 'Syne', sans-serif; font-size: 1.08rem; font-weight: 700; margin-bottom: .2rem; }
-    .exp-company { color: var(--accent); font-size: .875rem; margin-bottom: .45rem; }
+    .exp-list { max-width: 680px; }
+    .exp-item { display: grid; grid-template-columns: 120px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--border); align-items: start; }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-year { font-size: .75rem; color: var(--muted); font-weight: 500; letter-spacing: .05em; padding-top: .2rem; }
+    .exp-role { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .25rem; }
+    .exp-company { color: var(--accent); font-size: .875rem; margin-bottom: .5rem; }
     .exp-desc { font-size: .875rem; color: var(--muted); font-weight: 300; }
 
     /* CONTACT */
-    .contact-wrap { max-width: 620px; margin: 0 auto; text-align: center; }
-    .contact-intro { color: var(--muted); font-weight: 300; margin-bottom: 2.8rem; font-size: 1.05rem; }
-    .contact-links { display: flex; flex-direction: column; gap: .9rem; text-align: left; }
+    .contact-wrap { max-width: 600px; }
+    .contact-intro { color: var(--muted); font-weight: 300; margin-bottom: 2.5rem; font-size: 1.05rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
     .contact-link {
-      display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.5rem;
-      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-      text-decoration: none; color: var(--text);
-      transition: border-color .3s, transform .3s, box-shadow .3s;
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.25rem 1.5rem; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 8px;
+      text-decoration: none; color: var(--text); transition: border-color .2s, transform .15s;
     }
-    .contact-link:hover {
-      border-color: var(--accent); transform: translateX(8px);
-      box-shadow: 0 12px 30px rgba(0,0,0,.3);
-    }
-    .contact-icon { font-size: 1.25rem; width: 30px; text-align: center; }
+    .contact-link:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-icon { font-size: 1.2rem; width: 28px; text-align: center; }
     .contact-link-text strong { display: block; font-weight: 500; font-size: .95rem; }
     .contact-link-text span { font-size: .8rem; color: var(--muted); }
-    .contact-link-arrow { margin-left: auto; color: var(--muted); font-size: 1.15rem; transition: color .25s, transform .25s; }
-    .contact-link:hover .contact-link-arrow { color: var(--accent); transform: translateX(4px); }
+    .contact-link-arrow { margin-left: auto; color: var(--muted); font-size: 1.1rem; }
+    .contact-link:hover .contact-link-arrow { color: var(--accent); }
 
+    /* FOOTER */
     footer {
       border-top: 1px solid var(--border); padding: 2rem 6vw;
       display: flex; justify-content: space-between; align-items: center;
       font-size: .8rem; color: var(--muted); flex-wrap: wrap; gap: 1rem;
     }
+    footer a { color: var(--muted); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--accent); }
 
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .75s ease, transform .75s ease; }
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* MUSIC + CLOCK + AI (sama seperti sebelumnya) */
-    .music-player { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; }
+    /* MUSIC PLAYER WIDGET */
+    .music-player {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+      font-family: 'Inter', sans-serif;
+    }
     .music-toggle {
-      width: 56px; height: 56px; border-radius: 50%; background: var(--accent); color: #0C0C0E;
-      border: none; font-size: 1.55rem; cursor: pointer;
-      box-shadow: 0 8px 28px rgba(110,231,183,.35); transition: all .3s ease;
-      display: flex; align-items: center; justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0C0C0E;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(110,231,183,0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .music-toggle:hover { transform: scale(1.12); box-shadow: 0 14px 36px rgba(110,231,183,.5); }
-    .music-toggle.active { background: var(--bg); color: var(--accent); border: 1px solid var(--border); }
+    .music-toggle:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 32px rgba(110,231,183,0.5);
+    }
+    .music-toggle.active {
+      background: var(--bg);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    }
     .music-panel {
-      position: absolute; bottom: 72px; right: 0; width: 320px;
-      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      padding: 1.2rem; box-shadow: 0 24px 50px rgba(0,0,0,.75);
-      transform: scale(.9) translateY(18px); opacity: 0; visibility: hidden;
-      transition: all .3s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom right;
+      position: absolute;
+      bottom: 72px;
+      right: 0;
+      width: 320px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.2rem 1.2rem 1rem;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.8);
+      backdrop-filter: blur(12px);
+      transform: scale(0.9) translateY(12px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      transform-origin: bottom right;
     }
-    .music-panel.open { transform: scale(1) translateY(0); opacity: 1; visibility: visible; }
-    .music-panel .file-info { font-size: .8rem; color: var(--muted); margin-bottom: .6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .music-panel .file-info strong { color: var(--text); }
+    .music-panel.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+    .music-panel .file-info {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .music-panel .file-info strong { color: var(--text); font-weight: 500; }
+    .music-panel .upload-area { margin-bottom: 0.8rem; }
     .music-panel .upload-btn {
-      display: block; background: var(--bg); border: 1px dashed var(--border); border-radius: 8px;
-      padding: .45rem 1rem; font-size: .75rem; color: var(--muted); cursor: pointer;
-      transition: all .2s; width: 100%; text-align: center; margin-bottom: .9rem;
+      display: inline-block;
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 1rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: center;
     }
     .music-panel .upload-btn:hover { border-color: var(--accent); color: var(--accent); }
     .music-panel .upload-btn input { display: none; }
-    .music-controls { display: flex; align-items: center; gap: .5rem; }
-    .music-controls button { background: none; border: none; color: var(--text); font-size: 1.25rem; cursor: pointer; padding: .2rem .35rem; transition: color .2s; }
+    .music-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.3rem;
+    }
+    .music-controls button {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      transition: color 0.2s;
+      line-height: 1;
+    }
     .music-controls button:hover { color: var(--accent); }
-    .music-controls .progress-wrap { flex: 1; height: 4px; background: var(--border); border-radius: 4px; cursor: pointer; }
-    .music-controls .progress-bar { height: 100%; width: 0%; background: var(--accent); border-radius: 4px; transition: width .1s linear; }
-    .music-controls .time-label { font-size: .65rem; color: var(--muted); min-width: 36px; text-align: center; }
-    .music-controls .volume-wrap { display: flex; align-items: center; gap: .3rem; }
-    .music-controls .volume-wrap input[type="range"] { width: 52px; accent-color: var(--accent); height: 3px; cursor: pointer; }
+    .music-controls .progress-wrap {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+    }
+    .music-controls .progress-wrap .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 4px;
+      transition: width 0.1s linear;
+    }
+    .music-controls .time-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      min-width: 36px;
+      text-align: center;
+    }
+    .music-controls .volume-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .music-controls .volume-wrap input[type="range"] {
+      width: 56px;
+      accent-color: var(--accent);
+      background: var(--border);
+      height: 3px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .music-controls .volume-wrap input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
 
+    /* FLOATING DIGITAL CLOCK */
     .floating-clock {
-      position: fixed; bottom: 2rem; left: 2rem; z-index: 999;
-      background: var(--surface); border: 1px solid var(--border); border-radius: 100px;
-      padding: .55rem 1.15rem; backdrop-filter: blur(12px);
-      font-family: 'Inter', monospace; font-size: .88rem; font-weight: 500; color: var(--text);
-      display: flex; align-items: center; gap: .7rem; box-shadow: 0 8px 24px rgba(0,0,0,.55);
-      user-select: none; pointer-events: none;
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 999;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.6rem 1.2rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-family: 'Inter', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      transition: border-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      pointer-events: none;
     }
-    .clock-time { color: var(--accent); font-weight: 600; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+    .floating-clock:hover { border-color: var(--accent); }
+    .clock-icon { font-size: 1rem; opacity: 0.8; }
+    .clock-time {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      font-variant-numeric: tabular-nums;
+    }
 
-    .ai-chatbot { position: fixed; bottom: 6.2rem; right: 2rem; z-index: 999; }
+    /* AI CHATBOT WIDGET PROAKTIF & INTERAKTIF */
+    .ai-chatbot {
+      position: fixed;
+      bottom: 6rem;
+      right: 2rem;
+      z-index: 999;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .ai-avatar-wrap {
+      position: relative;
+    }
+
     .ai-avatar-btn {
-      width: 56px; height: 56px; border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
       background: linear-gradient(135deg, var(--accent2), var(--accent));
-      border: 2px solid var(--accent); cursor: pointer;
-      box-shadow: 0 8px 26px rgba(129,140,248,.4); transition: all .3s ease;
-      overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 0;
+      border: 2px solid var(--accent);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(129, 140, 248, 0.4);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
     }
-    .ai-avatar-btn:hover { transform: scale(1.12); box-shadow: 0 14px 36px rgba(129,140,248,.55); }
-    .ai-avatar-btn img { width: 100%; height: 100%; object-fit: cover; }
-    .ai-avatar-btn .avatar-fallback { font-size: 1.5rem; display: none; }
+    .ai-avatar-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 32px rgba(129, 140, 248, 0.6);
+    }
+    .ai-avatar-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .ai-avatar-btn .avatar-fallback {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    /* Pop-up bubble sapaan */
     .ai-greeting-bubble {
-      position: absolute; right: 70px; bottom: 10px;
-      background: var(--surface); border: 1px solid var(--accent); color: var(--text);
-      padding: .5rem .85rem; border-radius: 12px; border-bottom-right-radius: 3px;
-      font-size: .75rem; white-space: nowrap; box-shadow: 0 8px 22px rgba(0,0,0,.5);
-      animation: popIn .35s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+      position: absolute;
+      right: 68px;
+      bottom: 8px;
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      color: var(--text);
+      padding: 0.5rem 0.8rem;
+      border-radius: 12px;
+      border-bottom-right-radius: 2px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
     }
-    @keyframes popIn { from { opacity: 0; transform: translateX(12px) scale(.9); } to { opacity: 1; transform: translateX(0) scale(1); } }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateX(10px) scale(0.9); }
+      to { opacity: 1; transform: translateX(0) scale(1); }
+    }
+
     .ai-chat-panel {
-      position: absolute; bottom: 72px; right: 0; width: 340px; height: 480px;
-      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      box-shadow: 0 24px 50px rgba(0,0,0,.75); display: flex; flex-direction: column;
-      transform: scale(.9) translateY(18px); opacity: 0; visibility: hidden;
-      transition: all .3s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom right; overflow: hidden;
+      position: absolute;
+      bottom: 72px;
+      right: 0;
+      width: 340px;
+      height: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.8);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.9) translateY(12px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      transform-origin: bottom right;
+      overflow: hidden;
     }
-    .ai-chat-panel.open { transform: scale(1) translateY(0); opacity: 1; visibility: visible; }
+    .ai-chat-panel.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
     .ai-chat-header {
-      padding: .9rem 1.15rem; background: rgba(20,20,22,.85); border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 1.2rem;
+      background: rgba(20, 20, 22, 0.8);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .ai-chat-header-info { display: flex; align-items: center; gap: .55rem; }
-    .status-dot {
-      width: 8px; height: 8px; background: var(--accent); border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent); animation: pulseDot 2s infinite;
+    .ai-chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
     }
-    @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
-    .ai-chat-header h4 { font-size: .9rem; font-weight: 600; }
-    .ai-chat-close { background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; transition: color .2s; }
+    .ai-chat-header-info .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .ai-chat-header h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .ai-chat-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
     .ai-chat-close:hover { color: var(--text); }
-    .ai-chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: .75rem; }
-    .msg { max-width: 85%; padding: .55rem .85rem; border-radius: 12px; font-size: .82rem; line-height: 1.45; }
-    .msg.bot { background: var(--bg); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 3px; }
-    .msg.user { background: var(--accent2); color: #fff; align-self: flex-end; border-bottom-right-radius: 3px; }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .msg {
+      max-width: 85%;
+      padding: 0.6rem 0.9rem;
+      border-radius: 12px;
+      font-size: 0.825rem;
+      line-height: 1.45;
+    }
+    .msg.bot {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+    .msg.user {
+      background: var(--accent2);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    /* Typing Dots Animation */
     .typing-indicator {
-      display: flex; gap: 4px; padding: .55rem .85rem; background: var(--bg);
-      border: 1px solid var(--border); border-radius: 12px; border-bottom-left-radius: 3px; width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.6rem 0.9rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      border-bottom-left-radius: 2px;
+      align-self: flex-start;
+      width: fit-content;
     }
     .typing-dot {
-      width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
       animation: typingBounce 1.4s infinite ease-in-out both;
     }
-    .typing-dot:nth-child(1) { animation-delay: -.32s; }
-    .typing-dot:nth-child(2) { animation-delay: -.16s; }
-    @keyframes typingBounce { 0%,80%,100% { transform: scale(0); } 40% { transform: scale(1); } }
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
     .ai-suggestions {
-      padding: .5rem .75rem; display: flex; flex-wrap: wrap; gap: .4rem;
-      background: rgba(12,12,14,.5); border-top: 1px solid var(--border);
-      max-height: 90px; overflow-y: auto;
+      padding: 0.5rem 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      background: rgba(12, 12, 14, 0.5);
+      border-top: 1px solid var(--border);
+      max-height: 90px;
+      overflow-y: auto;
     }
     .sug-chip {
-      background: var(--surface); border: 1px solid var(--border); color: var(--accent);
-      padding: .25rem .6rem; border-radius: 100px; font-size: .7rem; cursor: pointer; transition: all .2s;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .sug-chip:hover { border-color: var(--accent); background: var(--border); }
+    .sug-chip:hover {
+      border-color: var(--accent);
+      background: var(--border);
+    }
+
     .ai-chat-input-area {
-      padding: .7rem .75rem; border-top: 1px solid var(--border); display: flex; gap: .4rem;
+      padding: 0.75rem 0.8rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.4rem;
+      background: var(--surface);
     }
     .ai-chat-input-area input {
-      flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-      padding: .5rem .8rem; color: var(--text); font-size: .8rem; outline: none;
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      color: var(--text);
+      font-size: 0.8rem;
+      outline: none;
     }
-    .ai-chat-input-area input:focus { border-color: var(--accent2); }
+    .ai-chat-input-area input:focus {
+      border-color: var(--accent2);
+    }
     .ai-chat-input-area button {
-      background: var(--accent2); border: none; color: #fff; border-radius: 8px;
-      padding: .5rem .8rem; font-size: .85rem; cursor: pointer; transition: opacity .2s;
+      background: var(--accent2);
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
     }
-    .ai-chat-input-area button:hover { opacity: .9; }
+    .ai-chat-input-area button:hover {
+      opacity: 0.9;
+    }
 
-    @media (max-width: 900px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-img-wrap { max-width: 340px; margin: 0 auto; }
-      .exp-item { grid-template-columns: 1fr; gap: .4rem; padding-left: 1.9rem; }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-img-wrap { display: none; }
+      .exp-item { grid-template-columns: 1fr; gap: .5rem; }
       nav .nav-links { display: none; }
+      .music-panel { width: 280px; right: -8px; }
+      .music-controls .volume-wrap input[type="range"] { width: 40px; }
       .projects-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) {
-      .music-panel { width: 280px; right: -6px; }
-      .floating-clock { bottom: 6.2rem; left: 1rem; padding: .4rem .9rem; font-size: .75rem; }
-      .ai-chatbot { bottom: 6.2rem; right: 1rem; }
-      .ai-chat-panel { width: 300px; right: -6px; }
-      .ai-greeting-bubble { display: none; }
+      .floating-clock {
+        bottom: 6rem;
+        left: 1rem;
+        padding: 0.4rem 1rem;
+        font-size: 0.75rem;
+        gap: 0.5rem;
+      }
+      .ai-chatbot {
+        bottom: 6rem;
+        right: 1rem;
+      }
+      .ai-chat-panel {
+        width: 300px;
+        right: -8px;
+      }
+      .ai-greeting-bubble {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ... (HTML body sama seperti sebelumnya, hanya CSS about yang diubah) ... -->
+<nav>
+  <a href="#" class="nav-logo">AHM.</a>
+  <ul class="nav-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#projects">Proyek</a></li>
+    <li><a href="#experience">Pengalaman</a></li>
+    <li><a href="#contact">Kontak</a></li>
+    <li><a href="blog.html" style="color: var(--accent); font-weight: 700;">📝 Blog</a></li>
+  </ul>
+</nav>
 
-<!-- Untuk menghemat, saya fokuskan pada bagian penting. 
-     Gunakan kode lengkap dari pesan sebelumnya + ganti CSS About dan fungsi AI. -->
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <p class="hero-tag"><span></span> Tersedia untuk proyek baru</p>
+  <h1>Halo, saya <em>Azzam Hafidz Murobbi</em></h1>
+  <p class="hero-subtitle">— Artist —</p>
+  <p class="hero-sub">Saya mencoba membagikan pengetahuan dan karya saya lewat website ini.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">Lihat Proyek</a>
+    <a href="#contact" class="btn btn-outline">Hubungi Saya</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">Tentang Saya</p>
+  <div class="about-grid reveal">
+    <div class="about-img-wrap">
+      <div class="about-img-placeholder">
+        <img src="p.jpg" alt="Foto Portofolio" />
+      </div>
+      <div class="about-accent-box">1 Minggu <small>Pengalaman</small></div>
+    </div>
+    <div class="about-text">
+      <h2 class="section-title">Sekilas tentang saya</h2>
+      <p>Saya seorang siswa SMPIT Assyifa Boarding School. Di sekolah tersebut saya mengikuti ekstrakulikuler coding. Lewat website ini saya ingin membagikan pengetahuan dan karya saya serta melatih skill dalam coding website.</p>
+      <p>Saat tidak sedang coding, saya suka menggambar. Saya juga sedang menekuni belajar bahasa seperti Inggris, Arab, Turki, Rusia, Jerman, dan Jepang. Saya punya pengetahuan yang cukup luas dalam sejarah dan militer — itulah kenapa saya ingin membagikan pengetahuan saya seputar itu, semoga bermanfaat!</p>
+      <div class="skills-chips">
+        <span class="chip">Menggambar</span>
+        <span class="chip">Coding</span>
+        <span class="chip">Sejarah</span>
+        <span class="chip">Militer</span>
+        <span class="chip">B. Inggris</span>
+        <span class="chip">B. Arab</span>
+        <span class="chip">B. Turki</span>
+        <span class="chip">B. Jepang</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Proyek</p>
+  <h2 class="section-title reveal">Yang telah saya bangun.</h2>
+  <div class="projects-grid">
+
+    <!-- 1. Artikel Militer & Sejarah -->
+    <a href="artikel.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img src="war.jpg" alt="Artikel Militer & Sejarah" />
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Artikel · Militer & Sejarah</p>
+          <h3 class="project-title">Artikel Militer & Sejarah</h3>
+          <p class="project-desc">Kumpulan artikel tentang sejarah dunia, strategi militer, dan peristiwa penting yang membentuk peradaban.</p>
+          <div class="project-links">
+            <span class="project-link">↗ Baca Artikel</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 2. Geography Quiz -->
+    <a href="geography-quiz.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img src="map.jpg" alt="Geography Quiz" />
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Game · Edukasi</p>
+          <h3 class="project-title">Geography Quiz</h3>
+          <p class="project-desc">Temukan 195 negara di peta dunia! Klik lokasi negara yang disebutkan secara acak. Asah pengetahuan geografimu!</p>
+          <div class="project-links">
+            <span class="project-link">↗ Main Sekarang</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 3. Kamus Turki -->
+    <a href="kamus-turki.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img src="turkce.jpg" alt="Kamus Turki" />
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Kamus · Bahasa</p>
+          <h3 class="project-title">Kamus Turki</h3>
+          <p class="project-desc">Kamus bahasa Turki–Indonesia dengan 90+ kata dasar. Cari cepat, dua arah, desain elegan.</p>
+          <div class="project-links">
+            <span class="project-link">↗ Buka Kamus</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 4. Kuis Sejarah 1814–1945 -->
+    <a href="kuis-sejarah-1814-1945.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img src="ww1france.jpg" alt="Kuis Sejarah" />
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Kuis · Sejarah</p>
+          <h3 class="project-title">Kuis Sejarah 1814–1945</h3>
+          <p class="project-desc">Quiz tentang sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
+          <div class="project-links">
+            <span class="project-link">↗ Mulai Kuis</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 5. Music Player -->
+    <a href="music-player.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img src="sound.jpg" alt="Music Player" />
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Audio · Player</p>
+          <h3 class="project-title">Music Player</h3>
+          <p class="project-desc">Upload lagu dari file explorermu. Putar, jeda, atur volume, dan nikmati musik langsung di browser!</p>
+          <div class="project-links">
+            <span class="project-link">↗ Buka Player</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 6. A.H.Mtube (Video Player) -->
+    <a href="ahmtube.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img src="mp4icon.jpg" alt="A.H.Mtube" />
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Video · Player</p>
+          <h3 class="project-title">A.H.Mtube</h3>
+          <p class="project-desc">Video player dengan playlist, kontrol lengkap, dan tampilan mirip YouTube. Upload video & tonton!</p>
+          <div class="project-links">
+            <span class="project-link">↗ Buka Player</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 7. Kalkulator Serbaguna -->
+    <a href="kalkulator.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <div class="fallback">🧮</div>
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Utility · Calculator</p>
+          <h3 class="project-title">🧮 Kalkulator Serbaguna</h3>
+          <p class="project-desc">Kalkulator ilmiah dengan mode basic & scientific. Dilengkapi riwayat perhitungan dan keyboard support.</p>
+          <div class="project-links">
+            <span class="project-link">↗ Buka Kalkulator</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 8. Arah Kiblat -->
+    <a href="kiblat.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <div class="fallback">🕌</div>
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Utility · Islami</p>
+          <h3 class="project-title">🕌 Arah Kiblat</h3>
+          <p class="project-desc">Deteksi arah kiblat dari lokasimu dengan kompas visual akurat. Berdasarkan perhitungan geodesi ke Ka'bah.</p>
+          <div class="project-links">
+            <span class="project-link">↗ Buka Kompas Kiblat</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Pengalaman</p>
+  <h2 class="section-title reveal">Perjalanan saya.</h2>
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <span class="exp-year">2025-sekarang</span>
+      <div>
+        <p class="exp-role">Siswa Ekskul Coding</p>
+        <p class="exp-company">SMPIT Assyifa Boarding School</p>
+        <p class="exp-desc">Belajar dasar-dasar web development, membuat website portfolio pertama, dan mengeksplorasi dunia coding.</p>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <span class="exp-year">2025-sekarang</span>
+      <div>
+        <p class="exp-role">Self-taught Artist</p>
+        <p class="exp-company">Independen</p>
+        <p class="exp-desc">Menekuni dunia seni gambar secara otodidak, mengembangkan gaya ilustrasi pribadi.</p>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <span class="exp-year">2025-sekarang</span>
+      <div>
+        <p class="exp-role">Language Learner</p>
+        <p class="exp-company">Mandiri</p>
+        <p class="exp-desc">Belajar 6 bahasa secara aktif: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Kontak</p>
+  <div class="contact-wrap reveal">
+    <h2 class="section-title">Ayo terhubung!</h2>
+    <p class="contact-intro">Punya pertanyaan, ingin berkolaborasi, atau sekadar menyapa? Jangan ragu untuk menghubungi saya!</p>
+    <div class="contact-links">
+      <a href="mailto:azzam@email.com" class="contact-link">
+        <span class="contact-icon">✉️</span>
+        <div class="contact-link-text"><strong>Email</strong><span>azzam@email.com</span></div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-icon">💼</span>
+        <div class="contact-link-text"><strong>LinkedIn</strong><span>linkedin.com/in/azzamhafidz</span></div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-icon">🐙</span>
+        <div class="contact-link-text"><strong>GitHub</strong><span>github.com/azzamhafidz</span></div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2024 Azzam Hafidz Murobbi. Dibuat dengan ❤️</span>
+  <span>Dirancang & Dikembangkan sendiri</span>
+</footer>
+
+<!-- AI CHATBOT WIDGET -->
+<div class="ai-chatbot" id="aiChatbot">
+  <div class="ai-avatar-wrap">
+    <!-- Pop-up Bubble Sapaan Otomatis -->
+    <div class="ai-greeting-bubble" id="greetingBubble" style="display:none;">
+      👋 Halo! Tanya sesuatu ke AI?
+    </div>
+    <button class="ai-avatar-btn" id="aiToggle" aria-label="Buka Chatbot Asisten">
+      <img src="assistant.jpg" alt="Asisten AI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='block';" />
+      <span class="avatar-fallback" id="avatarFallback" style="display:none;">🤖</span>
+    </button>
+  </div>
+
+  <div class="ai-chat-panel" id="aiPanel">
+    <div class="ai-chat-header">
+      <div class="ai-chat-header-info">
+        <span class="status-dot"></span>
+        <h4>Asisten Virtual</h4>
+      </div>
+      <button class="ai-chat-close" id="aiClose">✕</button>
+    </div>
+
+    <div class="ai-chat-messages" id="aiMessages">
+      <div class="msg bot">Halo! 👋 Saya asisten virtual website ini. Ada yang bisa saya bantu seputar profil pembuat, bahasa asing, sejarah, atau proyek coding-nya?</div>
+    </div>
+
+    <!-- Suggested Question Chips Dinamis -->
+    <div class="ai-suggestions" id="aiSuggestions">
+      <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
+      <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
+      <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang dipelajari?')">🌐 Belajar Bahasa</button>
+      <button class="sug-chip" onclick="askSuggested('Ceritakan tentang Kongres Wina 1814!')">📜 Sejarah 1814</button>
+    </div>
+
+    <form class="ai-chat-input-area" id="aiForm">
+      <input type="text" id="aiInput" placeholder="Ketik pertanyaanmu di sini..." autocomplete="off" />
+      <button type="submit">➤</button>
+    </form>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER WIDGET (FLOATING) -->
+<div class="music-player" id="musicPlayer">
+  <button class="music-toggle" id="musicToggle" aria-label="Buka pemutar musik">🎵</button>
+  <div class="music-panel" id="musicPanel">
+    <div class="file-info" id="fileInfo">📂 <strong>Belum ada lagu</strong></div>
+    <div class="upload-area">
+      <label class="upload-btn" id="uploadBtn">
+        📤 Upload lagu (MP3, WAV, OGG)
+        <input type="file" id="fileInput" accept=".mp3,.wav,.ogg,.m4a,.aac,.flac" />
+      </label>
+    </div>
+    <div class="music-controls">
+      <button id="playBtn" title="Putar/Jeda" aria-label="Play or Pause">▶️</button>
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <span class="time-label" id="timeLabel">0:00</span>
+      <div class="volume-wrap">
+        <button id="muteBtn" title="Mute" aria-label="Mute sound">🔊</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" aria-label="Volume Slider" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING DIGITAL CLOCK -->
+<div class="floating-clock">
+  <span class="clock-icon">🕒</span>
+  <span class="clock-time" id="clockDisplay">00:00:00</span>
+</div>
 
 <script>
-  // ... (script reveal, music, clock sama) ...
+  // REVEAL ANIMATION
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.project-card.reveal').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.08}s`;
+  });
 
-  // ===================== AI YANG LEBIH PINTAR =====================
+  // MUSIC PLAYER WIDGET LOGIC
+  (function() {
+    const toggle = document.getElementById('musicToggle');
+    const panel = document.getElementById('musicPanel');
+    const fileInput = document.getElementById('fileInput');
+    const fileInfo = document.getElementById('fileInfo');
+    const playBtn = document.getElementById('playBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressWrap = document.getElementById('progressWrap');
+    const timeLabel = document.getElementById('timeLabel');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const muteBtn = document.getElementById('muteBtn');
+
+    let audio = null;
+    let isPlaying = false;
+    let isMuted = false;
+
+    toggle.addEventListener('click', () => {
+      panel.classList.toggle('open');
+      toggle.classList.toggle('active');
+      toggle.textContent = panel.classList.contains('open') ? '✕' : '🎵';
+    });
+
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('audio/')) {
+        alert('Mohon pilih file audio (mp3, wav, ogg, dll)');
+        return;
+      }
+      const url = URL.createObjectURL(file);
+      if (audio) { audio.pause(); URL.revokeObjectURL(audio.src); }
+      audio = new Audio(url);
+      audio.volume = parseFloat(volumeSlider.value);
+      audio.addEventListener('timeupdate', updateProgress);
+      audio.addEventListener('loadedmetadata', () => { timeLabel.textContent = formatTime(0); });
+      audio.addEventListener('ended', () => { isPlaying = false; playBtn.textContent = '▶️'; });
+
+      fileInfo.innerHTML = `🎵 <strong>${file.name}</strong> (${(file.size / 1024 / 1024).toFixed(1)} MB)`;
+      playBtn.textContent = '▶️';
+      isPlaying = false;
+      togglePlay();
+    });
+
+    function togglePlay() {
+      if (!audio) return;
+      if (isPlaying) { audio.pause(); playBtn.textContent = '▶️'; }
+      else { audio.play().catch(e => console.warn('Play gagal:', e)); playBtn.textContent = '⏸️'; }
+      isPlaying = !isPlaying;
+    }
+
+    playBtn.addEventListener('click', togglePlay);
+
+    progressWrap.addEventListener('click', function(e) {
+      if (!audio) return;
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const pct = Math.min(1, Math.max(0, x / rect.width));
+      audio.currentTime = pct * audio.duration;
+    });
+
+    function updateProgress() {
+      if (!audio) return;
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = pct + '%';
+      timeLabel.textContent = formatTime(audio.currentTime);
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+
+    volumeSlider.addEventListener('input', function() {
+      if (audio) audio.volume = parseFloat(this.value);
+      if (isMuted) { isMuted = false; muteBtn.textContent = '🔊'; }
+    });
+
+    muteBtn.addEventListener('click', function() {
+      if (!audio) return;
+      isMuted = !isMuted;
+      audio.muted = isMuted;
+      muteBtn.textContent = isMuted ? '🔇' : '🔊';
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === ' ' && panel.classList.contains('open')) {
+        e.preventDefault();
+        togglePlay();
+      }
+    });
+
+    window.addEventListener('beforeunload', () => {
+      if (audio) URL.revokeObjectURL(audio.src);
+    });
+  })();
+
+  // DIGITAL CLOCK UPDATER
+  function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clockDisplay').textContent = `${hours}:${minutes}:${seconds}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // =========================================================
+  // ===== AI CHATBOT INTERAKSI TINGGI & PRIVASI LENGKAP =====
+  // =========================================================
+  const aiToggle = document.getElementById('aiToggle');
+  const aiPanel = document.getElementById('aiPanel');
+  const aiClose = document.getElementById('aiClose');
+  const aiForm = document.getElementById('aiForm');
+  const aiInput = document.getElementById('aiInput');
+  const aiMessages = document.getElementById('aiMessages');
+  const greetingBubble = document.getElementById('greetingBubble');
+  const aiSuggestions = document.getElementById('aiSuggestions');
+
+  setTimeout(() => {
+    if (!aiPanel.classList.contains('open')) {
+      greetingBubble.style.display = 'block';
+    }
+  }, 3000);
+
+  greetingBubble.addEventListener('click', () => {
+    aiPanel.classList.add('open');
+    greetingBubble.style.display = 'none';
+  });
+
+  aiToggle.addEventListener('click', () => {
+    aiPanel.classList.toggle('open');
+    greetingBubble.style.display = 'none';
+  });
+
+  aiClose.addEventListener('click', () => {
+    aiPanel.classList.remove('open');
+  });
+
+  aiForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const query = aiInput.value.trim();
+    if (!query) return;
+    
+    appendMessage(query, 'user');
+    aiInput.value = '';
+    showTypingIndicator();
+    
+    setTimeout(() => {
+      removeTypingIndicator();
+      generateAiResponse(query);
+    }, 600);
+  });
+
+  window.askSuggested = function(text) {
+    appendMessage(text, 'user');
+    showTypingIndicator();
+    setTimeout(() => {
+      removeTypingIndicator();
+      generateAiResponse(text);
+    }, 500);
+  };
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('msg', sender);
+    msgDiv.innerHTML = text;
+    aiMessages.appendChild(msgDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  function showTypingIndicator() {
+    removeTypingIndicator();
+    const typingDiv = document.createElement('div');
+    typingDiv.classList.add('typing-indicator');
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    aiMessages.appendChild(typingDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const typingDiv = document.getElementById('typingIndicator');
+    if (typingDiv) typingDiv.remove();
+  }
+
+  function updateSuggestions(chipsHtml) {
+    aiSuggestions.innerHTML = chipsHtml;
+  }
+
+  // LOGIKA AI ENGINE: KREATIF & TANPA SEBUT NAMA PENGGUNA
   function generateAiResponse(input) {
-    const text = input.toLowerCase().trim();
+    const text = input.toLowerCase();
     let reply = "";
     let nextChips = "";
 
-    // Jawaban panjang & natural untuk topik portofolio
-    if (text.match(/(siapa|profil|biodata|pembuat|pengembang|pemilik|kamu siapa)/)) {
-      reply = `Pengembang website ini adalah <strong>Azzam Hafidz Murobbi</strong>, siswa di SMPIT Assyifa Boarding School.<br><br>
-      Dia membangun seluruh website ini sendiri menggunakan HTML, CSS, dan JavaScript murni. Selain coding, dia juga seorang self-taught artist dan sedang belajar 6 bahasa asing secara aktif (Inggris, Arab, Turki, Rusia, Jerman, dan Jepang).<br><br>
-      Passion utamanya ada di Web Development, Sejarah & Militer, serta Bahasa Asing.`;
+    // 1. PROFIL & BIODATA PENGEMBANG
+    if (text.includes("siapa") || text.includes("profil") || text.includes("biodata") || text.includes("pembuat") || text.includes("pengembang") || text.includes("pemilik")) {
+      reply = "Pengembang website ini adalah seorang siswa di <strong>SMPIT Assyifa Boarding School</strong> yang aktif di ekstrakulikuler coding. Selain suka coding web, ia adalah seorang <em>self-taught artist</em> dan sedang memperdalam 6 bahasa asing!";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Apa saja karyanya?')">🎨 Karya & Hobi</button>
+        <button class="sug-chip" onclick="askSuggested('Apa proyek web terkerennya?')">💻 Proyek Web</button>
+      `;
+    } 
+    else if (text.includes("sekolah") || text.includes("assyifa") || text.includes("smp") || text.includes("pendidikan") || text.includes("ekskul")) {
+      reply = "Pengembang menempuh pendidikan menengah di <strong>SMPIT Assyifa Boarding School</strong>. Di sana ia mendalami dunia teknologi melalui ekstrakulikuler coding untuk membangun berbagai aplikasi web interaktif.";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Bahasa pemrograman apa yang dipakai?')">💻 Skill Coding</button>
+        <button class="sug-chip" onclick="askSuggested('Bagaimana cara menghubungi pengembang?')">✉️ Kontak</button>
+      `;
     }
-    else if (text.match(/(proyek|project|karya|apa saja yang dibuat)/)) {
-      reply = `Website ini berisi 8 proyek utama:<br><br>
-      1. Artikel Militer & Sejarah<br>
-      2. Geography Quiz (195 negara)<br>
-      3. Kamus Turki–Indonesia<br>
-      4. Kuis Sejarah 1814–1945<br>
-      5. Music Player<br>
-      6. A.H.Mtube (Video Player)<br>
-      7. Kalkulator Serbaguna<br>
-      8. Arah Kiblat Visual<br><br>
-      Semua dibuat dari nol sebagai latihan dan portofolio.`;
-    }
-    // ... (tambahkan pola lain seperti sebelumnya, buat lebih panjang)
 
+    // 2. PROYEK WEB & APLIKASI
+    else if (text.includes("proyek") || text.includes("karya") || text.includes("project") || text.includes("buat") || text.includes("bangun") || text.includes("aplikasi") || text.includes("game")) {
+      reply = "Terdapat 8 proyek unggulan yang telah dibangun di portofolio ini:<br>1. <strong>Artikel Militer & Sejarah</strong><br>2. <strong>Geography Quiz</strong> (Game tebak 195 negara)<br>3. <strong>Kamus Turki</strong><br>4. <strong>Kuis Sejarah 1814–1945</strong><br>5. <strong>Music Player</strong> & <strong>A.H.Mtube</strong><br>6. <strong>Kalkulator Serbaguna</strong><br>7. <strong>Kompas Kiblat Visual</strong>.";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Jelaskan tentang Geography Quiz!')">🗺️ Geography Quiz</button>
+        <button class="sug-chip" onclick="askSuggested('Jelaskan tentang Kamus Turki!')">🇹🇷 Kamus Turki</button>
+      `;
+    }
+
+    // 3. HOBI, SENI GAMBAR & MILITER
+    else if (text.includes("hobi") || text.includes("minat") || text.includes("suka") || text.includes("gambar") || text.includes("lukis") || text.includes("art")) {
+      reply = "Saat tidak coding, pengembang sangat menyukai seni menggambar secara otodidak. Selain itu, ia memiliki passion mendalam terhadap <strong>Sejarah Dunia</strong> dan <strong>Strategi Militer</strong> yang sering dituangkan ke dalam artikel blog.";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Ceritakan tentang taktik perang sejarah!')">⚔️ Taktik Militer</button>
+        <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang ditekuni?')">🌐 Bahasa Asing</button>
+      `;
+    }
+
+    // 4. BAHASA ASING (Inggris, Arab, Turki, Rusia, Jerman, Jepang)
+    else if (text.includes("bahasa") || text.includes("language") || text.includes("turki") || text.includes("inggris") || text.includes("arab") || text.includes("rusia") || text.includes("jerman") || text.includes("jepang")) {
+      if (text.includes("turki")) {
+        reply = "Bahasa Turki adalah salah satu bahasa pilihan favorit! Bahasa ini unik dengan struktur sufiks (aglutinatif). Contoh sapaan: <em>'Merhaba'</em> (Halo) dan <em>'Nasılsın?'</em> (Apa kabar?).";
+      } else if (text.includes("arab")) {
+        reply = "Bahasa Arab dipelajari secara aktif di lingkungan boarding school. Bahasa ini kaya akan tata bahasa (Nahwu & Sharaf) serta seni kaligrafi.";
+      } else if (text.includes("rusia")) {
+        reply = "Bahasa Rusia menggunakan Alfabet Kiril (Cyrillic). Contoh kata populer: <em>'Привет'</em> (Privet / Hai) dan <em>'Спасибо'</em> (Spasibo / Terima kasih).";
+      } else if (text.includes("jerman")) {
+        reply = "Bahasa Jerman memiliki sistem kata majemuk yang panjang serta penulisan kata benda berhuruf kapital. Contoh: <em>'Guten Tag'</em> (Selamat siang).";
+      } else if (text.includes("jepang")) {
+        reply = "Bahasa Jepang dipelajari beserta sistem tulisannya (Hiragana, Katakana, & Kanji). Contoh sapaan: <em>'Konnichiwa'</em> (こんにちは).";
+      } else if (text.includes("inggris")) {
+        reply = "Bahasa Inggris dipelajari sebagai bahasa internasional untuk mendukung skill web development dan komunikasi global.";
+      } else {
+        reply = "Pengembang secara aktif mempelajari <strong>6 bahasa asing</strong> secara mandiri: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
+      }
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Kamus Turki ada di website?')">📖 Kamus Turki</button>
+        <button class="sug-chip" onclick="askSuggested('Lihat proyek bahasa!')">🌐 Proyek Bahasa</button>
+      `;
+    }
+
+    // 5. SEJARAH DUNIA & STRATEGI MILITER
+    else if (text.includes("sejarah") || text.includes("militer") || text.includes("perang") || text.includes("taktik") || text.includes("1814") || text.includes("1945") || text.includes("napoleon") || text.includes("wina")) {
+      if (text.includes("1814") || text.includes("wina") || text.includes("napoleon")) {
+        reply = "<strong>Kongres Wina (1814–1815):</strong> Pertemuan diplomasi besar Eropa untuk menata ulang peta politik pasca-kekalahan Napoleon Bonaparte guna menciptakan Keseimbangan Kekuatan (<em>Balance of Power</em>).";
+      } else if (text.includes("perang dunia 1") || text.includes("pd1") || text.includes("ww1")) {
+        reply = "<strong>Perang Dunia I (1914–1918):</strong> Dipicu oleh insiden pembunuhan Archduke Franz Ferdinand dari Austria di Sarajevo, memicu pertempuran parit masif Blok Sekutu vs Blok Sentral.";
+      } else if (text.includes("perang dunia 2") || text.includes("pd2") || text.includes("ww2") || text.includes("1945")) {
+        reply = "<strong>Perang Dunia II (1939–1945):</strong> Perang global terbesar dalam sejarah yang berakhir pada tahun 1945 dan memicu era kemerdekaan baru bagi berbagai bangsa di dunia.";
+      } else {
+        reply = "Pengetahuan seputar Sejarah Dunia era 1814 hingga 1945 dituangkan ke dalam artikel blog serta game interaktif <strong>Kuis Sejarah</strong> di website ini!";
+      }
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Main Kuis Sejarah!')">🎮 Kuis Sejarah</button>
+        <button class="sug-chip" onclick="askSuggested('Baca Artikel Militer!')">📝 Artikel Militer</button>
+      `;
+    }
+
+    // 6. CODING & DEVELOPMENT
+    else if (text.includes("coding") || text.includes("html") || text.includes("css") || text.includes("javascript") || text.includes("web") || text.includes("developer")) {
+      reply = "Website portofolio ini dirancang secara mandiri menggunakan **HTML5, CSS3, dan Javascript murni (Vanilla JS)** dengan tampilan dark theme yang bersih, responsif, dan kaya widget interaktif!";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Lihat daftar proyek!')">🚀 Proyek Web</button>
+      `;
+    }
+
+    // 7. KONTAK & EMAIL
+    else if (text.includes("kontak") || text.includes("hubungi") || text.includes("email") || text.includes("linkedin") || text.includes("github") || text.includes("pesan")) {
+      reply = "Silakan hubungi pengembang melalui saluran resmi berikut:<br>✉️ Email: <strong>azzam@email.com</strong><br>💼 LinkedIn: linkedin.com/in/azzamhafidz<br>🐙 GitHub: github.com/azzamhafidz";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
+      `;
+    }
+
+    // 8. SAPAAN & INTERAKSI SOSIAL
+    else if (text.includes("halo") || text.includes("hai") || text.includes("pagi") || text.includes("siang") || text.includes("malam") || text.includes("assalamualaikum") || text.includes("ping")) {
+      reply = "Halo juga! 👋 Senang bisa mengobrol denganmu. Ada yang ingin kamu tanyakan seputar portofolio, sejarah, bahasa asing, atau proyek coding web di sini?";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
+        <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
+      `;
+    }
+
+    // 9. RESTRUKTURISASI BATAS KONTEKS (Bila di luar topik)
     else {
-      // Fallback yang lebih baik
-      reply = `Saya adalah asisten virtual di website Azzam. Saat ini pengetahuan saya masih terbatas pada topik seputar portofolio, sejarah, bahasa, dan coding.<br><br>
-      Untuk pertanyaan umum yang membutuhkan informasi terbaru dari internet (seperti DeepSeek), website ini perlu dihubungkan ke API.<br><br>
-      Kamu bisa tanya tentang profil Azzam, proyek-proyeknya, bahasa yang dipelajari, atau sejarah.`;
+      reply = "Maaf, saya tidak bisa menjawab pertanyaan di luar konteks portofolio, sejarah, bahasa, dan coding.";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
+        <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
+        <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang dipelajari?')">🌐 Belajar Bahasa</button>
+      `;
     }
 
     appendMessage(reply, 'bot');
