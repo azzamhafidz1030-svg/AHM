@@ -1274,19 +1274,110 @@
       `;
     }
 
-    // 9. RESTRUKTURISASI BATAS KONTEKS (Bila di luar topik)
-    else {
-      reply = "Maaf, saya tidak bisa menjawab pertanyaan di luar konteks portofolio, sejarah, bahasa, dan coding.";
-      nextChips = `
-        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
-        <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
-        <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang dipelajari?')">🌐 Belajar Bahasa</button>
-      `;
+    // ====================== GROQ AI ======================
+  const GROQ_API_KEY = "gsk_xxxxxxxxxxxxxxxxxxxxxxxx"; // ← GANTI DENGAN API KEY GROQ KAMU
+  const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+  const SYSTEM_PROMPT = `Kamu adalah asisten virtual di website portfolio Azzam Hafidz Murobbi.
+Azzam adalah siswa SMPIT Assyifa Boarding School yang suka coding, menggambar, sejarah & militer, dan belajar 6 bahasa (Inggris, Arab, Turki, Rusia, Jerman, Jepang).
+Proyek di website: Artikel Militer, Geography Quiz, Kamus Turki, Kuis Sejarah, Music Player, A.H.Mtube, Kalkulator, Arah Kiblat.
+Jawab dalam Bahasa Indonesia yang natural dan jelas. Kamu boleh menjawab pertanyaan apa saja.`;
+
+  const aiToggle = document.getElementById('aiToggle');
+  const aiPanel = document.getElementById('aiPanel');
+  const aiClose = document.getElementById('aiClose');
+  const aiForm = document.getElementById('aiForm');
+  const aiInput = document.getElementById('aiInput');
+  const aiMessages = document.getElementById('aiMessages');
+  const greetingBubble = document.getElementById('greetingBubble');
+  const aiSuggestions = document.getElementById('aiSuggestions');
+
+  setTimeout(() => {
+    if (!aiPanel.classList.contains('open')) greetingBubble.style.display = 'block';
+  }, 2500);
+
+  greetingBubble.onclick = () => { aiPanel.classList.add('open'); greetingBubble.style.display = 'none'; };
+  aiToggle.onclick = () => { aiPanel.classList.toggle('open'); greetingBubble.style.display = 'none'; };
+  aiClose.onclick = () => aiPanel.classList.remove('open');
+
+  function appendMessage(text, sender) {
+    const div = document.createElement('div');
+    div.className = `msg ${sender}`;
+    div.innerHTML = text;
+    aiMessages.appendChild(div);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'typing-indicator';
+    div.id = 'typing';
+    div.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    aiMessages.appendChild(div);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  function hideTyping() {
+    const t = document.getElementById('typing');
+    if (t) t.remove();
+  }
+
+  async function generateAiResponse(input) {
+    showTyping();
+
+    if (!GROQ_API_KEY || GROQ_API_KEY.includes('xxxxxxxx')) {
+      hideTyping();
+      appendMessage('API Key Groq belum diatur. Silakan masukkan API Key di dalam kode.', 'bot');
+      return;
     }
 
-    appendMessage(reply, 'bot');
-    if (nextChips) updateSuggestions(nextChips);
+    try {
+      const res = await fetch(GROQ_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            { role: 'user', content: input }
+          ],
+          temperature: 0.7,
+          max_tokens: 1024
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `Error ${res.status}`);
+      }
+
+      const data = await res.json();
+      const reply = data.choices?.[0]?.message?.content || 'Tidak ada jawaban.';
+      hideTyping();
+      appendMessage(reply.replace(/\n/g, '<br>'), 'bot');
+
+    } catch (err) {
+      hideTyping();
+      appendMessage(`Gagal terhubung ke Groq:<br><strong>${err.message}</strong>`, 'bot');
+    }
   }
+
+  aiForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const q = aiInput.value.trim();
+    if (!q) return;
+    appendMessage(q, 'user');
+    aiInput.value = '';
+    await generateAiResponse(q);
+  };
+
+  window.askSuggested = async (text) => {
+    appendMessage(text, 'user');
+    await generateAiResponse(text);
+  };
 </script>
 </body>
 </html>
