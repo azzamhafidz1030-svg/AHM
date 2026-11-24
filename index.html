@@ -132,7 +132,6 @@
     .project-thumb img {
       width: 100%; height: 100%; object-fit: cover; display: block;
     }
-    /* fallback jika gambar tidak ada */
     .project-thumb .fallback {
       font-size: 3rem;
       color: var(--muted);
@@ -184,7 +183,7 @@
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* MUSIC PLAYER WIDGET (floating) */
+    /* MUSIC PLAYER WIDGET */
     .music-player {
       position: fixed;
       bottom: 2rem;
@@ -325,6 +324,281 @@
       cursor: pointer;
     }
 
+    /* FLOATING DIGITAL CLOCK */
+    .floating-clock {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 999;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.6rem 1.2rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-family: 'Inter', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      transition: border-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      pointer-events: none;
+    }
+    .floating-clock:hover { border-color: var(--accent); }
+    .clock-icon { font-size: 1rem; opacity: 0.8; }
+    .clock-time {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* AI CHATBOT WIDGET PROAKTIF & INTERAKTIF */
+    .ai-chatbot {
+      position: fixed;
+      bottom: 6rem;
+      right: 2rem;
+      z-index: 999;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .ai-avatar-wrap {
+      position: relative;
+    }
+
+    .ai-avatar-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border: 2px solid var(--accent);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(129, 140, 248, 0.4);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .ai-avatar-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 32px rgba(129, 140, 248, 0.6);
+    }
+    .ai-avatar-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .ai-avatar-btn .avatar-fallback {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    /* Pop-up bubble sapaan */
+    .ai-greeting-bubble {
+      position: absolute;
+      right: 68px;
+      bottom: 8px;
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      color: var(--text);
+      padding: 0.5rem 0.8rem;
+      border-radius: 12px;
+      border-bottom-right-radius: 2px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateX(10px) scale(0.9); }
+      to { opacity: 1; transform: translateX(0) scale(1); }
+    }
+
+    .ai-chat-panel {
+      position: absolute;
+      bottom: 72px;
+      right: 0;
+      width: 340px;
+      height: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.8);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.9) translateY(12px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      transform-origin: bottom right;
+      overflow: hidden;
+    }
+    .ai-chat-panel.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .ai-chat-header {
+      padding: 0.9rem 1.2rem;
+      background: rgba(20, 20, 22, 0.8);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ai-chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .ai-chat-header-info .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .ai-chat-header h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .ai-chat-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .ai-chat-close:hover { color: var(--text); }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .msg {
+      max-width: 85%;
+      padding: 0.6rem 0.9rem;
+      border-radius: 12px;
+      font-size: 0.825rem;
+      line-height: 1.45;
+    }
+    .msg.bot {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+    .msg.user {
+      background: var(--accent2);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    /* Typing Dots Animation */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.6rem 0.9rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      border-bottom-left-radius: 2px;
+      align-self: flex-start;
+      width: fit-content;
+    }
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
+    .ai-suggestions {
+      padding: 0.5rem 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      background: rgba(12, 12, 14, 0.5);
+      border-top: 1px solid var(--border);
+      max-height: 90px;
+      overflow-y: auto;
+    }
+    .sug-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sug-chip:hover {
+      border-color: var(--accent);
+      background: var(--border);
+    }
+
+    .ai-chat-input-area {
+      padding: 0.75rem 0.8rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.4rem;
+      background: var(--surface);
+    }
+    .ai-chat-input-area input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      color: var(--text);
+      font-size: 0.8rem;
+      outline: none;
+    }
+    .ai-chat-input-area input:focus {
+      border-color: var(--accent2);
+    }
+    .ai-chat-input-area button {
+      background: var(--accent2);
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .ai-chat-input-area button:hover {
+      opacity: 0.9;
+    }
+
     @media (max-width: 768px) {
       .about-grid { grid-template-columns: 1fr; }
       .about-img-wrap { display: none; }
@@ -333,6 +607,24 @@
       .music-panel { width: 280px; right: -8px; }
       .music-controls .volume-wrap input[type="range"] { width: 40px; }
       .projects-grid { grid-template-columns: 1fr; }
+      .floating-clock {
+        bottom: 6rem;
+        left: 1rem;
+        padding: 0.4rem 1rem;
+        font-size: 0.75rem;
+        gap: 0.5rem;
+      }
+      .ai-chatbot {
+        bottom: 6rem;
+        right: 1rem;
+      }
+      .ai-chat-panel {
+        width: 300px;
+        right: -8px;
+      }
+      .ai-greeting-bubble {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -345,6 +637,7 @@
     <li><a href="#projects">Proyek</a></li>
     <li><a href="#experience">Pengalaman</a></li>
     <li><a href="#contact">Kontak</a></li>
+    <li><a href="blog.html" style="color: var(--accent); font-weight: 700;">📝 Blog</a></li>
   </ul>
 </nav>
 
@@ -368,7 +661,7 @@
   <div class="about-grid reveal">
     <div class="about-img-wrap">
       <div class="about-img-placeholder">
-        <img src="p.jpg" alt="Foto Saya" />
+        <img src="p.jpg" alt="Foto Portofolio" />
       </div>
       <div class="about-accent-box">1 Minggu <small>Pengalaman</small></div>
     </div>
@@ -447,9 +740,7 @@
       </div>
     </a>
 
-   
-
-    <!-- 5. Kuis Sejarah 1814–1945 -->
+    <!-- 4. Kuis Sejarah 1814–1945 -->
     <a href="kuis-sejarah-1814-1945.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -458,7 +749,7 @@
         <div class="project-body">
           <p class="project-tag">Kuis · Sejarah</p>
           <h3 class="project-title">Kuis Sejarah 1814–1945</h3>
-          <p class="project-desc">quiz tenta ng sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
+          <p class="project-desc">Quiz tentang sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
           <div class="project-links">
             <span class="project-link">↗ Mulai Kuis</span>
           </div>
@@ -466,7 +757,7 @@
       </div>
     </a>
 
-    <!-- 6. Music Player -->
+    <!-- 5. Music Player -->
     <a href="music-player.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -483,7 +774,7 @@
       </div>
     </a>
 
-    <!-- 7. A.H.Mtube (Video Player) -->
+    <!-- 6. A.H.Mtube (Video Player) -->
     <a href="ahmtube.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -495,6 +786,40 @@
           <p class="project-desc">Video player dengan playlist, kontrol lengkap, dan tampilan mirip YouTube. Upload video & tonton!</p>
           <div class="project-links">
             <span class="project-link">↗ Buka Player</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 7. Kalkulator Serbaguna -->
+    <a href="kalkulator.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <div class="fallback">🧮</div>
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Utility · Calculator</p>
+          <h3 class="project-title">🧮 Kalkulator Serbaguna</h3>
+          <p class="project-desc">Kalkulator ilmiah dengan mode basic & scientific. Dilengkapi riwayat perhitungan dan keyboard support.</p>
+          <div class="project-links">
+            <span class="project-link">↗ Buka Kalkulator</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 8. Arah Kiblat -->
+    <a href="kiblat.html" style="text-decoration:none;">
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <div class="fallback">🕌</div>
+        </div>
+        <div class="project-body">
+          <p class="project-tag">Utility · Islami</p>
+          <h3 class="project-title">🕌 Arah Kiblat</h3>
+          <p class="project-desc">Deteksi arah kiblat dari lokasimu dengan kompas visual akurat. Berdasarkan perhitungan geodesi ke Ka'bah.</p>
+          <div class="project-links">
+            <span class="project-link">↗ Buka Kompas Kiblat</span>
           </div>
         </div>
       </div>
@@ -567,7 +892,48 @@
   <span>Dirancang & Dikembangkan sendiri</span>
 </footer>
 
-<!-- ===== MUSIC PLAYER WIDGET (FLOATING) ===== -->
+<!-- AI CHATBOT WIDGET -->
+<div class="ai-chatbot" id="aiChatbot">
+  <div class="ai-avatar-wrap">
+    <!-- Pop-up Bubble Sapaan Otomatis -->
+    <div class="ai-greeting-bubble" id="greetingBubble" style="display:none;">
+      👋 Halo! Tanya sesuatu ke AI?
+    </div>
+    <button class="ai-avatar-btn" id="aiToggle" aria-label="Buka Chatbot Asisten">
+      <img src="assistant.jpg" alt="Asisten AI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='block';" />
+      <span class="avatar-fallback" id="avatarFallback" style="display:none;">🤖</span>
+    </button>
+  </div>
+
+  <div class="ai-chat-panel" id="aiPanel">
+    <div class="ai-chat-header">
+      <div class="ai-chat-header-info">
+        <span class="status-dot"></span>
+        <h4>Asisten Virtual</h4>
+      </div>
+      <button class="ai-chat-close" id="aiClose">✕</button>
+    </div>
+
+    <div class="ai-chat-messages" id="aiMessages">
+      <div class="msg bot">Halo! 👋 Saya asisten virtual website ini. Ada yang bisa saya bantu seputar profil pembuat, bahasa asing, sejarah, atau proyek coding-nya?</div>
+    </div>
+
+    <!-- Suggested Question Chips Dinamis -->
+    <div class="ai-suggestions" id="aiSuggestions">
+      <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
+      <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
+      <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang dipelajari?')">🌐 Belajar Bahasa</button>
+      <button class="sug-chip" onclick="askSuggested('Ceritakan tentang Kongres Wina 1814!')">📜 Sejarah 1814</button>
+    </div>
+
+    <form class="ai-chat-input-area" id="aiForm">
+      <input type="text" id="aiInput" placeholder="Ketik pertanyaanmu di sini..." autocomplete="off" />
+      <button type="submit">➤</button>
+    </form>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER WIDGET (FLOATING) -->
 <div class="music-player" id="musicPlayer">
   <button class="music-toggle" id="musicToggle" aria-label="Buka pemutar musik">🎵</button>
   <div class="music-panel" id="musicPanel">
@@ -579,21 +945,27 @@
       </label>
     </div>
     <div class="music-controls">
-      <button id="playBtn" title="Putar/Jeda">▶️</button>
+      <button id="playBtn" title="Putar/Jeda" aria-label="Play or Pause">▶️</button>
       <div class="progress-wrap" id="progressWrap">
         <div class="progress-bar" id="progressBar"></div>
       </div>
       <span class="time-label" id="timeLabel">0:00</span>
       <div class="volume-wrap">
-        <button id="muteBtn" title="Mute">🔊</button>
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" />
+        <button id="muteBtn" title="Mute" aria-label="Mute sound">🔊</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" aria-label="Volume Slider" />
       </div>
     </div>
   </div>
 </div>
 
+<!-- FLOATING DIGITAL CLOCK -->
+<div class="floating-clock">
+  <span class="clock-icon">🕒</span>
+  <span class="clock-time" id="clockDisplay">00:00:00</span>
+</div>
+
 <script>
-  // ===== REVEAL ANIMATION =====
+  // REVEAL ANIMATION
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
@@ -604,7 +976,7 @@
     el.style.transitionDelay = `${i * 0.08}s`;
   });
 
-  // ===== MUSIC PLAYER WIDGET LOGIC =====
+  // MUSIC PLAYER WIDGET LOGIC
   (function() {
     const toggle = document.getElementById('musicToggle');
     const panel = document.getElementById('musicPanel');
@@ -701,9 +1073,220 @@
     window.addEventListener('beforeunload', () => {
       if (audio) URL.revokeObjectURL(audio.src);
     });
-
-    console.log('🎵 Music Player siap! Upload lagu dari file explorer.');
   })();
+
+  // DIGITAL CLOCK UPDATER
+  function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clockDisplay').textContent = `${hours}:${minutes}:${seconds}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // =========================================================
+  // ===== AI CHATBOT INTERAKSI TINGGI & PRIVASI LENGKAP =====
+  // =========================================================
+  const aiToggle = document.getElementById('aiToggle');
+  const aiPanel = document.getElementById('aiPanel');
+  const aiClose = document.getElementById('aiClose');
+  const aiForm = document.getElementById('aiForm');
+  const aiInput = document.getElementById('aiInput');
+  const aiMessages = document.getElementById('aiMessages');
+  const greetingBubble = document.getElementById('greetingBubble');
+  const aiSuggestions = document.getElementById('aiSuggestions');
+
+  setTimeout(() => {
+    if (!aiPanel.classList.contains('open')) {
+      greetingBubble.style.display = 'block';
+    }
+  }, 3000);
+
+  greetingBubble.addEventListener('click', () => {
+    aiPanel.classList.add('open');
+    greetingBubble.style.display = 'none';
+  });
+
+  aiToggle.addEventListener('click', () => {
+    aiPanel.classList.toggle('open');
+    greetingBubble.style.display = 'none';
+  });
+
+  aiClose.addEventListener('click', () => {
+    aiPanel.classList.remove('open');
+  });
+
+  aiForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const query = aiInput.value.trim();
+    if (!query) return;
+
+    appendMessage(query, 'user');
+    aiInput.value = '';
+    showTypingIndicator();
+
+    setTimeout(() => {
+      removeTypingIndicator();
+      generateAiResponse(query);
+    }, 600);
+  });
+
+  window.askSuggested = function(text) {
+    appendMessage(text, 'user');
+    showTypingIndicator();
+    setTimeout(() => {
+      removeTypingIndicator();
+      generateAiResponse(text);
+    }, 500);
+  };
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('msg', sender);
+    msgDiv.innerHTML = text;
+    aiMessages.appendChild(msgDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  function showTypingIndicator() {
+    removeTypingIndicator();
+    const typingDiv = document.createElement('div');
+    typingDiv.classList.add('typing-indicator');
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    aiMessages.appendChild(typingDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const typingDiv = document.getElementById('typingIndicator');
+    if (typingDiv) typingDiv.remove();
+  }
+
+  function updateSuggestions(chipsHtml) {
+    aiSuggestions.innerHTML = chipsHtml;
+  }
+
+  // LOGIKA AI ENGINE: KREATIF & TANPA SEBUT NAMA PENGGUNA
+  function generateAiResponse(input) {
+    const text = input.toLowerCase();
+    let reply = "";
+    let nextChips = "";
+
+    // 1. PROFIL & BIODATA PENGEMBANG
+    if (text.includes("siapa") || text.includes("profil") || text.includes("biodata") || text.includes("pembuat") || text.includes("pengembang") || text.includes("pemilik")) {
+      reply = "Pengembang website ini adalah seorang siswa di <strong>SMPIT Assyifa Boarding School</strong> yang aktif di ekstrakulikuler coding. Selain suka coding web, ia adalah seorang <em>self-taught artist</em> dan sedang memperdalam 6 bahasa asing!";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Apa saja karyanya?')">🎨 Karya & Hobi</button>
+        <button class="sug-chip" onclick="askSuggested('Apa proyek web terkerennya?')">💻 Proyek Web</button>
+      `;
+    } 
+    else if (text.includes("sekolah") || text.includes("assyifa") || text.includes("smp") || text.includes("pendidikan") || text.includes("ekskul")) {
+      reply = "Pengembang menempuh pendidikan menengah di <strong>SMPIT Assyifa Boarding School</strong>. Di sana ia mendalami dunia teknologi melalui ekstrakulikuler coding untuk membangun berbagai aplikasi web interaktif.";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Bahasa pemrograman apa yang dipakai?')">💻 Skill Coding</button>
+        <button class="sug-chip" onclick="askSuggested('Bagaimana cara menghubungi pengembang?')">✉️ Kontak</button>
+      `;
+    }
+
+    // 2. PROYEK WEB & APLIKASI
+    else if (text.includes("proyek") || text.includes("karya") || text.includes("project") || text.includes("buat") || text.includes("bangun") || text.includes("aplikasi") || text.includes("game")) {
+      reply = "Terdapat 8 proyek unggulan yang telah dibangun di portofolio ini:<br>1. <strong>Artikel Militer & Sejarah</strong><br>2. <strong>Geography Quiz</strong> (Game tebak 195 negara)<br>3. <strong>Kamus Turki</strong><br>4. <strong>Kuis Sejarah 1814–1945</strong><br>5. <strong>Music Player</strong> & <strong>A.H.Mtube</strong><br>6. <strong>Kalkulator Serbaguna</strong><br>7. <strong>Kompas Kiblat Visual</strong>.";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Jelaskan tentang Geography Quiz!')">🗺️ Geography Quiz</button>
+        <button class="sug-chip" onclick="askSuggested('Jelaskan tentang Kamus Turki!')">🇹🇷 Kamus Turki</button>
+      `;
+    }
+
+    // 3. HOBI, SENI GAMBAR & MILITER
+    else if (text.includes("hobi") || text.includes("minat") || text.includes("suka") || text.includes("gambar") || text.includes("lukis") || text.includes("art")) {
+      reply = "Saat tidak coding, pengembang sangat menyukai seni menggambar secara otodidak. Selain itu, ia memiliki passion mendalam terhadap <strong>Sejarah Dunia</strong> dan <strong>Strategi Militer</strong> yang sering dituangkan ke dalam artikel blog.";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Ceritakan tentang taktik perang sejarah!')">⚔️ Taktik Militer</button>
+        <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang ditekuni?')">🌐 Bahasa Asing</button>
+      `;
+    }
+
+    // 4. BAHASA ASING (Inggris, Arab, Turki, Rusia, Jerman, Jepang)
+    else if (text.includes("bahasa") || text.includes("language") || text.includes("turki") || text.includes("inggris") || text.includes("arab") || text.includes("rusia") || text.includes("jerman") || text.includes("jepang")) {
+      if (text.includes("turki")) {
+        reply = "Bahasa Turki adalah salah satu bahasa pilihan favorit! Bahasa ini unik dengan struktur sufiks (aglutinatif). Contoh sapaan: <em>'Merhaba'</em> (Halo) dan <em>'Nasılsın?'</em> (Apa kabar?).";
+      } else if (text.includes("arab")) {
+        reply = "Bahasa Arab dipelajari secara aktif di lingkungan boarding school. Bahasa ini kaya akan tata bahasa (Nahwu & Sharaf) serta seni kaligrafi.";
+      } else if (text.includes("rusia")) {
+        reply = "Bahasa Rusia menggunakan Alfabet Kiril (Cyrillic). Contoh kata populer: <em>'Привет'</em> (Privet / Hai) dan <em>'Спасибо'</em> (Spasibo / Terima kasih).";
+      } else if (text.includes("jerman")) {
+        reply = "Bahasa Jerman memiliki sistem kata majemuk yang panjang serta penulisan kata benda berhuruf kapital. Contoh: <em>'Guten Tag'</em> (Selamat siang).";
+      } else if (text.includes("jepang")) {
+        reply = "Bahasa Jepang dipelajari beserta sistem tulisannya (Hiragana, Katakana, & Kanji). Contoh sapaan: <em>'Konnichiwa'</em> (こんにちは).";
+      } else if (text.includes("inggris")) {
+        reply = "Bahasa Inggris dipelajari sebagai bahasa internasional untuk mendukung skill web development dan komunikasi global.";
+      } else {
+        reply = "Pengembang secara aktif mempelajari <strong>6 bahasa asing</strong> secara mandiri: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
+      }
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Kamus Turki ada di website?')">📖 Kamus Turki</button>
+        <button class="sug-chip" onclick="askSuggested('Lihat proyek bahasa!')">🌐 Proyek Bahasa</button>
+      `;
+    }
+
+    // 5. SEJARAH DUNIA & STRATEGI MILITER
+    else if (text.includes("sejarah") || text.includes("militer") || text.includes("perang") || text.includes("taktik") || text.includes("1814") || text.includes("1945") || text.includes("napoleon") || text.includes("wina")) {
+      if (text.includes("1814") || text.includes("wina") || text.includes("napoleon")) {
+        reply = "<strong>Kongres Wina (1814–1815):</strong> Pertemuan diplomasi besar Eropa untuk menata ulang peta politik pasca-kekalahan Napoleon Bonaparte guna menciptakan Keseimbangan Kekuatan (<em>Balance of Power</em>).";
+      } else if (text.includes("perang dunia 1") || text.includes("pd1") || text.includes("ww1")) {
+        reply = "<strong>Perang Dunia I (1914–1918):</strong> Dipicu oleh insiden pembunuhan Archduke Franz Ferdinand dari Austria di Sarajevo, memicu pertempuran parit masif Blok Sekutu vs Blok Sentral.";
+      } else if (text.includes("perang dunia 2") || text.includes("pd2") || text.includes("ww2") || text.includes("1945")) {
+        reply = "<strong>Perang Dunia II (1939–1945):</strong> Perang global terbesar dalam sejarah yang berakhir pada tahun 1945 dan memicu era kemerdekaan baru bagi berbagai bangsa di dunia.";
+      } else {
+        reply = "Pengetahuan seputar Sejarah Dunia era 1814 hingga 1945 dituangkan ke dalam artikel blog serta game interaktif <strong>Kuis Sejarah</strong> di website ini!";
+      }
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Main Kuis Sejarah!')">🎮 Kuis Sejarah</button>
+        <button class="sug-chip" onclick="askSuggested('Baca Artikel Militer!')">📝 Artikel Militer</button>
+      `;
+    }
+
+    // 6. CODING & DEVELOPMENT
+    else if (text.includes("coding") || text.includes("html") || text.includes("css") || text.includes("javascript") || text.includes("web") || text.includes("developer")) {
+      reply = "Website portofolio ini dirancang secara mandiri menggunakan <strong>HTML5, CSS3, dan Javascript murni (Vanilla JS)</strong> dengan tampilan dark theme yang bersih, responsif, dan kaya widget interaktif!";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Lihat daftar proyek!')">🚀 Proyek Web</button>
+      `;
+    }
+
+    // 7. KONTAK & EMAIL
+    else if (text.includes("kontak") || text.includes("hubungi") || text.includes("email") || text.includes("linkedin") || text.includes("github") || text.includes("pesan")) {
+      reply = "Silakan hubungi pengembang melalui saluran resmi berikut:<br>✉️ Email: <strong>azzam@email.com</strong><br>💼 LinkedIn: linkedin.com/in/azzamhafidz<br>🐙 GitHub: github.com/azzamhafidz";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
+      `;
+    }
+
+    // 8. SAPAAN & INTERAKSI SOSIAL
+    else if (text.includes("halo") || text.includes("hai") || text.includes("pagi") || text.includes("siang") || text.includes("malam") || text.includes("assalamualaikum") || text.includes("ping")) {
+      reply = "Halo juga! 👋 Senang bisa mengobrol denganmu. Ada yang ingin kamu tanyakan seputar portofolio, sejarah, bahasa asing, atau proyek coding web di sini?";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
+        <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
+      `;
+    }
+
+    // 9. RESTRUKTURISASI BATAS KONTEKS (Bila di luar topik)
+    else {
+      reply = "Maaf, saya tidak bisa menjawab pertanyaan di luar konteks portofolio, sejarah, bahasa, dan coding.";
+      nextChips = `
+        <button class="sug-chip" onclick="askSuggested('Bagaimana profil pengembang website ini?')">👤 Profil Pembuat</button>
+        <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek Web</button>
+        <button class="sug-chip" onclick="askSuggested('Bahasa apa saja yang dipelajari?')">🌐 Belajar Bahasa</button>
+      `;
+    }
+
+    appendMessage(reply, 'bot');
+    if (nextChips) updateSuggestions(nextChips);
+  }
 </script>
 </body>
 </html>
