@@ -132,6 +132,7 @@
     .project-thumb img {
       width: 100%; height: 100%; object-fit: cover; display: block;
     }
+    /* fallback jika gambar tidak ada */
     .project-thumb .fallback {
       font-size: 3rem;
       color: var(--muted);
@@ -183,7 +184,7 @@
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* MUSIC PLAYER WIDGET */
+    /* MUSIC PLAYER WIDGET (floating) */
     .music-player {
       position: fixed;
       bottom: 2rem;
@@ -324,236 +325,6 @@
       cursor: pointer;
     }
 
-    /* FLOATING DIGITAL CLOCK */
-    .floating-clock {
-      position: fixed;
-      bottom: 2rem;
-      left: 2rem;
-      z-index: 999;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 0.6rem 1.2rem;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      font-family: 'Inter', monospace;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-      transition: border-color 0.3s ease, transform 0.2s ease;
-      user-select: none;
-      pointer-events: none;
-    }
-    .floating-clock:hover { border-color: var(--accent); }
-    .clock-icon { font-size: 1rem; opacity: 0.8; }
-    .clock-time {
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* ========================================================= */
-    /* ===== AI CHATBOT WIDGET (DIPASANG DI ATAS MP3 PLAYER) ===== */
-    /* ========================================================= */
-    /* AI CHATBOT WIDGET */
-    .ai-chatbot {
-      position: fixed;
-      bottom: 6rem; /* Dipasang tepat di atas tombol pemutar musik */
-      bottom: 6rem;
-      right: 2rem;
-      z-index: 999;
-      font-family: 'Inter', sans-serif;
-    }
-
-    /* Tombol Asisten Bulat */
-    .ai-avatar-btn {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      border: 2px solid var(--accent);
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(129, 140, 248, 0.4);
-      transition: all 0.3s ease;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-    }
-    .ai-avatar-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 12px 32px rgba(129, 140, 248, 0.6);
-    }
-    .ai-avatar-btn img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .ai-avatar-btn .avatar-fallback {
-      font-size: 1.5rem;
-      line-height: 1;
-    }
-
-    /* Panel Chatbot */
-    .ai-chat-panel {
-      position: absolute;
-      bottom: 72px;
-      right: 0;
-      width: 340px;
-      height: 460px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 20px 48px rgba(0,0,0,0.8);
-      backdrop-filter: blur(12px);
-      display: flex;
-      flex-direction: column;
-      transform: scale(0.9) translateY(12px);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.25s ease;
-      transform-origin: bottom right;
-      overflow: hidden;
-    }
-    .ai-chat-panel.open {
-      transform: scale(1) translateY(0);
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* Chat Header */
-    .ai-chat-header {
-      padding: 0.9rem 1.2rem;
-      background: rgba(20, 20, 22, 0.8);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .ai-chat-header-info {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .ai-chat-header-info .status-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-    }
-    .ai-chat-header h4 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .ai-chat-close {
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    .ai-chat-close:hover { color: var(--text); }
-
-    /* Chat Messages Box */
-    .ai-chat-messages {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .msg {
-      max-width: 85%;
-      padding: 0.6rem 0.9rem;
-      border-radius: 12px;
-      font-size: 0.825rem;
-      line-height: 1.45;
-    }
-    .msg.bot {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      align-self: flex-start;
-      border-bottom-left-radius: 2px;
-    }
-    .msg.user {
-      background: var(--accent2);
-      color: #fff;
-      align-self: flex-end;
-      border-bottom-right-radius: 2px;
-    }
-
-    /* Suggested Questions Area */
-    .ai-suggestions {
-      padding: 0.5rem 0.8rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      background: rgba(12, 12, 14, 0.5);
-      border-top: 1px solid var(--border);
-    }
-    .sug-chip {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--accent);
-      padding: 0.25rem 0.6rem;
-      border-radius: 100px;
-      font-size: 0.7rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .sug-chip:hover {
-      border-color: var(--accent);
-      background: var(--border);
-    }
-
-    /* Chat Input Form */
-    .ai-chat-input-area {
-      padding: 0.75rem 0.8rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 0.4rem;
-      background: var(--surface);
-    }
-    .ai-chat-input-area input {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.5rem 0.8rem;
-      color: var(--text);
-      font-size: 0.8rem;
-      outline: none;
-    }
-    .ai-chat-input-area input:focus {
-      border-color: var(--accent2);
-    }
-    .ai-chat-input-area button {
-      background: var(--accent2);
-      border: none;
-      color: #fff;
-      border-radius: 8px;
-      padding: 0.5rem 0.8rem;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .ai-chat-input-area button:hover {
-      opacity: 0.9;
-    }
-    /* ========================================================= */
-
     @media (max-width: 768px) {
       .about-grid { grid-template-columns: 1fr; }
       .about-img-wrap { display: none; }
@@ -562,21 +333,6 @@
       .music-panel { width: 280px; right: -8px; }
       .music-controls .volume-wrap input[type="range"] { width: 40px; }
       .projects-grid { grid-template-columns: 1fr; }
-      .floating-clock {
-        bottom: 6rem;
-        left: 1rem;
-        padding: 0.4rem 1rem;
-        font-size: 0.75rem;
-        gap: 0.5rem;
-      }
-      .ai-chatbot {
-        bottom: 6rem;
-        right: 1rem;
-      }
-      .ai-chat-panel {
-        width: 300px;
-        right: -8px;
-      }
     }
   </style>
 </head>
@@ -589,7 +345,6 @@
     <li><a href="#projects">Proyek</a></li>
     <li><a href="#experience">Pengalaman</a></li>
     <li><a href="#contact">Kontak</a></li>
-    <li><a href="blog.html" style="color: var(--accent); font-weight: 700;">📝 Blog</a></li>
   </ul>
 </nav>
 
@@ -613,7 +368,7 @@
   <div class="about-grid reveal">
     <div class="about-img-wrap">
       <div class="about-img-placeholder">
-        <img src="p.jpg" alt="Foto Azzam Hafidz Murobbi" />
+        <img src="p.jpg" alt="Foto Saya" />
       </div>
       <div class="about-accent-box">1 Minggu <small>Pengalaman</small></div>
     </div>
@@ -692,7 +447,9 @@
       </div>
     </a>
 
-    <!-- 4. Kuis Sejarah 1814–1945 -->
+   
+
+    <!-- 5. Kuis Sejarah 1814–1945 -->
     <a href="kuis-sejarah-1814-1945.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -701,7 +458,7 @@
         <div class="project-body">
           <p class="project-tag">Kuis · Sejarah</p>
           <h3 class="project-title">Kuis Sejarah 1814–1945</h3>
-          <p class="project-desc">Quiz tentang sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
+          <p class="project-desc">quiz tenta ng sejarah dunia dari Kongres Wina sampai akhir Perang Dunia II. Mudah–Sulit!</p>
           <div class="project-links">
             <span class="project-link">↗ Mulai Kuis</span>
           </div>
@@ -709,7 +466,7 @@
       </div>
     </a>
 
-    <!-- 5. Music Player -->
+    <!-- 6. Music Player -->
     <a href="music-player.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -726,7 +483,7 @@
       </div>
     </a>
 
-    <!-- 6. A.H.Mtube (Video Player) -->
+    <!-- 7. A.H.Mtube (Video Player) -->
     <a href="ahmtube.html" style="text-decoration:none;">
       <div class="project-card reveal">
         <div class="project-thumb">
@@ -738,40 +495,6 @@
           <p class="project-desc">Video player dengan playlist, kontrol lengkap, dan tampilan mirip YouTube. Upload video & tonton!</p>
           <div class="project-links">
             <span class="project-link">↗ Buka Player</span>
-          </div>
-        </div>
-      </div>
-    </a>
-
-    <!-- 7. Kalkulator Serbaguna -->
-    <a href="kalkulator.html" style="text-decoration:none;">
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <div class="fallback">🧮</div>
-        </div>
-        <div class="project-body">
-          <p class="project-tag">Utility · Calculator</p>
-          <h3 class="project-title">🧮 Kalkulator Serbaguna</h3>
-          <p class="project-desc">Kalkulator ilmiah dengan mode basic & scientific. Dilengkapi riwayat perhitungan dan keyboard support.</p>
-          <div class="project-links">
-            <span class="project-link">↗ Buka Kalkulator</span>
-          </div>
-        </div>
-      </div>
-    </a>
-
-    <!-- 8. Arah Kiblat -->
-    <a href="kiblat.html" style="text-decoration:none;">
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <div class="fallback">🕌</div>
-        </div>
-        <div class="project-body">
-          <p class="project-tag">Utility · Islami</p>
-          <h3 class="project-title">🕌 Arah Kiblat</h3>
-          <p class="project-desc">Deteksi arah kiblat dari lokasimu dengan kompas visual akurat. Berdasarkan perhitungan geodesi ke Ka'bah.</p>
-          <div class="project-links">
-            <span class="project-link">↗ Buka Kompas Kiblat</span>
           </div>
         </div>
       </div>
@@ -844,53 +567,7 @@
   <span>Dirancang & Dikembangkan sendiri</span>
 </footer>
 
-<!-- ========================================================= -->
-<!-- ===== AI CHATBOT WIDGET (BULAT DI ATAS MP3 PLAYER) ===== -->
-<!-- ========================================================= -->
-<!-- AI CHATBOT WIDGET -->
-<div class="ai-chatbot" id="aiChatbot">
-  <!-- Tombol Profil Bulat untuk Asisten -->
-  <button class="ai-avatar-btn" id="aiToggle" aria-label="Buka Chatbot Asisten">
-    <!-- Nanti kalau ada foto assistant.jpg, tag img di bawah ini yang dipakai -->
-    <img src="assistant.jpg" alt="Asisten AI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='block';" />
-    <span class="avatar-fallback" id="avatarFallback" style="display:none;">🤖</span>
-  </button>
-
-  <!-- Panel Chatbot -->
-  <div class="ai-chat-panel" id="aiPanel">
-    <div class="ai-chat-header">
-      <div class="ai-chat-header-info">
-        <span class="status-dot"></span>
-        <h4>Asisten Virtual Azzam</h4>
-      </div>
-      <button class="ai-chat-close" id="aiClose">✕</button>
-    </div>
-
-    <!-- Area Pesan Chat -->
-    <div class="ai-chat-messages" id="aiMessages">
-      <div class="msg bot">Halo! 👋 Saya asisten virtual Azzam. Ada yang bisa saya bantu seputar portofolio dan karyanya?</div>
-      <div class="msg bot">Halo! 👋 Saya asisten virtual Azzam. Kamu bisa bertanya seputar profil Azzam, proyek web, bahasa, hingga sejarah & militer!</div>
-    </div>
-
-    <!-- Suggested Questions Chips -->
-    <div class="ai-suggestions" id="aiSuggestions">
-      <button class="sug-chip" onclick="askSuggested('Siapa Azzam?')">👤 Siapa Azzam?</button>
-      <button class="sug-chip" onclick="askSuggested('Apa proyek unggulannya?')">🚀 Proyek unggulan?</button>
-      <button class="sug-chip" onclick="askSuggested('Bahasa apa yang dipelajari?')">🌐 Bahasa dipelajari?</button>
-      <button class="sug-chip" onclick="askSuggested('Apa hobinya?')">🎨 Hobi & Minat?</button>
-      <button class="sug-chip" onclick="askSuggested('Ceritakan tentang sejarah Perang Dunia!')">⚔️ Topik Sejarah?</button>
-    </div>
-
-    <!-- Free Question Input Area -->
-    <form class="ai-chat-input-area" id="aiForm">
-      <input type="text" id="aiInput" placeholder="Tanyakan sesuatu..." autocomplete="off" />
-      <input type="text" id="aiInput" placeholder="Tanyakan seputar profil, bahasa, atau sejarah..." autocomplete="off" />
-      <button type="submit">➤</button>
-    </form>
-  </div>
-</div>
-
-<!-- MUSIC PLAYER WIDGET (FLOATING) -->
+<!-- ===== MUSIC PLAYER WIDGET (FLOATING) ===== -->
 <div class="music-player" id="musicPlayer">
   <button class="music-toggle" id="musicToggle" aria-label="Buka pemutar musik">🎵</button>
   <div class="music-panel" id="musicPanel">
@@ -902,27 +579,21 @@
       </label>
     </div>
     <div class="music-controls">
-      <button id="playBtn" title="Putar/Jeda" aria-label="Play or Pause">▶️</button>
+      <button id="playBtn" title="Putar/Jeda">▶️</button>
       <div class="progress-wrap" id="progressWrap">
         <div class="progress-bar" id="progressBar"></div>
       </div>
       <span class="time-label" id="timeLabel">0:00</span>
       <div class="volume-wrap">
-        <button id="muteBtn" title="Mute" aria-label="Mute sound">🔊</button>
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" aria-label="Volume Slider" />
+        <button id="muteBtn" title="Mute">🔊</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" />
       </div>
     </div>
   </div>
 </div>
 
-<!-- FLOATING DIGITAL CLOCK -->
-<div class="floating-clock">
-  <span class="clock-icon">🕒</span>
-  <span class="clock-time" id="clockDisplay">00:00:00</span>
-</div>
-
 <script>
-  // REVEAL ANIMATION
+  // ===== REVEAL ANIMATION =====
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
@@ -933,7 +604,7 @@
     el.style.transitionDelay = `${i * 0.08}s`;
   });
 
-  // MUSIC PLAYER WIDGET LOGIC
+  // ===== MUSIC PLAYER WIDGET LOGIC =====
   (function() {
     const toggle = document.getElementById('musicToggle');
     const panel = document.getElementById('musicPanel');
@@ -1030,149 +701,9 @@
     window.addEventListener('beforeunload', () => {
       if (audio) URL.revokeObjectURL(audio.src);
     });
+
+    console.log('🎵 Music Player siap! Upload lagu dari file explorer.');
   })();
-
-  // DIGITAL CLOCK UPDATER
-  function updateClock() {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('clockDisplay').textContent = `${hours}:${minutes}:${seconds}`;
-  }
-  updateClock();
-  setInterval(updateClock, 1000);
-
-  // =========================================================
-  // ===== AI CHATBOT INTERACTIVE LOGIC =====
-  // =========================================================
-  // AI CHATBOT INTERACTIVE LOGIC
-  const aiToggle = document.getElementById('aiToggle');
-  const aiPanel = document.getElementById('aiPanel');
-  const aiClose = document.getElementById('aiClose');
-  const aiForm = document.getElementById('aiForm');
-  const aiInput = document.getElementById('aiInput');
-  const aiMessages = document.getElementById('aiMessages');
-
-  // Toggle Chat Open/Close
-  aiToggle.addEventListener('click', () => {
-    aiPanel.classList.toggle('open');
-  });
-  aiClose.addEventListener('click', () => {
-    aiPanel.classList.remove('open');
-  });
-
-  // Handle Free Form Question Submission
-  aiForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const query = aiInput.value.trim();
-    if (!query) return;
-
-    appendMessage(query, 'user');
-    aiInput.value = '';
-
-    setTimeout(() => {
-      generateAiResponse(query);
-    }, 400);
-  });
-
-  // Function for Suggested Questions Chips
-  window.askSuggested = function(text) {
-    appendMessage(text, 'user');
-    setTimeout(() => {
-      generateAiResponse(text);
-    }, 400);
-  };
-
-  function appendMessage(text, sender) {
-    const msgDiv = document.createElement('div');
-    msgDiv.classList.add('msg', sender);
-    msgDiv.textContent = text;
-    aiMessages.appendChild(msgDiv);
-    aiMessages.scrollTop = aiMessages.scrollHeight;
-  }
-
-  // Simple Auto Response Bot Logic
-  // LOGIKA AI CHATBOT: MENJAWAB PORTOFOLIO + BAHASA & SEJARAH, DILUAR ITU REFUSE
-  function generateAiResponse(input) {
-    const text = input.toLowerCase();
-    let reply = "";
-
-    if (text.includes("siapa") || text.includes("azzam") || text.includes("profil")) {
-      reply = "Azzam Hafidz Murobbi adalah seorang siswa SMPIT Assyifa Boarding School, artist otodidak, serta pengembang web yang suka belajar berbagai bahasa!";
-    } else if (text.includes("proyek") || text.includes("karya") || text.includes("project")) {
-      reply = "Azzam telah membuat berbagai proyek keren seperti Kuis Sejarah, Kamus Bahasa Turki, Geography Quiz, Pemutar Musik/Video, Kalkulator, dan Detektor Kiblat!";
-    } else if (text.includes("bahasa") || text.includes("language")) {
-      reply = "Saat ini Azzam aktif mempelajari 6 bahasa: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
-    } else if (text.includes("hobi") || text.includes("minat") || text.includes("suka")) {
-      reply = "Selain coding web, Azzam sangat hobi menggambar, mendalami sejarah dunia, serta strategi militer.";
-    } else if (text.includes("sekolah") || text.includes("assyifa")) {
-      reply = "Azzam bersekolah di SMPIT Assyifa Boarding School dan aktif mengikuti ekstrakulikuler coding di sana.";
-    } else if (text.includes("kontak") || text.includes("hubungi") || text.includes("email")) {
-      reply = "Kamu bisa menghubungi Azzam melalui email di azzam@email.com atau melihat profil LinkedIn & GitHub-nya di bagian bawah website.";
-    } else {
-      reply = "Terima kasih atas pertanyaannya! Silakan jelajahi portofolio Azzam atau pilih pertanyaan yang disarankan di atas ya. 😊";
-    // 1. DATA ASLI PORTOFOLIO & PROFIL AZZAM
-    if (text.includes("siapa") || text.includes("azzam") || text.includes("profil") || text.includes("biodata") || text.includes("nama")) {
-      reply = "Azzam Hafidz Murobbi adalah siswa SMPIT Assyifa Boarding School yang mengikuti ekskul coding. Selain suka coding web, ia adalah seorang self-taught artist dan aktif belajar 6 bahasa asing.";
-    } 
-    else if (text.includes("sekolah") || text.includes("assyifa") || text.includes("smp") || text.includes("pendidikan")) {
-      reply = "Azzam menempuh pendidikan di SMPIT Assyifa Boarding School dan mengembangkan bakat web development lewat ekstrakulikuler coding.";
-    } 
-    else if (text.includes("proyek") || text.includes("karya") || text.includes("project") || text.includes("buat") || text.includes("bangun") || text.includes("aplikasi")) {
-      reply = "Proyek web yang dibangun Azzam antara lain: Artikel Militer & Sejarah, Geography Quiz, Kamus Turki, Kuis Sejarah 1814–1945, Music Player, A.H.Mtube (Video Player), Kalkulator Serbaguna, dan Deteksi Arah Kiblat.";
-    } 
-    else if (text.includes("hobi") || text.includes("minat") || text.includes("suka") || text.includes("gambar") || text.includes("melukis") || text.includes("lukis")) {
-      reply = "Saat tidak sedang memperdalam coding web, Azzam sangat hobi menggambar secara otodidak dan membagikan pengetahuannya tentang sejarah dunia dan militer.";
-    } 
-    else if (text.includes("kontak") || text.includes("hubungi") || text.includes("email") || text.includes("linkedin") || text.includes("github")) {
-      reply = "Kamu bisa terhubung dengan Azzam melalui email di azzam@email.com, atau mengunjungi LinkedIn (linkedin.com/in/azzamhafidz) dan GitHub-nya (github.com/azzamhafidz).";
-    }
-
-    // 2. PENGETAHUAN LUAS TENTANG BAHASA (Inggris, Arab, Turki, Rusia, Jerman, Jepang)
-    else if (text.includes("bahasa") || text.includes("language") || text.includes("turki") || text.includes("turkce") || text.includes("inggris") || text.includes("english") || text.includes("arab") || text.includes("rusia") || text.includes("jerman") || text.includes("jepang")) {
-      if (text.includes("turki")) {
-        reply = "Azzam sedang mempelajari bahasa Turki! Bahasa Turki menggunakan alfabet Latin dan memiliki tata bahasa berupa penempelan akhiran (aglutinatif), seperti 'Merhaba' (Halo) dan 'Teşekkür ederim' (Terima kasih). Azzam juga sudah membuat proyek Kamus Turki.";
-      } else if (text.includes("arab")) {
-        reply = "Bahasa Arab adalah salah satu dari 6 bahasa yang dipelajari Azzam. Bahasa ini memiliki sistem penulisan dari kanan ke kiri dan kaya akan tata bahasa (nahwu & sharaf).";
-      } else if (text.includes("rusia")) {
-        reply = "Bahasa Rusia menggunakan alfabet Kiril (Cyrillic). Salah satu kata dasarnya adalah 'Здравствуйте' (Zdravstvuyte) yang artinya Halo.";
-      } else if (text.includes("jerman")) {
-        reply = "Bahasa Jerman terkenal dengan penulisan kata benda yang diawali huruf kapital dan kata majemuk yang panjang. Contohnya: 'Guten Tag' (Selamat siang).";
-      } else if (text.includes("jepang")) {
-        reply = "Bahasa Jepang memiliki 3 sistem tulisan: Hiragana, Katakana, dan Kanji. Contoh sapaan dasarnya adalah 'Konnichiwa' (こんにちは).";
-      } else if (text.includes("inggris")) {
-        reply = "Bahasa Inggris merupakan salah satu bahasa internasional yang ditekuni Azzam untuk mendukung skill coding dan komunikasi globalnya.";
-      } else {
-        reply = "Azzam aktif mempelajari 6 bahasa secara mandiri, yaitu: Inggris, Arab, Turki, Rusia, Jerman, dan Jepang!";
-      }
-    }
-
-    // 3. PENGETAHUAN LUAS TENTANG SEJARAH & MILITER
-    else if (text.includes("sejarah") || text.includes("militer") || text.includes("perang") || text.includes("war") || text.includes("strategi") || text.includes("1814") || text.includes("1945") || text.includes("kongres wina") || text.includes("napoleon")) {
-      if (text.includes("1814") || text.includes("kongres wina") || text.includes("wina") || text.includes("napoleon")) {
-        reply = "Kongres Wina (1814-1815) diadakan untuk menata ulang peta politik Eropa setelah kekalahan Napoleon Bonaparte, demi menjaga keseimbangan kekuasaan (Balance of Power) di Eropa.";
-      } else if (text.includes("perang dunia 1") || text.includes("pd1") || text.includes("ww1")) {
-        reply = "Perang Dunia I (1914–1918) dipicu oleh terbunuhnya Archduke Franz Ferdinand dari Austria di Sarajevo, yang memicu perang parit besar antara Blok Sekutu dan Blok Sentral.";
-      } else if (text.includes("perang dunia 2") || text.includes("pd2") || text.includes("ww2") || text.includes("1945")) {
-        reply = "Perang Dunia II (1939–1945) berakhir pada tahun 1945 dengan kekalahan negara-negara Poros (Axis) dan menjadi momen penting kemerdekaan berbagai bangsa, termasuk Indonesia.";
-      } else {
-        reply = "Azzam sangat tertarik pada topik Sejarah Dunia dan Strategi Militer, khususnya periode 1814 (pasca-Napoleon) hingga akhir Perang Dunia II (1945). Azzam juga membuat proyek Artikel Militer dan Kuis Sejarah!";
-      }
-    }
-
-    // 4. GREETINGS UMUM
-    else if (text.includes("halo") || text.includes("hai") || text.includes("pagi") || text.includes("siang") || text.includes("malam") || text.includes("assalamualaikum")) {
-      reply = "Halo! 👋 Ada yang ingin kamu tanyakan seputar portofolio Azzam, bahasa asing, atau sejarah dunia?";
-    } 
-
-    // 5. JIKA DILUAR KONTEKS (Bukan Profil Azzam, Proyek Web, Bahasa, atau Sejarah/Militer)
-    else {
-      reply = "Saya tidak bisa menjawab pertanyaan di luar konteks portofolio Azzam.";
-    }
-
-    appendMessage(reply, 'bot');
-  }
 </script>
 </body>
-</html>
+</html>     
