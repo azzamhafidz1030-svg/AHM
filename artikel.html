@@ -37,25 +37,35 @@
     .artikel-wrap { padding:3rem 6vw 6rem; }
     .artikel-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:1.5rem; }
 
-    .artikel-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; transition:border-color .2s,transform .2s; cursor:pointer; display:flex; flex-direction:column; }
+    .artikel-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; transition:border-color .2s,transform .2s; cursor:pointer; }
     .artikel-card:hover { border-color:rgba(110,231,183,.4); transform:translateY(-4px); }
 
-    .artikel-thumb { width:100%; height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); background:linear-gradient(135deg, #1a1a2e, #16213e); }
+    .artikel-thumb { width:100%; height:180px; overflow:hidden; position:relative; border-bottom:1px solid var(--border); }
     .artikel-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-    .artikel-thumb .emoji-bg { width:100%; height:100%; display:none; align-items:center; justify-content:center; font-size:3rem; }
+    .artikel-thumb .emoji-bg { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:3rem; }
 
-    .artikel-body { padding:1.25rem; flex:1; display:flex; flex-direction:column; }
+    .a1{background:linear-gradient(135deg,#1a0a0a,#3d1515);}
+    .a2{background:linear-gradient(135deg,#0a1a0a,#153d15);}
+    .a3{background:linear-gradient(135deg,#0a0a1a,#15153d);}
+    .a4{background:linear-gradient(135deg,#1a1a0a,#3d3d15);}
+    .a5{background:linear-gradient(135deg,#1a0a1a,#3d153d);}
+    .a6{background:linear-gradient(135deg,#0a1a1a,#153d3d);}
+    .a7{background:linear-gradient(135deg,#1a0f0a,#3d2515);}
+    .a8{background:linear-gradient(135deg,#0f0a1a,#25153d);}
+    .a9{background:linear-gradient(135deg,#0a1a0f,#153d25);}
+
+    .artikel-body { padding:1.25rem; }
     .artikel-meta { display:flex; align-items:center; gap:.75rem; margin-bottom:.75rem; flex-wrap:wrap; }
     .artikel-kategori { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; padding:.2rem .6rem; border:1px solid rgba(110,231,183,.3); border-radius:100px; }
     .artikel-tanggal { font-size:.75rem; color:var(--muted); }
     .artikel-title { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; margin-bottom:.5rem; line-height:1.3; }
-    .artikel-desc { font-size:.85rem; color:var(--muted); font-weight:300; margin-bottom:1rem; line-height:1.6; flex:1; }
+    .artikel-desc { font-size:.85rem; color:var(--muted); font-weight:300; margin-bottom:1rem; line-height:1.6; }
     .artikel-link { font-size:.8rem; font-weight:600; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:.3rem; transition:gap .2s; }
     .artikel-link:hover { gap:.6rem; }
 
     .modal-overlay { position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.85); backdrop-filter:blur(8px); display:flex; align-items:flex-start; justify-content:center; padding:2rem 1rem; opacity:0; pointer-events:none; transition:opacity .3s; overflow-y:auto; }
     .modal-overlay.open { opacity:1; pointer-events:all; }
-    .modal { background:var(--surface); border:1px solid var(--border); border-radius:12px; width:100%; max-width:720px; transform:translateY(30px); transition:transform .3s; overflow:hidden; margin:auto; }
+    .modal { background:var(--surface); border:1px solid var(--border); border-radius:12px; width:100%; max-width:720px; transform:translateY(30px); transition:transform .3s; overflow:hidden; }
     .modal-overlay.open .modal { transform:translateY(0); }
     .modal-header { padding:2rem 2rem 1.5rem; border-bottom:1px solid var(--border); position:relative; }
     .modal-close { position:absolute; top:1.5rem; right:1.5rem; background:var(--border); border:none; color:var(--muted); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:all .2s; }
@@ -98,12 +108,193 @@
 
 <div class="artikel-wrap">
   <div class="artikel-grid" id="artikelGrid">
-    
-    <!-- KARTU ARTIKEL DIBUAT OTOMATIS OLEH JAVASCRIPT DI BAWAH -->
+
+    <!-- 0: Perang Dunia II -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(0)">
+      <div class="artikel-thumb a1">
+        <img src="ww2.jpg" alt="Perang Dunia II" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">10 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Dunia II: Pertempuran yang Mengubah Dunia</h3>
+        <p class="artikel-desc">Mengenal kronologi, strategi, dan dampak Perang Dunia II yang menjadi konflik terbesar dalam sejarah manusia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 1: Sun Tzu -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(1)">
+      <div class="artikel-thumb a2">
+        <img src="sun-tzu.jpg" alt="Sun Tzu" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">5 Jun 2024</span></div>
+        <h3 class="artikel-title">Strategi Perang Sun Tzu yang Masih Relevan</h3>
+        <p class="artikel-desc">Pelajaran dari kitab The Art of War karya Sun Tzu yang hingga kini dipakai oleh militer dan pemimpin dunia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 2: Ottoman -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(2)">
+      <div class="artikel-thumb a3">
+        <img src="kemal.jpg" alt="Ottoman" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">1 Jun 2024</span></div>
+        <h3 class="artikel-title">Kejatuhan Kekaisaran Ottoman</h3>
+        <p class="artikel-desc">Bagaimana kekaisaran yang pernah menguasai tiga benua akhirnya runtuh dan melahirkan Turki modern.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 3: Senjata Modern -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(3)">
+      <div class="artikel-thumb a4">
+        <img src="drone.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">28 Mei 2024</span></div>
+        <h3 class="artikel-title">Teknologi Senjata Modern yang Mengubah Peperangan</h3>
+        <p class="artikel-desc">Dari drone tempur hingga rudal hipersonik, teknologi militer modern yang mendefinisikan ulang strategi perang.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 4: Perang Dingin -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(4)">
+      <div class="artikel-thumb a5">
+        <img src="cold-war.jpg" alt="Perang Dingin" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">20 Mei 2024</span></div>
+        <h3 class="artikel-title">Perang Dingin: Dua Kekuatan yang Mengancam Dunia</h3>
+        <p class="artikel-desc">Rivalitas Amerika Serikat dan Uni Soviet yang berlangsung puluhan tahun dan membentuk peta dunia modern.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 5: Perang Saudara Spanyol -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(5)">
+      <div class="artikel-thumb a4">
+        <img src="spaincivilwar.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">1 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Saudara Spanyol</h3>
+        <p class="artikel-desc">Konflik brutal 1936–1939 yang membelah Spanyol menjadi dua kubu dan menjadi pemanasan Perang Dunia II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 6: Perang Musim Dingin -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(6)">
+      <div class="artikel-thumb a4">
+        <img src="winterwr.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">3 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Musim Dingin Finlandia</h3>
+        <p class="artikel-desc">Bagaimana Finlandia kecil berhasil menahan serangan Uni Soviet yang jauh lebih besar selama musim dingin 1939.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 7: Object 775 -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(7)">
+      <div class="artikel-thumb a4">
+        <img src="object775.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">5 Jun 2024</span></div>
+        <h3 class="artikel-title">Tank Object 775</h3>
+        <p class="artikel-desc">Tank eksperimental Soviet dengan meriam roket unik yang tidak pernah diproduksi massal namun meninggalkan jejak sejarah.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 8: Tank Maus -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(8)">
+     <div class="artikel-thumb a4">
+        <img src="maus.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">7 Jun 2024</span></div>
+        <h3 class="artikel-title">Tank Maus — Monster Baja Nazi</h3>
+        <p class="artikel-desc">Tank terberat yang pernah dibuat manusia, 188 ton baja Jerman yang tidak pernah bertempur di medan perang.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 9: Attack of the Dead Men -->
+    <div class="artikel-card reveal" data-kategori="sejarah" onclick="bukaArtikel(9)">
+      <div class="artikel-thumb a4">
+        <img src="aotdm.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Sejarah</span><span class="artikel-tanggal">9 Jun 2024</span></div>
+        <h3 class="artikel-title">Attack of the Dead Men</h3>
+        <p class="artikel-desc">100 tentara Rusia yang terkena gas klorin bangkit menyerang dan memukul mundur pasukan Jerman.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 10: Perang Rif -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(10)">
+      <div class="artikel-thumb a4">
+        <img src="rif.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">11 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Rif</h3>
+        <p class="artikel-desc">Perlawanan suku Berber Maroko melawan Spanyol dan Prancis 1921–1926 yang menginspirasi gerakan kemerdekaan dunia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 11: Perang Dunia I -->
+    <div class="artikel-card reveal" data-kategori="perang" onclick="bukaArtikel(11)">
+     <div class="artikel-thumb a4">
+        <img src="ww1.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Perang</span><span class="artikel-tanggal">13 Jun 2024</span></div>
+        <h3 class="artikel-title">Perang Dunia I</h3>
+        <p class="artikel-desc">Konflik global 1914–1918 yang menghancurkan empat kekaisaran besar dan merenggut 20 juta jiwa manusia.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 12: Divisi SS Handschar -->
+    <div class="artikel-card reveal" data-kategori="militer" onclick="bukaArtikel(12)">
+      <div class="artikel-thumb a4">
+        <img src="handschar.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Militer</span><span class="artikel-tanggal">15 Jun 2024</span></div>
+        <h3 class="artikel-title">Divisi SS Handschar</h3>
+        <p class="artikel-desc">Divisi Waffen-SS unik yang terdiri dari Muslim Bosnia bertempur untuk Nazi Jerman di Balkan pada PD II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
+
+    <!-- 13: Panzerfaust -->
+    <div class="artikel-card reveal" data-kategori="senjata" onclick="bukaArtikel(13)">
+      <div class="artikel-thumb a4">
+        <img src="panzerfaust.jpg" alt="Senjata Modern" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="artikel-body">
+        <div class="artikel-meta"><span class="artikel-kategori">Senjata</span><span class="artikel-tanggal">17 Jun 2024</span></div>
+        <h3 class="artikel-title">Panzerfaust — Senjata Anti-Tank Jerman</h3>
+        <p class="artikel-desc">Senjata anti-tank sekali pakai yang murah dan mematikan, mimpi buruk pasukan lapis baja Sekutu di akhir PD II.</p>
+        <a class="artikel-link">Baca Selengkapnya →</a>
+      </div>
+    </div>
 
   </div>
 </div>
 
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="tutupArtikel(event)">
   <div class="modal" id="modalBox">
     <div class="modal-header">
@@ -122,282 +313,218 @@
 </footer>
 
 <script>
-// ================================================================
-// DATABASE ARTIKEL (44 ARTIKEL LENGKAP)
-// ================================================================
 const artikelData = [
-  // --- 14 ARTIKEL LAMA ---
-  { img:"ww2 1.jpg", kategori:"Perang", title:"Perang Dunia II: Pertempuran yang Mengubah Dunia", tanggal:"10 Jun 2024", desc:"Mengenal kronologi, strategi, dan dampak Perang Dunia II yang menjadi konflik terbesar dalam sejarah manusia.", isi:`
+  // 0
+  { kategori:"Perang", title:"Perang Dunia II: Pertempuran yang Mengubah Dunia", tanggal:"10 Juni 2024", isi:`
     <p>Perang Dunia II (1939–1945) adalah konflik militer terbesar dalam sejarah manusia yang melibatkan lebih dari 70 negara dan menewaskan sekitar 70–85 juta jiwa.</p>
     <h3>Latar Belakang</h3>
     <p>Perang ini bermula dari ambisi ekspansif Nazi Jerman di bawah Adolf Hitler, fasisme Italia di bawah Mussolini, dan militerisme Jepang. Invasi Jerman ke Polandia pada 1 September 1939 memicu deklarasi perang dari Inggris dan Prancis.</p>
     <h3>Front Utama</h3>
-    <ul><li><strong>Front Eropa Barat</strong> — Jerman menduduki Prancis, Belgia, dan Belanda.</li><li><strong>Front Timur</strong> — Pertempuran Jerman vs Uni Soviet, termasuk Pertempuran Stalingrad yang menjadi titik balik perang.</li><li><strong>Pasifik</strong> — Jepang vs Amerika Serikat setelah serangan Pearl Harbor 1941.</li></ul>
+    <ul>
+      <li><strong>Front Eropa Barat</strong> — Jerman menduduki Prancis, Belgia, dan Belanda.</li>
+      <li><strong>Front Timur</strong> — Pertempuran Jerman vs Uni Soviet, termasuk Pertempuran Stalingrad yang menjadi titik balik perang.</li>
+      <li><strong>Pasifik</strong> — Jepang vs Amerika Serikat setelah serangan Pearl Harbor 1941.</li>
+    </ul>
     <h3>Akhir Perang</h3>
     <p>Perang berakhir dengan menyerahnya Jerman pada Mei 1945, diikuti menyerahnya Jepang pada Agustus 1945 setelah bom atom dijatuhkan di Hiroshima dan Nagasaki.</p>
+    <h3>Dampak</h3>
+    <p>Perang ini melahirkan PBB, Perang Dingin, dekolonisasi Asia-Afrika, dan tatanan dunia baru yang masih kita rasakan hingga hari ini.</p>
   `},
-  { img:"sun tzu.jpg", kategori:"Militer", title:"Strategi Perang Sun Tzu yang Masih Relevan", tanggal:"5 Jun 2024", desc:"Pelajaran dari kitab The Art of War karya Sun Tzu yang hingga kini dipakai oleh militer dan pemimpin dunia.", isi:`
+  // 1
+  { kategori:"Militer", title:"Strategi Perang Sun Tzu yang Masih Relevan", tanggal:"5 Juni 2024", isi:`
     <p>Sun Tzu adalah seorang jenderal dan filsuf militer Tiongkok yang hidup sekitar abad ke-5 SM. Karyanya, The Art of War, menjadi salah satu buku strategi paling berpengaruh sepanjang masa.</p>
     <h3>Prinsip Utama Sun Tzu</h3>
-    <ul><li><strong>"Kenali dirimu dan kenali musuhmu"</strong> — Kemenangan membutuhkan pemahaman mendalam tentang diri sendiri dan lawan.</li><li><strong>"Perang terbaik adalah menang tanpa bertarung"</strong> — Strategi diplomatik dan psikologis lebih baik dari konfrontasi langsung.</li><li><strong>"Kecepatan adalah senjata"</strong> — Bergerak cepat dan tidak terduga membuat musuh kerepotan.</li></ul>
+    <ul>
+      <li><strong>"Kenali dirimu dan kenali musuhmu"</strong> — Kemenangan membutuhkan pemahaman mendalam tentang diri sendiri dan lawan.</li>
+      <li><strong>"Perang terbaik adalah menang tanpa bertarung"</strong> — Strategi diplomatik dan psikologis lebih baik dari konfrontasi langsung.</li>
+      <li><strong>"Kecepatan adalah senjata"</strong> — Bergerak cepat dan tidak terduga membuat musuh kerepotan.</li>
+    </ul>
+    <h3>Relevansi Modern</h3>
+    <p>Ajaran Sun Tzu tidak hanya dipakai militer, tapi juga dunia bisnis, politik, dan olahraga. Banyak CEO dan pemimpin dunia mengaku terinspirasi oleh The Art of War.</p>
+    <h3>Penerapan dalam Militer Modern</h3>
+    <p>Doktrin perang asimetris, operasi intelijen, dan perang siber semuanya mencerminkan prinsip-prinsip yang Sun Tzu ajarkan 2.500 tahun yang lalu.</p>
   `},
-  { img:"kemal.jpg", kategori:"Sejarah", title:"Kejatuhan Kekaisaran Ottoman", tanggal:"1 Jun 2024", desc:"Bagaimana kekaisaran yang pernah menguasai tiga benua akhirnya runtuh dan melahirkan Turki modern.", isi:`
+  // 2
+  { kategori:"Sejarah", title:"Kejatuhan Kekaisaran Ottoman", tanggal:"1 Juni 2024", isi:`
     <p>Kekaisaran Ottoman berdiri selama lebih dari 600 tahun (1299–1922) dan pada puncaknya menguasai wilayah dari Maroko hingga Persia, dari Hungaria hingga Yaman.</p>
     <h3>Faktor Kemunduran</h3>
-    <ul><li><strong>Kekalahan dalam Perang Dunia I</strong> — Ottoman berpihak pada Jerman yang kalah perang.</li><li><strong>Nasionalisme</strong> — Bangkitnya semangat nasionalisme berbagai etnis di dalam kekaisaran.</li><li><strong>Korupsi dan birokrasi</strong> — Lemahnya pemerintahan pusat.</li></ul>
+    <ul>
+      <li><strong>Kekalahan dalam Perang Dunia I</strong> — Ottoman berpihak pada Jerman yang kalah perang.</li>
+      <li><strong>Nasionalisme</strong> — Bangkitnya semangat nasionalisme berbagai etnis di dalam kekaisaran.</li>
+      <li><strong>Korupsi dan birokrasi</strong> — Lemahnya pemerintahan pusat dan ketidakmampuan beradaptasi dengan modernitas.</li>
+    </ul>
+    <h3>Perjanjian Lausanne 1923</h3>
+    <p>Setelah Perang Kemerdekaan Turki di bawah Mustafa Kemal Atatürk, Perjanjian Lausanne 1923 mengakui kedaulatan Turki modern dan menandai berakhirnya era Ottoman.</p>
+    <h3>Warisan Ottoman</h3>
+    <p>Kekaisaran Ottoman meninggalkan warisan budaya, arsitektur, dan hukum yang masih terasa di lebih dari 40 negara yang pernah menjadi wilayahnya.</p>
   `},
-  { img:"drone.jpg", kategori:"Militer", title:"Teknologi Senjata Modern yang Mengubah Peperangan", tanggal:"28 Mei 2024", desc:"Dari drone tempur hingga rudal hipersonik, teknologi militer modern yang mendefinisikan ulang strategi perang.", isi:`
+  // 3
+  { kategori:"Militer", title:"Teknologi Senjata Modern yang Mengubah Peperangan", tanggal:"28 Mei 2024", isi:`
     <p>Perkembangan teknologi militer pada abad ke-21 telah mendefinisikan ulang cara perang dilakukan, dari pertempuran fisik menjadi konflik yang melibatkan kecerdasan buatan, siber, dan luar angkasa.</p>
     <h3>Drone Tempur</h3>
     <p>Drone atau UAV kini menjadi tulang punggung operasi militer modern. Dari pengintaian hingga serangan presisi, drone mengurangi risiko bagi pilot manusia.</p>
     <h3>Rudal Hipersonik</h3>
-    <p>Rudal yang bergerak di atas Mach 5 hampir tidak bisa dicegat sistem pertahanan konvensional.</p>
+    <p>Rudal yang bergerak di atas Mach 5 hampir tidak bisa dicegat sistem pertahanan konvensional. Rusia, China, dan AS berlomba mengembangkan teknologi ini.</p>
+    <h3>Perang Siber</h3>
+    <ul>
+      <li>Serangan terhadap infrastruktur digital musuh</li>
+      <li>Propaganda dan disinformasi digital</li>
+      <li>Pencurian data intelijen</li>
+    </ul>
+    <h3>AI dalam Militer</h3>
+    <p>Kecerdasan buatan digunakan untuk analisis data intelijen, sistem senjata otonom, dan pengambilan keputusan di medan perang secara real-time.</p>
   `},
-  { img:"cold war.jpg", kategori:"Sejarah", title:"Perang Dingin: Dua Kekuatan yang Mengancam Dunia", tanggal:"20 Mei 2024", desc:"Rivalitas Amerika Serikat dan Uni Soviet yang berlangsung puluhan tahun dan membentuk peta dunia modern.", isi:`
+  // 4
+  { kategori:"Sejarah", title:"Perang Dingin: Dua Kekuatan yang Mengancam Dunia", tanggal:"20 Mei 2024", isi:`
     <p>Perang Dingin (1947–1991) adalah persaingan geopolitik, ideologis, dan militer antara Amerika Serikat dan Uni Soviet yang berlangsung hampir setengah abad.</p>
+    <h3>Mengapa Disebut "Dingin"?</h3>
+    <p>Karena kedua kekuatan tidak pernah bertempur secara langsung, melainkan melalui negara-negara proksi, perlombaan senjata, dan persaingan teknologi.</p>
     <h3>Peristiwa Kunci</h3>
-    <ul><li><strong>Blokade Berlin (1948)</strong> — Soviet memblokade Berlin Barat, AS merespons dengan jembatan udara.</li><li><strong>Krisis Rudal Kuba (1962)</strong> — Dunia hampir menuju perang nuklir.</li><li><strong>Perlombaan Luar Angkasa</strong> — Sputnik, Apollo 11, persaingan teknologi antariksa.</li></ul>
+    <ul>
+      <li><strong>Blokade Berlin (1948)</strong> — Soviet memblokade Berlin Barat, AS merespons dengan jembatan udara.</li>
+      <li><strong>Krisis Rudal Kuba (1962)</strong> — Dunia hampir menuju perang nuklir.</li>
+      <li><strong>Perlombaan Luar Angkasa</strong> — Sputnik, Apollo 11, persaingan teknologi antariksa.</li>
+      <li><strong>Perang Vietnam & Korea</strong> — Perang proksi yang menelan jutaan korban.</li>
+    </ul>
+    <h3>Akhir Perang Dingin</h3>
+    <p>Runtuhnya Tembok Berlin pada 1989 dan bubarnya Uni Soviet pada 1991 mengakhiri Perang Dingin dengan kemenangan blok Barat.</p>
   `},
-  { img:"spaincivilwar.jpg", kategori:"Perang", title:"Perang Saudara Spanyol", tanggal:"1 Jun 2024", desc:"Konflik brutal 1936–1939 yang membelah Spanyol menjadi dua kubu dan menjadi pemanasan Perang Dunia II.", isi:`
+  // 5
+  { kategori:"Perang", title:"Perang Saudara Spanyol", tanggal:"1 Juni 2024", isi:`
     <p>Perang Saudara Spanyol (1936–1939) adalah konflik antara pemerintah Republik Spanyol yang sah melawan pasukan nasionalis pimpinan Jenderal Francisco Franco.</p>
+    <h3>Latar Belakang</h3>
+    <p>Ketegangan politik antara kaum kiri dan kanan telah lama membara di Spanyol. Pada Juli 1936, Franco memimpin kudeta militer yang gagal, namun memicu perang saudara yang menghancurkan.</p>
+    <h3>Pihak yang Bertarung</h3>
+    <ul>
+      <li><strong>Republik</strong> — didukung Uni Soviet dan relawan internasional (Brigade Internasional)</li>
+      <li><strong>Nasionalis</strong> — didukung Nazi Jerman dan Fasis Italia</li>
+    </ul>
     <h3>Pemboman Guernica</h3>
     <p>Pada April 1937, Jerman mengebom kota Guernica sebagai "latihan" untuk Perang Dunia II. Tragedi ini diabadikan Pablo Picasso dalam lukisan terkenal "Guernica".</p>
+    <h3>Akhir Perang</h3>
+    <p>Franco memenangkan perang pada April 1939 dan memerintah Spanyol sebagai diktator hingga kematiannya pada 1975. Perang ini menewaskan sekitar 500.000 orang.</p>
   `},
-  { img:"winterwr.jpg", kategori:"Perang", title:"Perang Musim Dingin Finlandia", tanggal:"3 Jun 2024", desc:"Bagaimana Finlandia kecil berhasil menahan serangan Uni Soviet yang jauh lebih besar selama musim dingin 1939.", isi:`
-    <p>Perang Musim Dingin (30 November 1939 – 13 Maret 1940) adalah konflik antara Uni Soviet dan Finlandia. Meski kalah secara jumlah, Finlandia memberikan perlawanan luar biasa.</p>
+  // 6
+  { kategori:"Perang", title:"Perang Musim Dingin Finlandia", tanggal:"3 Juni 2024", isi:`
+    <p>Perang Musim Dingin (30 November 1939 – 13 Maret 1940) adalah konflik antara Uni Soviet dan Finlandia. Meski kalah secara jumlah, Finlandia memberikan perlawanan luar biasa yang mengejutkan dunia.</p>
+    <h3>Kekuatan Kedua Pihak</h3>
+    <ul>
+      <li><strong>Soviet</strong> — 450.000 tentara, 6.000 tank, 3.800 pesawat</li>
+      <li><strong>Finlandia</strong> — 300.000 tentara, 30 tank, 130 pesawat</li>
+    </ul>
+    <h3>Taktik Finlandia</h3>
+    <p>Tentara Finlandia memanfaatkan hutan dan salju tebal untuk bertempur secara gerilya. Pasukan ski Finlandia bergerak cepat dan menyergap kolom Soviet yang lambat di medan salju.</p>
     <h3>Simo Häyhä — White Death</h3>
     <p>Sniper legendaris Finlandia ini mencatat 500+ konfirmasi pembunuhan dalam 100 hari, menjadikannya sniper paling mematikan dalam sejarah perang modern.</p>
+    <h3>Hasil Perang</h3>
+    <p>Finlandia akhirnya kalah dan harus menyerahkan 11% wilayahnya kepada Soviet. Namun ketahanan Finlandia memalukan Uni Soviet di mata dunia.</p>
   `},
-  { img:"objct7775.jpg", kategori:"Senjata", title:"Tank Object 775", tanggal:"5 Jun 2024", desc:"Tank eksperimental Soviet dengan meriam roket unik yang tidak pernah diproduksi massal.", isi:`
+  // 7
+  { kategori:"Senjata", title:"Tank Object 775", tanggal:"5 Juni 2024", isi:`
     <p>Object 775 adalah tank eksperimental Soviet yang dikembangkan pada awal 1960-an dengan desain yang sangat unik dan revolusioner.</p>
     <h3>Desain Unik</h3>
-    <p>Tank ini menggunakan meriam-peluncur roket kaliber 125mm yang bisa menembakkan rudal anti-tank berpemandu dari dalam lambung tank yang sangat rendah.</p>
+    <p>Tank ini menggunakan meriam-peluncur roket (ATGM launcher) kaliber 125mm yang bisa menembakkan rudal anti-tank berpemandu dari dalam lambung tank yang sangat rendah.</p>
+    <h3>Spesifikasi</h3>
+    <ul>
+      <li><strong>Berat</strong> — sekitar 36 ton</li>
+      <li><strong>Senjata utama</strong> — meriam roket 125mm</li>
+      <li><strong>Awak</strong> — hanya 2 orang</li>
+      <li><strong>Profil</strong> — sangat rendah, sulit dijadikan target</li>
+    </ul>
+    <h3>Mengapa Tidak Diproduksi?</h3>
+    <p>Meski inovatif, Object 775 memiliki masalah serius — jangkauan penglihatan awak sangat terbatas dan sistem senjatanya terlalu kompleks. Soviet akhirnya memilih T-64.</p>
   `},
-  { img:"maus.jpg", kategori:"Senjata", title:"Tank Maus — Monster Baja Nazi", tanggal:"7 Jun 2024", desc:"Tank terberat yang pernah dibuat manusia, 188 ton baja Jerman yang tidak pernah bertempur di medan perang.", isi:`
-    <p>Panzerkampfwagen VIII Maus adalah tank terberat yang pernah dibuat dalam sejarah. Dengan bobot 188 ton, tank raksasa ini adalah proyek ambisius Nazi Jerman.</p>
+  // 8
+  { kategori:"Senjata", title:"Tank Maus — Monster Baja Nazi", tanggal:"7 Juni 2024", isi:`
+    <p>Panzerkampfwagen VIII Maus adalah tank terberat yang pernah dibuat dalam sejarah. Dengan bobot 188 ton, tank raksasa ini adalah proyek ambisius Nazi Jerman yang tidak pernah bertempur.</p>
+    <h3>Spesifikasi Monster</h3>
+    <ul>
+      <li><strong>Berat</strong> — 188 ton</li>
+      <li><strong>Panjang</strong> — 10,2 meter</li>
+      <li><strong>Senjata utama</strong> — meriam 128mm + meriam 75mm</li>
+      <li><strong>Baju baja</strong> — hingga 240mm di bagian depan</li>
+      <li><strong>Kecepatan</strong> — hanya 20 km/jam</li>
+    </ul>
     <h3>Masalah Besar</h3>
     <p>Maus terlalu berat untuk melewati jembatan manapun di Eropa. Tank ini harus menyeberangi sungai dengan cara menyelam di dasar sungai menggunakan snorkel.</p>
+    <h3>Nasib Maus</h3>
+    <p>Hanya 2 unit yang berhasil dibuat. Keduanya dihancurkan oleh Jerman sendiri agar tidak jatuh ke tangan Soviet. Satu unit kini ada di Museum Tank Kubinka, Rusia.</p>
   `},
-  { img:"a.o.t.d.m..jpg", kategori:"Sejarah", title:"Attack of the Dead Men", tanggal:"9 Jun 2024", desc:"100 tentara Rusia yang terkena gas klorin bangkit menyerang dan memukul mundur pasukan Jerman.", isi:`
+  // 9
+  { kategori:"Sejarah", title:"Attack of the Dead Men", tanggal:"9 Juni 2024", isi:`
     <p>"Serangan Orang Mati" terjadi pada 6 Agustus 1915 di Benteng Osowiec, Polandia — salah satu kisah paling luar biasa dalam sejarah Perang Dunia I.</p>
+    <h3>Serangan Gas Jerman</h3>
+    <p>Jerman melancarkan serangan gas klorin dalam skala besar — 30 tabung gas menghasilkan awan beracun setinggi 12 meter. Sekitar 100 tentara Rusia yang tersisa terkena gas mematikan ini.</p>
     <h3>Bangkit dari Kematian</h3>
     <p>Tentara Rusia yang sudah sekarat, dengan paru-paru terbakar, kulit melepuh, dan memuntahkan darah — bangkit dan melancarkan serangan balik dengan bayonet.</p>
+    <h3>Akibat bagi Jerman</h3>
+    <p>Pasukan Jerman yang melihat puluhan "zombie" berdarah menyerang mereka panik besar. Mereka mundur dan saling menginjak satu sama lain. Ratusan tentara Jerman meninggal karena kepanikan ini.</p>
+    <h3>Warisan</h3>
+    <p>Kisah ini menjadi legenda dalam sejarah militer Rusia sebagai simbol keteguhan jiwa dan keberanian yang melampaui batas manusiawi.</p>
   `},
-  { img:"rif.jpg", kategori:"Perang", title:"Perang Rif", tanggal:"11 Jun 2024", desc:"Perlawanan suku Berber Maroko melawan Spanyol dan Prancis 1921–1926.", isi:`
+  // 10
+  { kategori:"Perang", title:"Perang Rif", tanggal:"11 Juni 2024", isi:`
     <p>Perang Rif (1921–1926) adalah perlawanan suku Berber di pegunungan Rif, Maroko Utara, melawan penjajahan Spanyol dan kemudian Prancis, dipimpin oleh Abd el-Krim.</p>
     <h3>Bencana Annual 1921</h3>
     <p>Pada Juli 1921, pasukan Berber menghancurkan total 20.000 tentara Spanyol di Annual — kekalahan militer terparah Spanyol sejak abad ke-16.</p>
+    <h3>Republik Rif</h3>
+    <p>Abd el-Krim mendirikan Republik Konfederasi Suku Rif — negara modern pertama di Afrika dengan konstitusi dan tentara reguler.</p>
+    <h3>Penggunaan Senjata Kimia</h3>
+    <p>Spanyol dan Prancis menggunakan gas mustard dan fosgen dalam skala besar terhadap penduduk sipil Berber — salah satu penggunaan senjata kimia pertama dalam sejarah kolonial.</p>
+    <h3>Pengaruh Global</h3>
+    <p>Kemenangan awal Abd el-Krim menginspirasi gerakan kemerdekaan di Asia, Afrika, dan Timur Tengah, termasuk Ho Chi Minh dan Mao Zedong.</p>
   `},
-  { img:"ww1.jpg", kategori:"Perang", title:"Perang Dunia I", tanggal:"13 Jun 2024", desc:"Konflik global 1914–1918 yang menghancurkan empat kekaisaran besar dan merenggut 20 juta jiwa.", isi:`
-    <p>Perang Dunia I (1914–1918) adalah konflik global yang menghancurkan empat kekaisaran besar — Ottoman, Austro-Hungaria, Jerman, dan Rusia.</p>
+  // 11
+  { kategori:"Perang", title:"Perang Dunia I", tanggal:"13 Juni 2024", isi:`
+    <p>Perang Dunia I (1914–1918) adalah konflik global yang menghancurkan empat kekaisaran besar — Ottoman, Austro-Hungaria, Jerman, dan Rusia — serta menewaskan lebih dari 20 juta orang.</p>
+    <h3>Pemicu Perang</h3>
+    <p>Pembunuhan Archduke Franz Ferdinand di Sarajevo pada 28 Juni 1914 memicu serangkaian aliansi yang menyeret seluruh Eropa ke dalam perang hanya dalam hitungan minggu.</p>
     <h3>Perang Parit</h3>
     <p>PD I didominasi perang parit di Front Barat. Jutaan tentara hidup dalam parit berlumpur selama berbulan-bulan hanya untuk maju beberapa meter.</p>
+    <h3>Pertempuran Paling Berdarah</h3>
+    <ul>
+      <li><strong>Pertempuran Somme</strong> — 1 juta korban dalam 141 hari</li>
+      <li><strong>Pertempuran Verdun</strong> — 700.000 korban dalam 10 bulan</li>
+      <li><strong>Pertempuran Gallipoli</strong> — 500.000 korban di kedua pihak</li>
+    </ul>
+    <h3>Akhir Perang & Dampak</h3>
+    <p>Jerman menyerah pada 11 November 1918. Perjanjian Versailles yang keras menjadi benih lahirnya Nazi dan Perang Dunia II dua dekade kemudian.</p>
   `},
-  { img:"handschar.jpg", kategori:"Militer", title:"Divisi SS Handschar", tanggal:"15 Jun 2024", desc:"Divisi Waffen-SS unik yang terdiri dari Muslim Bosnia bertempur untuk Nazi Jerman di Balkan.", isi:`
+  // 12
+  { kategori:"Militer", title:"Divisi SS Handschar", tanggal:"15 Juni 2024", isi:`
     <p>Divisi SS ke-13 "Handschar" adalah divisi Waffen-SS yang unik karena sebagian besar anggotanya adalah Muslim Bosnia, menjadi unit Muslim terbesar dalam sejarah militer Jerman.</p>
+    <h3>Pembentukan</h3>
+    <p>Heinrich Himmler membentuk divisi ini setelah melihat potensi rekrutmen di Bosnia, dengan dukungan Grand Mufti Yerusalem Amin al-Husseini.</p>
     <h3>Keunikan Divisi</h3>
-    <ul><li>Diizinkan membawa imam di setiap batalion</li><li>Mendapat makanan halal</li><li>Seragam khusus dengan peci fez</li></ul>
+    <ul>
+      <li>Diizinkan membawa imam di setiap batalion</li>
+      <li>Mendapat makanan halal</li>
+      <li>Seragam khusus dengan peci fez</li>
+      <li>Lambang divisi: pedang handschar dan swastika</li>
+    </ul>
+    <h3>Pemberontakan Internal</h3>
+    <p>Pada September 1943, terjadi pemberontakan dalam divisi. Sejumlah tentara menolak berperang dan membunuh beberapa perwira Jerman sebelum ditumpas.</p>
+    <h3>Kejahatan Perang</h3>
+    <p>Divisi ini terlibat dalam pembantaian warga sipil Serbia dan Yahudi di Bosnia.</p>
   `},
-  { img:"panzerfaust.jpg", kategori:"Senjata", title:"Panzerfaust — Senjata Anti-Tank Jerman", tanggal:"17 Jun 2024", desc:"Senjata anti-tank sekali pakai yang murah dan mematikan, mimpi buruk pasukan lapis baja Sekutu.", isi:`
+  // 13
+  { kategori:"Senjata", title:"Panzerfaust — Senjata Anti-Tank Jerman", tanggal:"17 Juni 2024", isi:`
     <p>Panzerfaust (bahasa Jerman: "tinju baja") adalah senjata anti-tank sekali pakai yang dikembangkan Jerman pada Perang Dunia II. Sederhana, murah, dan sangat mematikan.</p>
+    <h3>Desain Revolusioner</h3>
+    <p>Panzerfaust terdiri dari tabung baja sederhana berisi hulu ledak berbentuk kerucut. Siapapun bisa menggunakannya setelah pelatihan singkat.</p>
     <h3>Varian Utama</h3>
-    <ul><li><strong>Panzerfaust 30</strong> — jangkauan 30 meter</li><li><strong>Panzerfaust 60</strong> — jangkauan 60 meter</li><li><strong>Panzerfaust 100</strong> — jangkauan 100 meter</li></ul>
-  `},
-
-  // --- 30 ARTIKEL BARU ---
-  { img:"napoleon.jpg", kategori:"Perang", title:"Perang Napoleon: Ambisi Mengguncang Eropa", tanggal:"1 Jan 2024", desc:"Serangkaian konflik besar yang melibatkan Napoleon Bonaparte melawan koalisi Eropa.", isi:`
-    <p>Perang Napoleon (1803–1815) adalah serangkaian konflik besar yang melibatkan Kekaisaran Prancis di bawah Napoleon Bonaparte melawan berbagai koalisi kekuatan Eropa. Perang ini mengubah wajah benua secara drastis.</p>
-    <h3>Kebangkitan Napoleon</h3><p>Setelah Revolusi Prancis, Napoleon dengan cepat naik pangkat menjadi jenderal brilian. Ia berhasil menguasai sebagian besar Eropa Barat dan Tengah melalui taktik militer yang inovatif.</p>
-    <h3>Invasi ke Rusia</h3><p>Pada tahun 1812, Napoleon memimpin invasi besar-besaran ke Rusia. Namun, musim dingin yang ekstrem dan taktik bumi hangus dari tentara Rusia menghancurkan Grand Armée-nya.</p>
-  `},
-  { img:"revolution.jpg", kategori:"Sejarah", title:"Revolusi Prancis: Runtuhnya Feodalisme", tanggal:"15 Jan 2024", desc:"Periode perubahan sosial radikal yang menggulingkan monarki absolut Prancis.", isi:`
-    <p>Revolusi Prancis (1789–1799) adalah periode perubahan sosial dan politik yang radikal di Prancis. Raja Louis XVI digulingkan dan dieksekusi, mengakhiri monarki absolut.</p>
-    <h3>Penyebab</h3><p>Ketidaksetaraan sosial (sistem tiga kelas), krisis keuangan akibat perang, dan gagal panen membuat rakyat kelaparan. Ketika kabar tentang pengepungan Bastille menyebar, rakyat mulai bangkit.</p>
-    <h3>Era Teror</h3><p>Di bawah pimpinan Robespierre, ribuan orang dieksekusi dengan guillotine dalam masa yang dikenal sebagai Reign of Terror (Era Teror).</p>
-  `},
-  { img:"spartan.jpg", kategori:"Militer", title:"Pertempuran Thermopylae: 300 Spartan", tanggal:"20 Jan 2024", desc:"Kisah legendaris Raja Leonidas memimpin pasukan kecil melawan Persia.", isi:`
-    <p>Pertempuran Thermopylae (480 SM) adalah salah satu pertempuran paling legendaris dalam sejarah. Raja Leonidas dari Sparta memimpin pasukan kecil Yunani melawan invasi besar-besaran Kekaisaran Persia.</p>
-    <h3>Strategi Yunani</h3><p>Yunani memanfaatkan celah sempit di pegunungan Thermopylae untuk menetralisir keunggulan jumlah pasukan Persia. Phalanx hoplite Spartan yang disiplin menghancurkan gelombang serangan Persia.</p>
-    <h3>Pengorbanan</h3><p>Leonidas dan 300 Spartan memilih bertahan dan bertarung sampai mati untuk memberi waktu pasukan Yunani lainnya mundur.</p>
-  `},
-  { img:"crusade.jpg", kategori:"Perang", title:"Perang Salib: Perebutan Tanah Suci", tanggal:"2 Feb 2024", desc:"Ekspedisi militer umat Kristen Eropa untuk merebut Yerusalem.", isi:`
-    <p>Perang Salib adalah serangkaian ekspedisi militer yang dilakukan oleh umat Kristen Eropa pada Abad Pertengahan (abad ke-11 hingga ke-13) untuk merebut kembali Yerusalem dan Tanah Suci dari kekuasaan Muslim.</p>
-    <h3>Salahuddin Al-Ayyubi</h3><p>Pada tahun 1187, Salahuddin Al-Ayyubi memenangkan Pertempuran Hattin dan berhasil merebut kembali Yerusalem, memicu Perang Salib Ketiga.</p>
-  `},
-  { img:"rusia.jpg", kategori:"Sejarah", title:"Revolusi Rusia 1917: Lahirnya Uni Soviet", tanggal:"10 Feb 2024", desc:"Penggulingan monarki Tsar yang melahirkan negara komunis pertama.", isi:`
-    <p>Revolusi Rusia pada tahun 1917 adalah salah satu peristiwa paling penting di abad ke-20. Revolusi ini menggulingkan monarki Tsar dan melahirkan negara komunis pertama di dunia, Uni Soviet.</p>
-    <h3>Revolusi Oktober</h3><p>Kelompok Bolshevik yang dipimpin oleh Vladimir Lenin mengambil alih kekuasaan melalui kudeta. Mereka menjanjikan "Damai, Roti, dan Tanah" kepada rakyat.</p>
-  `},
-  { img:"pearlharbor.jpg", kategori:"Perang", title:"Pengeboman Pearl Harbor: Bangkitnya AS", tanggal:"12 Feb 2024", desc:"Serangan mendadak Jepang yang menyeret AS ke dalam Perang Dunia II.", isi:`
-    <p>Serangan Pearl Harbor terjadi pada 7 Desember 1941, ketika Angkatan Laut Kekaisaran Jepang melancarkan serangan mendadak terhadap pangkalan Angkatan Laut AS di Hawaii.</p>
-    <h3>Deklarasi Perang</h3><p>Keesokan harinya, Presiden Franklin D. Roosevelt berpidato dan menyebut tanggal tersebut sebagai "tanggal yang akan hidup dalam keburukan". Kongres menyatakan perang terhadap Jepang.</p>
-  `},
-  { img:"stalingrad.jpg", kategori:"Perang", title:"Pertempuran Stalingrad: Titik Balik PD II", tanggal:"15 Feb 2024", desc:"Pertempuran paling berdarah yang mematahkan mitos Nazi Jerman.", isi:`
-    <p>Pertempuran Stalingrad (1942–1943) adalah salah satu pertempuran paling berdarah dalam sejarah manusia, sekaligus menjadi titik balik Perang Dunia II di Front Timur.</p>
-    <h3>Operasi Uranus</h3><p>Soviet melancarkan Operasi Uranus, sebuah serangan besar-besaran untuk mengepung Tentara Keenam Jerman yang dipimpin Jenderal Paulus.</p>
-  `},
-  { img:"dday.jpg", kategori:"Sejarah", title:"Pendaratan Normandia (D-Day)", tanggal:"20 Feb 2024", desc:"Pendaratan amfibi terbesar dalam sejarah.", isi:`
-    <p>Operasi Overlord atau yang lebih dikenal sebagai D-Day adalah pendaratan amfibi terbesar dalam sejarah, yang terjadi pada 6 Juni 1944 di pantai Normandia, Prancis.</p>
-    <h3>Pantai Pendaratan</h3><p>Pendaratan terbagi menjadi lima pantai: Utah, Omaha, Gold, Juno, dan Sword. Pantai Omaha adalah yang paling berdarah bagi tentara Amerika.</p>
-  `},
-  { img:"hiroshima.jpg", kategori:"Senjata", title:"Bom Atom Hiroshima dan Nagasaki", tanggal:"25 Feb 2024", desc:"Satu-satunya penggunaan senjata nuklir dalam perang.", isi:`
-    <p>Pada Agustus 1945, Amerika Serikat menjatuhkan bom atom di kota Hiroshima dan Nagasaki, Jepang. Ini adalah satu-satunya penggunaan senjata nuklir dalam perang di sejarah manusia.</p>
-    <h3>Korban</h3><p>Sekitar 100.000 hingga 200.000 orang tewas seketika atau dalam beberapa bulan berikutnya akibat luka bakar, radiasi, dan penyakit.</p>
-  `},
-  { img:"korea.jpg", kategori:"Perang", title:"Perang Korea: Konflik Tak Berakhir", tanggal:"1 Mar 2024", desc:"Perang proksi Perang Dingin antara Korea Utara dan Selatan.", isi:`
-    <p>Perang Korea (1950–1953) adalah perang antara Korea Utara (didukung China dan Uni Soviet) melawan Korea Selatan (didukung PBB dan AS).</p>
-    <h3>Gencatan Senjata</h3><p>Perang berakhir dengan gencatan senjata pada 27 Juli 1953 di Panmunjom, namun secara resmi kedua negara masih dalam keadaan perang hingga saat ini.</p>
-  `},
-  { img:"vietnam.jpg", kategori:"Perang", title:"Perang Vietnam: Neraka di Hutan", tanggal:"5 Mar 2024", desc:"Konflik panjang yang melibatkan taktik gerilya Viet Cong.", isi:`
-    <p>Perang Vietnam (1955–1975) adalah konflik panjang dan berdarah antara Vietnam Utara (komunis) melawan Vietnam Selatan (didukung AS).</p>
-    <h3>Taktik Gerilya</h3><p>Viet Cong (gerilyawan komunis) menggunakan taktik perang gerilya di hutan rimba, membuat pasukan AS yang memiliki teknologi canggih kesulitan.</p>
-  `},
-  { img:"luther.jpg", kategori:"Sejarah", title:"Reformasi Protestan: Guncangan Gereja", tanggal:"10 Mar 2024", desc:"Gerakan Martin Luther yang menantang otoritas Gereja Katolik.", isi:`
-    <p>Reformasi Protestan adalah gerakan keagamaan pada abad ke-16 yang menantang otoritas Gereja Katolik Roma dan Paus, yang berujung pada perpecahan besar dalam agama Kristen.</p>
-    <h3>Martin Luther</h3><p>Seorang biarawan Jerman, Martin Luther, memprotes praktik penjualan indulgensi (surat pengampunan dosa) oleh Gereja. Pada tahun 1517, ia memakukan 95 Tesis di pintu gereja di Wittenberg.</p>
-  `},
-  { img:"mongol.jpg", kategori:"Militer", title:"Genghis Khan dan Kekaisaran Mongol", tanggal:"15 Mar 2024", desc:"Pendiri kekaisaran darat terbesar dalam sejarah.", isi:`
-    <p>Genghis Khan (1162–1227) adalah pendiri Kekaisaran Mongol, kekaisaran darat terbesar dalam sejarah yang membentang dari Asia Timur hingga Eropa Timur.</p>
-    <h3>Penyatuan Suku</h3><p>Lahir dengan nama Temüjin, ia berhasil menyatukan suku-suku Mongol yang bertikai dan diproklamasikan sebagai "Khan Agung" pada tahun 1206.</p>
-  `},
-  { img:"columbus.jpg", kategori:"Sejarah", title:"Penemuan Benua Amerika oleh Columbus", tanggal:"20 Mar 2024", desc:"Pelayaran Columbus pada 1492 yang membuka pintu kolonialisme.", isi:`
-    <p>Pada tahun 1492, penjelajah Italia Christopher Columbus, yang disponsori oleh Kerajaan Spanyol, melakukan pelayaran melintasi Samudra Atlantik dan mencapai benua Amerika.</p>
-    <h3>Pendaratan Pertama</h3><p>Ia mendarat di pulau yang ia beri nama San Salvador (sekarang Bahama), dan kemudian menjelajahi Kuba serta Hispaniola.</p>
-  `},
-  { img:"spartacus.jpg", kategori:"Militer", title:"Pasukan Spartacus: Pemberontakan Gladiator", tanggal:"25 Mar 2024", desc:"Pemberontakan budak terbesar melawan Republik Romawi.", isi:`
-    <p>Pada tahun 73 SM, Spartacus, seorang gladiator Trakia yang diperbudak, memimpin pemberontakan besar melawan Republik Romawi.</p>
-    <h3>Kemenangan Awal</h3><p>Pasukan budak Spartacus mengejutkan Roma dengan mengalahkan beberapa legiun Romawi, sehingga jumlah mereka membengkak menjadi puluhan ribu orang.</p>
-  `},
-  { img:"30years.jpg", kategori:"Perang", title:"Perang Tiga Puluh Tahun", tanggal:"1 Apr 2024", desc:"Perang besar Eropa yang awalnya dipicu konflik agama.", isi:`
-    <p>Perang Tiga Puluh Tahun (1618–1648) adalah perang besar yang melibatkan hampir semua negara Eropa, awalnya dipicu oleh konflik agama antara Katolik dan Protestan.</p>
-    <h3>Perdamaian Westfalen</h3><p>Perang berakhir dengan Perjanjian Westfalen pada tahun 1648, yang mengakui kedaulatan negara-negara dan menjadi dasar bagi sistem negara modern.</p>
-  `},
-  { img:"egypt.jpg", kategori:"Sejarah", title:"Peradaban Mesir Kuno dan Piramida", tanggal:"5 Apr 2024", desc:"Salah satu peradaban tertua dengan peninggalan arsitektur luar biasa.", isi:`
-    <p>Mesir Kuno adalah salah satu peradaban paling maju dan bertahan lama dalam sejarah manusia, berkembang di sepanjang lembah Sungai Nil selama lebih dari 3.000 tahun.</p>
-    <h3>Piramida Giza</h3><p>Piramida Agung Giza dibangun sebagai makam Firaun Khufu. Ini adalah satu-satunya Keajaiban Dunia Kuno yang masih berdiri hingga kini.</p>
-  `},
-  { img:"rome.jpg", kategori:"Sejarah", title:"Kekaisaran Romawi: Kejayaan dan Keruntuhan", tanggal:"10 Apr 2024", desc:"Dari Republik menjadi Kekaisaran besar yang menguasai Eropa.", isi:`
-    <p>Kekaisaran Romawi adalah salah satu kekaisaran terbesar dan paling berpengaruh dalam sejarah, yang pada puncaknya menguasai wilayah luas di Eropa, Afrika Utara, dan Timur Tengah.</p>
-    <h3>Dari Republik ke Kekaisaran</h3><p>Setelah pembunuhan Julius Caesar dan perang saudara, Augustus menjadi Kaisar pertama Romawi pada tahun 27 SM.</p>
-    <h3>Pax Romana</h3><p>Periode perdamaian dan stabilitas yang berlangsung sekitar 200 tahun, di mana perdagangan dan arsitektur berkembang pesat.</p>
-    <h3>Faktor Keruntuhan</h3><p>Krisis ekonomi, korupsi politik, invasi suku-suku barbar, dan pembagian kekaisaran menjadi dua (Timur dan Barat) melemahkan Roma.</p>
-    <h3>Akhir Kekaisaran Barat</h3><p>Pada tahun 476 M, Kaisar terakhir Romawi Barat digulingkan oleh Odoacer, menandai berakhirnya era Romawi Kuno di Eropa Barat.</p>
-  `},
-  { img:"troya.jpg", kategori:"Perang", title:"Perang Troya: Mitos atau Nyata?", tanggal:"15 Apr 2024", desc:"Konflik legendaris antara Yunani dan Troya.", isi:`
-    <p>Perang Troya adalah salah satu konflik paling terkenal dalam mitologi Yunani, diabadikan dalam puisi epik Homer, <i>Iliad</i>.</p>
-    <h3>Penyebab Perang</h3><p>Perang dipicu oleh penculikan Helen dari Sparta oleh Paris dari Troya, yang melanggar hukum keramahan dan memicu sumpah para raja Yunani.</p>
-    <h3>Kuda Troya</h3><p>Setelah pengepungan selama 10 tahun, Yunani menggunakan taktik licik: bersembunyi di dalam kuda kayu raksasa yang ditinggalkan di gerbang kota.</p>
-    <h3>Bukti Arkeologi</h3><p>Pada abad ke-19, arkeolog Heinrich Schliemann menemukan reruntuhan kota yang diyakini sebagai Troya di Hisarlik, Turki modern.</p>
-    <h3>Warisan</h3><p>Kisah Perang Troya mengajarkan tentang kesombongan (hubris), pengkhianatan, dan kehancuran yang dibawa oleh perang.</p>
-  `},
-  { img:"alexander.jpg", kategori:"Militer", title:"Alexander Agung: Penakluk Dunia", tanggal:"20 Apr 2024", desc:"Raja Makedonia yang menaklukkan Kekaisaran Persia hingga India.", isi:`
-    <p>Alexander III dari Makedonia, yang dikenal sebagai Alexander Agung (356–323 SM), adalah salah satu komandan militer paling sukses dalam sejarah.</p>
-    <h3>Awal Penaklukan</h3><p>Setelah naik takhta pada usia 20 tahun, ia segera menundukkan kota-kota Yunani yang memberontak dan memulai invasi ke Kekaisaran Persia.</p>
-    <h3>Menaklukkan Persia</h3><p>Dalam pertempuran Issus dan Gaugamela, Alexander mengalahkan pasukan Persia yang jauh lebih besar di bawah Raja Darius III.</p>
-    <h3>Hingga ke India</h3><p>Ambisi Alexander membawanya hingga ke sungai Indus di India. Pasukannya yang kelelahan akhirnya memaksa ia untuk kembali ke Babilonia.</p>
-    <h3>Kematian dan Warisan</h3><p>Alexander meninggal secara misterius pada usia 32 tahun di Babilonia. Kekaisarannya terpecah, namun ia meninggalkan warisan penyebaran budaya Yunani (Hellenisme).</p>
-  `},
-  { img:"indus.jpg", kategori:"Sejarah", title:"Peradaban Lembah Indus", tanggal:"25 Apr 2024", desc:"Peradaban maju kuno di Asia Selatan dengan sistem drainase canggih.", isi:`
-    <p>Peradaban Lembah Indus (sekitar 3300–1300 SM) adalah salah satu peradaban paling awal di dunia, berkembang di wilayah yang sekarang menjadi Pakistan dan India barat laut.</p>
-    <h3>Kota Terencana</h3><p>Berbeda dengan peradaban lain, kota-kota seperti Mohenjo-daro dan Harappa dibangun dengan tata letak grid yang sangat terorganisir.</p>
-    <h3>Sistem Sanitasi</h3><p>Peradaban ini memiliki sistem drainase dan saluran air limbah yang canggih, jauh mendahului zamannya.</p>
-    <h3>Tulisan yang Belum Terpecahkan</h3><p>Mereka menggunakan simbol-simbol yang diukir pada segel batu, namun hingga kini tulisan Indus belum berhasil diuraikan oleh para ahli.</p>
-    <h3>Misteri Kemunduran</h3><p>Kemunduran peradaban ini secara misterius dikaitkan dengan perubahan iklim, banjir, atau invasi bangsa Arya.</p>
-  `},
-  { img:"janissary.jpg", kategori:"Militer", title:"Pasukan Janissari: Pengawal Elit Ottoman", tanggal:"1 Mei 2024", desc:"Pasukan infanteri elit Kekaisaran Ottoman yang dilatih sejak muda.", isi:`
-    <p>Janissari (Yeniçeri) adalah pasukan infanteri elit Kekaisaran Ottoman yang menjadi tulang punggung penaklukan Ottoman di Eropa, Asia, dan Afrika.</p>
-    <h3>Sistem Devshirme</h3><p>Pasukan ini direkrut melalui sistem Devshirme, di mana anak-anak muda Kristen dari wilayah taklukan diambil, diislamkan, dan dilatih secara militer.</p>
-    <h3>Disiplin dan Kekuatan</h3><p>Janissari adalah salah satu pasukan pertama yang menggunakan senjata api (musket) secara massal dan sangat disiplin dalam pertempuran.</p>
-    <h3>Kekuasaan yang Berlebihan</h3><p>Seiring berjalannya waktu, Janissari menjadi sangat kuat dan mulai ikut campur dalam urusan politik serta melakukan kudeta terhadap Sultan.</p>
-    <h3>Pembubaran</h3><p>Karena dianggap sebagai ancaman, Sultan Mahmud II membubarkan korps Janissari secara kejam dalam "Insiden yang Menguntungkan" pada tahun 1826.</p>
-  `},
-  { img:"100years.jpg", kategori:"Perang", title:"Perang Seratus Tahun", tanggal:"5 Mei 2024", desc:"Konflik berkepanjangan antara Inggris dan Prancis.", isi:`
-    <p>Perang Seratus Tahun (1337–1453) adalah serangkaian konflik bersenjata antara Kerajaan Inggris dan Kerajaan Prancis yang berlangsung lebih dari satu abad.</p>
-    <h3>Penyebab Konflik</h3><p>Perang dipicu oleh persaingan dinasti atas takhta Prancis serta perebutan wilayah strategis seperti Flanders yang kaya akan industri wol.</p>
-    <h3>Keunggulan Busur Panjang</h3><p>Inggris memenangkan beberapa pertempuran besar (seperti Crécy dan Agincourt) berkat penggunaan busur panjang (longbow) yang mampu menembus baju baja ksatria Prancis.</p>
-    <h3>Joan of Arc</h3><p>Seorang gadis petani Prancis, Joan of Arc, mengklaim mendapat wahyu ilahi. Ia memimpin pasukan Prancis meraih kemenangan penting di Orléans.</p>
-    <h3>Akhir Perang</h3><p>Prancis akhirnya memenangkan perang, merebut kembali sebagian besar wilayahnya. Perang ini mempercepat transisi dari pasukan ksatria feodal ke tentara nasional yang profesional.</p>
-  `},
-  { img:"industry.jpg", kategori:"Sejarah", title:"Revolusi Industri: Awal Dunia Modern", tanggal:"10 Mei 2024", desc:"Pergeseran besar dari tenaga manusia ke mesin.", isi:`
-    <p>Revolusi Industri adalah periode transisi dari ekonomi agraris ke ekonomi industri, yang dimulai di Inggris pada abad ke-18 dan menyebar ke seluruh dunia.</p>
-    <h3>Mesin Uap</h3><p>Penemuan mesin uap oleh James Watt menjadi katalis utama, mengubah tenaga manusia dan hewan menjadi tenaga mesin yang tak terbatas.</p>
-    <h3>Pabrik dan Urbanisasi</h3><p>Produksi beralih dari rumah ke pabrik-pabrik besar. Hal ini memicu urbanisasi masif, di mana jutaan orang pindah dari desa ke kota untuk mencari kerja.</p>
-    <h3>Kondisi Kerja yang Buruk</h3><p>Revolusi Industri awal ditandai dengan eksploitasi buruh, termasuk penggunaan tenaga kerja anak-anak, jam kerja yang panjang, dan lingkungan kerja yang berbahaya.</p>
-    <h3>Dampak Jangka Panjang</h3><p>Revolusi ini mengubah struktur sosial, melahirkan kelas menengah dan kelas pekerja, serta memicu kemajuan pesat dalam transportasi (kereta api) dan komunikasi.</p>
-  `},
-  { img:"opium.jpg", kategori:"Perang", title:"Perang Candu: Inggris vs Tiongkok", tanggal:"15 Mei 2024", desc:"Konflik yang membuka pintu Tiongkok bagi imperialis Barat.", isi:`
-    <p>Perang Candu Pertama (1839–1842) adalah konflik militer antara Inggris dan Dinasti Qing Tiongkok, yang dipicu oleh upaya Tiongkok menghentikan perdagangan opium.</p>
-    <h3>Masalah Opium</h3><p>Inggris mengekspor opium dari India ke Tiongkok untuk menyeimbangkan defisit perdagangan teh. Akibatnya, terjadi krisis kecanduan opium di Tiongkok.</p>
-    <h3>Penghancuran Opium</h3><p>Komisaris Tiongkok, Lin Zexu, menyita dan menghancurkan berton-ton opium milik pedagang Inggris di Kanton.</p>
-    <h3>Keunggulan Angkatan Laut Inggris</h3><p>Inggris merespons dengan mengirim armada laut modern. Tiongkok yang masih menggunakan teknologi abad pertengahan tidak mampu membendung kekuatan Inggris.</p>
-    <h3>Perjanjian Nanjing</h3><p>Tiongkok terpaksa menandatangani Perjanjian Nanjing yang tidak setara, menyerahkan Hong Kong kepada Inggris dan membuka pelabuhan untuk pedagang asing. Ini menandai awal "Abad Penghinaan" bagi Tiongkok.</p>
-  `},
-  { img:"gurkha.jpg", kategori:"Militer", title:"Pasukan Gurkha: Tentara Legendaris Nepal", tanggal:"20 Mei 2024", desc:"Pasukan pemberani dari Nepal yang bertempur untuk Inggris.", isi:`
-    <p>Pasukan Gurkha adalah tentara dari Nepal yang terkenal karena keberanian, ketangguhan, dan loyalitas mereka dalam pertempuran. Mereka telah bertempur untuk Kerajaan Inggris dan India selama hampir 200 tahun.</p>
-    <h3>Sejarah Perekrutan</h3><p>Setelah Perang Inggris-Nepal (1814–1816), Inggris sangat terkesan dengan kemampuan tempur prajurit Nepal. Sejak saat itu, mereka mulai merekrut orang-orang Gurkha ke dalam pasukan Inggris.</p>
-    <h3>Pisau Kukri</h3><p>Senjata ikonik mereka adalah Kukri, sebilah pisau melengkung yang sangat tajam. Kukri digunakan untuk memotong tanaman, memasak, sekaligus sebagai senjata mematikan jarak dekat.</p>
-    <h3>Keberanian di Medan Perang</h3><p>Selama Perang Dunia I dan II, pasukan Gurkha menunjukkan keberanian luar biasa. Di medan perang yang sulit seperti hutan rimba dan pegunungan, mereka sering menjadi pasukan pemimpin.</p>
-    <h3>Penghargaan Victoria Cross</h3><p>Banyak prajurit Gurkha yang menerima Victoria Cross, penghargaan militer tertinggi Inggris, atas tindakan kepahlawanan mereka di luar kewajiban.</p>
-    <h3>Legenda yang Abadi</h3><p>Hingga saat ini, pasukan Gurkha masih bertugas di berbagai misi perdamaian dan operasi militer di seluruh dunia, mempertahankan reputasi mereka sebagai salah satu tentara paling ditakuti di dunia.</p>
-  `},
-  { img:"maya.jpg", kategori:"Sejarah", title:"Peradaban Maya: Astronomi dan Matematika", tanggal:"25 Mei 2024", desc:"Peradaban Amerika Tengah yang menguasai astronomi.", isi:`
-    <p>Peradaban Maya berkembang di wilayah Meksiko selatan, Guatemala, Belize, dan Honduras. Mereka mencapai puncak kejayaannya antara tahun 250 hingga 900 Masehi.</p>
-    <h3>Kota-Kota Megah</h3><p>Maya membangun kota-kota besar dengan piramida megah, kuil, dan istana, seperti Tikal, Palenque, dan Chichen Itza, yang menjadi pusat perdagangan dan agama.</p>
-    <h3>Keahlian Astronomi</h3><p>Maya adalah astronom yang sangat hebat. Mereka mengamati pergerakan matahari, bulan, dan planet Venus dengan akurasi yang menakjubkan, jauh sebelum teleskop ditemukan.</p>
-    <h3>Kalender Maya</h3><p>Mereka menciptakan sistem kalender yang sangat kompleks, termasuk Kalender Hitung Panjang dan Tzolk'in. Kalender ini sangat akurat dalam menghitung siklus waktu.</p>
-    <h3>Konsep Angka Nol</h3><p>Maya adalah salah satu peradaban awal di dunia yang secara mandiri mengembangkan konsep matematika "nol" (zero) dan menggunakan sistem vigesimal (basis 20).</p>
-    <h3>Keruntuhan</h3><p>Secara misterius, peradaban Maya di dataran rendah runtuh pada abad ke-9, kemungkinan besar akibat kekeringan parah, perang saudara, dan kerusakan lingkungan.</p>
-  `},
-  { img:"boer.jpg", kategori:"Perang", title:"Perang Boer: Perlawanan Afrika Selatan", tanggal:"30 Mei 2024", desc:"Perang antara Inggris melawan koloni Boer.", isi:`
-    <p>Perang Boer (1899–1902) adalah perang antara Kekaisaran Inggris melawan dua republik Boer merdeka, yaitu Republik Afrika Selatan (Transvaal) dan Negara Bebas Oranye.</p>
-    <h3>Penyebab Perang</h3><p>Penemuan tambang emas dan berlian besar di wilayah Boer memicu ambisi Inggris untuk menguasai seluruh Afrika Selatan (Imperialisme).</p>
-    <h3>Taktik Gerilya Boer</h3><p>Meskipun kalah jumlah, petani Boer (komando) bertempur dengan sangat gigih. Mereka menggunakan taktik menembak dari jarak jauh, menunggang kuda, dan perang gerilya di medan terbuka.</p>
-    <h3>Kamp Konsentrasi</h3><p>Untuk memutus dukungan rakyat terhadap gerilyawan Boer, pasukan Inggris membumihanguskan peternakan dan menempatkan wanita serta anak-anak Boer ke dalam kamp konsentrasi. Ribuan orang meninggal akibat kelaparan dan penyakit.</p>
-    <h3>Perjanjian Vereeniging</h3><p>Perang berakhir pada tahun 1902 dengan Perjanjian Vereeniging. Republik Boer harus menyerah dan bergabung dengan Uni Afrika Selatan di bawah kekuasaan Inggris.</p>
-  `},
-  { img:"terracotta.jpg", kategori:"Militer", title:"Pasukan Terakota: Pasukan Bawah Tanah", tanggal:"5 Jun 2024", desc:"Pasukan tentara dari Dinasti Qin yang menjadi penemuan arkeologi.", isi:`
-    <p>Pasukan Terakota adalah koleksi patung yang menggambarkan tentara Kaisar Qin Shi Huang, kaisar pertama Tiongkok. Patung-patung ini ditemukan pada tahun 1974 oleh petani lokal yang sedang menggali sumur.</p>
-    <h3>Tujuan Dibuat</h3><p>Kaisar Qin membangun pasukan ini sebagai bekal di alam baka. Ia percaya bahwa pasukan tanah liat ini akan melindunginya di akhirat, layaknya pasukan sungguhan.</p>
-    <h3>Skala Megah</h3><p>Diperkirakan terdapat lebih dari 8.000 patung tentara, 130 kereta kuda, dan 520 kuda, yang dikubur dalam formasi perang yang sangat rapi di area seluas 56 kilometer persegi.</p>
-    <h3>Detail Luar Biasa</h3><p>Keajaiban dari patung ini adalah wajah mereka yang unik. Tidak ada dua patung yang wajahnya sama persis. Mereka juga membawa senjata asli dan mengenakan seragam sesuai pangkat militer mereka.</p>
-    <h3>Warisan UNESCO</h3><p>Saat ini, situs Mausoleum Kaisar Qin telah menjadi Situs Warisan Dunia UNESCO dan salah satu penemuan arkeologi paling penting abad ke-20.</p>
-  `},
-  { img:"alexandria.jpg", kategori:"Sejarah", title:"Perpustakaan Alexandria: Pusat Ilmu Dunia", tanggal:"10 Jun 2024", desc:"Perpustakaan terbesar di dunia kuno.", isi:`
-    <p>Perpustakaan Alexandria di Mesir kuno adalah salah satu perpustakaan terbesar dan paling penting di dunia kuno. Perpustakaan ini merupakan bagian dari Mouseion, sebuah lembaga penelitian yang didedikasikan untuk para Muses.</p>
-    <h3>Pusat Pengetahuan</h3><p>Didirikan pada abad ke-3 SM pada masa Dinasti Ptolemeus, perpustakaan ini bertujuan untuk mengumpulkan seluruh pengetahuan dunia. Kapal-kapal yang berlabuh di Alexandria konon harus menyerahkan buku mereka untuk disalin.</p>
-    <h3>Koleksi Gulungan</h3><p>Perpustakaan ini menampung ratusan ribu gulungan papirus, mencakup karya sastra, matematika, astronomi, kedokteran, dan filsafat dari Yunani, Mesir, Persia, dan India.</p>
-    <h3>Kehancuran yang Misterius</h3><p>Nasib perpustakaan ini masih menjadi misteri. Ada teori kebakaran akibat perang saudara di bawah Julius Caesar, serangan pasukan Aurelian, atau penghancuran oleh Khalifah Umar. Yang pasti, peradaban besar ini perlahan punya akhir yang tragis.</p>
-    <h3>Simbol Pencerahan</h3><p>Meskipun telah hilang, Perpustakaan Alexandria tetap menjadi simbol universal dari pencarian manusia akan pengetahuan dan pentingnya melestarikan ilmu untuk generasi mendatang.</p>
+    <ul>
+      <li><strong>Panzerfaust 30</strong> — jangkauan 30 meter, penetrasi 140mm baja</li>
+      <li><strong>Panzerfaust 60</strong> — jangkauan 60 meter, lebih akurat</li>
+      <li><strong>Panzerfaust 100</strong> — jangkauan 100 meter, bisa diisi ulang</li>
+      <li><strong>Panzerfaust 150</strong> — versi terakhir, tidak sempat diproduksi massal</li>
+    </ul>
+    <h3>Dampak di Medan Perang</h3>
+    <p>Jerman memproduksi lebih dari 8 juta unit Panzerfaust. Di akhir perang, senjata ini menjadi andalan Volkssturm dalam mempertahankan kota-kota Jerman.</p>
+    <h3>Warisan</h3>
+    <p>Konsep Panzerfaust menginspirasi pengembangan RPG-7 Soviet dan berbagai senjata anti-tank modern yang masih digunakan hingga hari ini.</p>
   `}
 ];
-
-// ================================================================
-// RENDER KARTU & MODAL (OTOMATIS)
-// ================================================================
-const grid = document.getElementById('artikelGrid');
-const emojiMap = { "Perang":"⚔️", "Sejarah":"📜", "Militer":"🎖️", "Senjata":"🔫" };
-
-artikelData.forEach((art, index) => {
-  const emoji = emojiMap[art.kategori] || "📖";
-  
-  grid.innerHTML += `
-    <div class="artikel-card reveal" data-kategori="${art.kategori.toLowerCase()}" onclick="bukaArtikel(${index})">
-      <div class="artikel-thumb">
-        <img src="${art.img}" alt="${art.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="emoji-bg">${emoji}</div>
-      </div>
-      <div class="artikel-body">
-        <div class="artikel-meta">
-          <span class="artikel-kategori">${art.kategori}</span>
-          <span class="artikel-tanggal">${art.tanggal}</span>
-        </div>
-        <h3 class="artikel-title">${art.title}</h3>
-        <p class="artikel-desc">${art.desc}</p>
-        <a class="artikel-link">Baca Selengkapnya →</a>
-      </div>
-    </div>
-  `;
-});
 
 function bukaArtikel(index) {
   const a = artikelData[index];
@@ -435,3 +562,4 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
+

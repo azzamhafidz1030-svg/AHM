@@ -6,27 +6,17 @@
   <title>A.H.Mtube — Video Player</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    /* ===== RESET & VARIABLES ===== */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0C0C0E;
+      --bg:      #0C0C0E;
       --surface: #141416;
-      --border: #222226;
-      --accent: #6EE7B7;
+      --border:  #222226;
+      --accent:  #6EE7B7;
       --accent2: #818CF8;
-      --text: #E4E4E7;
-      --muted: #71717A;
-      --hover: #2a2a36;
-      --danger: #f87171;
-      --radius: 12px;
-      --radius-sm: 6px;
+      --text:    #E4E4E7;
+      --muted:   #71717A;
+      --hover:   #2a2a36;
     }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -37,171 +27,112 @@
 
     /* ===== HEADER ===== */
     .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 1.5rem;
-      background: rgba(12, 12, 14, 0.92);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.8rem 2rem;
+      background: rgba(12,12,14,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-
     .header-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+      display: flex; align-items: center; gap: 1rem;
     }
-
     .logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       color: var(--accent);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
+      display: flex; align-items: center; gap: 0.3rem;
     }
-
-    .logo span {
-      color: var(--text);
-      font-weight: 400;
-      font-size: 0.8rem;
-    }
-
+    .logo span { color: var(--text); font-weight: 400; font-size: 0.8rem; }
     .back-link {
       color: var(--muted);
       text-decoration: none;
       font-size: 0.8rem;
       font-weight: 500;
       border: 1px solid var(--border);
-      padding: 0.3rem 0.75rem;
-      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
       transition: all 0.2s;
     }
+    .back-link:hover { border-color: var(--accent); color: var(--accent); }
 
-    .back-link:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+    .header-right {
+      display: flex; align-items: center; gap: 1rem;
     }
-
-    .upload-btn {
+    .upload-btn-header {
       background: var(--accent);
       color: #0C0C0E;
       border: none;
       padding: 0.4rem 1rem;
-      border-radius: var(--radius-sm);
+      border-radius: 6px;
       font-weight: 600;
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.2s;
       font-family: 'Inter', sans-serif;
     }
+    .upload-btn-header:hover { background: #a7f3d0; transform: scale(1.02); }
 
-    .upload-btn:hover {
-      background: #a7f3d0;
-      transform: scale(1.02);
-    }
-
-    /* ===== MAIN LAYOUT ===== */
-    .main {
+    /* ===== LAYOUT ===== */
+    .main-layout {
       display: grid;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns: 1fr 380px;
       gap: 1.5rem;
-      padding: 5rem 1.5rem 2rem;
-      max-width: 1400px;
+      padding: 5rem 2rem 2rem;
+      max-width: 1440px;
       margin: 0 auto;
     }
 
-    /* ===== VIDEO SECTION ===== */
+    /* ===== VIDEO PLAYER ===== */
     .video-section {
       background: var(--surface);
       border-radius: 16px;
       border: 1px solid var(--border);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
     }
-
     .video-wrapper {
       position: relative;
       width: 100%;
       background: #000;
-      aspect-ratio: 16 / 9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
     }
-
     .video-wrapper video {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: contain;
+      width: 100%; height: 100%; display: block; object-fit: contain;
     }
-
     .video-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       color: var(--muted);
+      font-size: 1.2rem;
       text-align: center;
       padding: 2rem;
-      pointer-events: none;
     }
+    .video-placeholder .icon { font-size: 4rem; display: block; margin-bottom: 0.5rem; }
 
-    .video-placeholder .icon {
-      font-size: 3.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .video-placeholder p {
-      font-size: 0.95rem;
-    }
-
-    .video-placeholder .hint {
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
-      opacity: 0.7;
-    }
-
-    /* ===== CONTROLS ===== */
-    .controls {
+    /* Video Controls (custom) */
+    .video-controls {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.55rem 1rem;
+      gap: 0.8rem;
+      padding: 0.6rem 1rem;
       background: var(--bg);
       border-top: 1px solid var(--border);
       flex-wrap: wrap;
     }
-
-    .controls button {
+    .video-controls button {
       background: none;
       border: none;
       color: var(--text);
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       cursor: pointer;
       padding: 0.2rem 0.3rem;
       transition: color 0.2s;
       line-height: 1;
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
     }
-
-    .controls button:hover {
-      color: var(--accent);
-    }
-
-    .progress-wrap {
+    .video-controls button:hover { color: var(--accent); }
+    .video-controls .progress-wrap {
       flex: 1;
       height: 4px;
       background: var(--border);
@@ -210,24 +141,21 @@
       position: relative;
       min-width: 60px;
     }
-
-    .progress-bar {
+    .video-controls .progress-wrap .progress-bar {
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       border-radius: 4px;
       transition: width 0.05s linear;
     }
-
-    .time-label {
+    .video-controls .time-label {
       font-size: 0.7rem;
       color: var(--muted);
-      min-width: 72px;
+      min-width: 44px;
       text-align: center;
       font-variant-numeric: tabular-nums;
     }
-
-    .speed-select {
+    .video-controls .speed-select {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
@@ -237,44 +165,39 @@
       cursor: pointer;
       font-family: 'Inter', sans-serif;
     }
-
-    .speed-select:hover {
-      border-color: var(--accent);
+    .video-controls .speed-select:hover { border-color: var(--accent); }
+    .video-controls .vol-wrap {
+      display: flex; align-items: center; gap: 0.3rem;
     }
-
-    .vol-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .vol-wrap input[type="range"] {
-      width: 55px;
+    .video-controls .vol-wrap input[type="range"] {
+      width: 50px;
       accent-color: var(--accent);
       height: 3px;
       cursor: pointer;
     }
+    .video-controls .vol-wrap input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 10px; height: 10px; border-radius: 50%; background: var(--accent); cursor: pointer;
+    }
+    .video-controls .fullscreen-btn { font-size: 1.1rem; }
 
     /* ===== VIDEO INFO ===== */
     .video-info {
-      padding: 1rem 1.25rem 1.1rem;
+      padding: 1rem 1.2rem 0.8rem;
     }
-
     .video-info .title {
       font-family: 'Syne', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      margin-bottom: 0.25rem;
-      line-height: 1.3;
+      margin-bottom: 0.3rem;
     }
-
     .video-info .meta {
       font-size: 0.8rem;
       color: var(--muted);
     }
 
     /* ===== PLAYLIST SIDEBAR ===== */
-    .playlist {
+    .playlist-sidebar {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -283,34 +206,24 @@
       display: flex;
       flex-direction: column;
     }
-
-    .playlist-header {
+    .playlist-sidebar .pl-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--border);
     }
-
-    .playlist-header h3 {
+    .playlist-sidebar .pl-header h3 {
       font-family: 'Syne', sans-serif;
       font-size: 1rem;
       font-weight: 700;
     }
-
-    .playlist-header .right {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .playlist-count {
+    .playlist-sidebar .pl-header .count {
       font-size: 0.75rem;
       color: var(--muted);
     }
-
-    .clear-btn {
+    .playlist-sidebar .pl-header .clear-btn {
       background: none;
       border: none;
       color: var(--muted);
@@ -320,668 +233,580 @@
       border-radius: 4px;
       transition: all 0.2s;
     }
-
-    .clear-btn:hover {
-      color: var(--danger);
-      background: rgba(248, 113, 113, 0.08);
+    .playlist-sidebar .pl-header .clear-btn:hover {
+      color: #f87171;
+      background: rgba(248,113,113,0.08);
     }
 
     .playlist-scroll {
       flex: 1;
       overflow-y: auto;
-      margin: 0 -0.4rem;
-      padding: 0 0.4rem;
+      margin: 0 -0.5rem;
+      padding: 0 0.5rem;
     }
+    .playlist-scroll::-webkit-scrollbar { width: 4px; }
+    .playlist-scroll::-webkit-scrollbar-track { background: var(--bg); border-radius: 4px; }
+    .playlist-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-    .playlist-scroll::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .playlist-scroll::-webkit-scrollbar-track {
-      background: var(--bg);
-      border-radius: 4px;
-    }
-
-    .playlist-scroll::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 4px;
-    }
-
-    /* Playlist Item */
     .pl-item {
       display: flex;
-      gap: 0.75rem;
-      padding: 0.5rem 0.55rem;
+      gap: 0.8rem;
+      padding: 0.5rem 0.6rem;
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s;
       align-items: center;
       border-left: 3px solid transparent;
     }
-
-    .pl-item:hover {
-      background: rgba(110, 231, 183, 0.05);
-    }
-
+    .pl-item:hover { background: rgba(110,231,183,0.04); }
     .pl-item.active {
-      background: rgba(110, 231, 183, 0.09);
+      background: rgba(110,231,183,0.08);
       border-left-color: var(--accent);
     }
-
-    .pl-thumb {
-      width: 78px;
-      height: 44px;
+    .pl-item .thumb {
+      width: 80px;
+      height: 45px;
       background: var(--bg);
       border-radius: 4px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       border: 1px solid var(--border);
       overflow: hidden;
     }
-
-    .pl-thumb video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .pl-info {
+    .pl-item .thumb video { width: 100%; height: 100%; object-fit: cover; }
+    .pl-item .pl-info {
       flex: 1;
       min-width: 0;
     }
-
-    .pl-name {
+    .pl-item .pl-info .pl-name {
       font-size: 0.8rem;
       font-weight: 500;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
-    .pl-dur {
+    .pl-item .pl-info .pl-dur {
       font-size: 0.65rem;
       color: var(--muted);
-      margin-top: 0.1rem;
     }
-
-    .pl-remove {
+    .pl-item .pl-remove {
       background: none;
       border: none;
       color: var(--muted);
       font-size: 0.7rem;
       cursor: pointer;
-      padding: 0.15rem 0.35rem;
+      padding: 0.1rem 0.3rem;
       border-radius: 4px;
       transition: all 0.2s;
-      opacity: 0.35;
+      opacity: 0.3;
     }
+    .pl-item:hover .pl-remove { opacity: 0.8; }
+    .pl-item .pl-remove:hover { color: #f87171; background: rgba(248,113,113,0.1); opacity: 1; }
 
-    .pl-item:hover .pl-remove {
-      opacity: 0.85;
-    }
-
-    .pl-remove:hover {
-      color: var(--danger);
-      background: rgba(248, 113, 113, 0.12);
-      opacity: 1;
-    }
-
-    /* Empty State */
     .empty-playlist {
       text-align: center;
-      padding: 2.5rem 0.5rem;
+      padding: 2rem 0.5rem;
       color: var(--muted);
     }
+    .empty-playlist .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
 
-    .empty-playlist .icon {
-      font-size: 2.4rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .empty-playlist p {
-      font-size: 0.9rem;
-    }
-
-    .empty-playlist .hint {
-      font-size: 0.75rem;
-      margin-top: 0.3rem;
-      opacity: 0.7;
-    }
-
-    /* ===== DROP OVERLAY ===== */
+    /* ===== DRAG & DROP OVERLAY ===== */
     .drop-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      background: rgba(12, 12, 14, 0.88);
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(12,12,14,0.85);
       backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 0.75rem;
-      font-size: 1.4rem;
+      gap: 1rem;
+      font-size: 1.5rem;
       color: var(--accent);
       pointer-events: none;
     }
-
-    .drop-overlay.show {
-      display: flex;
-    }
-
-    .drop-overlay .icon {
-      font-size: 3.5rem;
-    }
-
-    .drop-overlay .formats {
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
+    .drop-overlay.show { display: flex; }
+    .drop-overlay .icon { font-size: 4rem; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
-      .main {
-        grid-template-columns: 1fr;
-        padding: 4.75rem 1rem 1.5rem;
-      }
-
-      .playlist {
-        max-height: 380px;
-      }
+      .main-layout { grid-template-columns: 1fr; padding: 5rem 1rem 1rem; }
+      .playlist-sidebar { max-height: 400px; }
     }
-
     @media (max-width: 600px) {
-      .header {
-        padding: 0.55rem 1rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .logo {
-        font-size: 1.05rem;
-      }
-
-      .controls {
-        gap: 0.35rem;
-        padding: 0.45rem 0.6rem;
-      }
-
-      .vol-wrap input[type="range"] {
-        width: 36px;
-      }
-
-      .video-info .title {
-        font-size: 1rem;
-      }
-
-      .pl-thumb {
-        width: 64px;
-        height: 36px;
-      }
-
-      .main {
-        padding-top: 4.25rem;
-      }
+      .header { padding: 0.5rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+      .logo { font-size: 1rem; }
+      .video-controls { gap: 0.4rem; padding: 0.4rem 0.6rem; flex-wrap: nowrap; overflow-x: auto; }
+      .video-controls .vol-wrap input[type="range"] { width: 30px; }
+      .video-controls .speed-select { font-size: 0.6rem; }
+      .video-info .title { font-size: 1rem; }
+      .pl-item .thumb { width: 60px; height: 34px; }
+      .main-layout { padding-top: 4.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-left">
-      <a href="index.html" class="logo">▶ A.H.M<span>tube</span></a>
-      <a href="index.html" class="back-link">← Portfolio</a>
-    </div>
-    <button class="upload-btn" id="uploadBtn">Upload Video</button>
-  </header>
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="header-left">
+    <a href="index.html" class="logo">▶ A.H.M<span>tube</span></a>
+    <a href="index.html" class="back-link">← Portfolio</a>
+  </div>
+  <div class="header-right">
+    <button class="upload-btn-header" id="uploadBtnHeader">📤 Upload Video</button>
+  </div>
+</header>
 
-  <!-- DROP OVERLAY -->
-  <div class="drop-overlay" id="dropOverlay">
-    <div class="icon">📤</div>
-    <div>Lepaskan file video di sini</div>
-    <div class="formats">MP4, WebM, OGG</div>
+<!-- ===== DROP OVERLAY ===== -->
+<div class="drop-overlay" id="dropOverlay">
+  <div class="icon">📤</div>
+  <div>Lepaskan file video di sini</div>
+  <span style="font-size:0.9rem;color:var(--muted);">MP4, WebM, OGG</span>
+</div>
+
+<!-- ===== MAIN LAYOUT ===== -->
+<div class="main-layout">
+
+  <!-- === VIDEO SECTION === -->
+  <div class="video-section">
+    <div class="video-wrapper" id="videoWrapper">
+      <video id="videoPlayer" style="width:100%;height:100%;display:block;"></video>
+      <div class="video-placeholder" id="videoPlaceholder">
+        <span class="icon">🎬</span>
+        <p>Upload video untuk mulai menonton</p>
+        <p style="font-size:0.8rem;margin-top:0.3rem;">atau pilih dari playlist di samping</p>
+      </div>
+    </div>
+
+    <!-- Video Controls -->
+    <div class="video-controls" id="videoControls">
+      <button id="playBtn" title="Putar/Jeda">▶️</button>
+      <button id="prevBtn" title="Video sebelumnya">⏮</button>
+      <button id="nextBtn" title="Video berikutnya">⏭</button>
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <span class="time-label" id="timeLabel">0:00 / 0:00</span>
+      <select class="speed-select" id="speedSelect">
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+      </select>
+      <div class="vol-wrap">
+        <button id="muteBtn" title="Mute">🔊</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" />
+      </div>
+      <button class="fullscreen-btn" id="fullscreenBtn" title="Layar penuh">⛶</button>
+    </div>
+
+    <!-- Video Info -->
+    <div class="video-info">
+      <div class="title" id="videoTitle">Belum ada video diputar</div>
+      <div class="meta" id="videoMeta">Upload video atau pilih dari playlist</div>
+    </div>
   </div>
 
-  <!-- MAIN -->
-  <main class="main">
-
-    <!-- VIDEO SECTION -->
-    <section class="video-section">
-      <div class="video-wrapper" id="videoWrapper">
-        <video id="videoPlayer"></video>
-        <div class="video-placeholder" id="videoPlaceholder">
-          <div class="icon">🎬</div>
-          <p>Upload video untuk mulai menonton</p>
-          <p class="hint">atau pilih dari playlist di samping</p>
-        </div>
+  <!-- === PLAYLIST SIDEBAR === -->
+  <div class="playlist-sidebar">
+    <div class="pl-header">
+      <h3>📋 Playlist</h3>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span class="count" id="playlistCount">0 video</span>
+        <button class="clear-btn" id="clearPlaylistBtn">✕ Kosongkan</button>
       </div>
-
-      <div class="controls" id="videoControls">
-        <button id="playBtn" title="Putar / Jeda">▶️</button>
-        <button id="prevBtn" title="Video sebelumnya">⏮</button>
-        <button id="nextBtn" title="Video berikutnya">⏭</button>
-
-        <div class="progress-wrap" id="progressWrap">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <span class="time-label" id="timeLabel">0:00 / 0:00</span>
-
-        <select class="speed-select" id="speedSelect">
-          <option value="0.5">0.5x</option>
-          <option value="0.75">0.75x</option>
-          <option value="1" selected>1x</option>
-          <option value="1.25">1.25x</option>
-          <option value="1.5">1.5x</option>
-          <option value="2">2x</option>
-        </select>
-
-        <div class="vol-wrap">
-          <button id="muteBtn" title="Mute">🔊</button>
-          <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" />
-        </div>
-
-        <button id="fullscreenBtn" title="Layar penuh">⛶</button>
+    </div>
+    <div class="playlist-scroll" id="playlistContainer">
+      <div class="empty-playlist">
+        <div class="icon">🎬</div>
+        <p>Belum ada video</p>
+        <p style="font-size:0.75rem;margin-top:0.3rem;">Upload atau drag & drop</p>
       </div>
+    </div>
+  </div>
 
-      <div class="video-info">
-        <div class="title" id="videoTitle">Belum ada video diputar</div>
-        <div class="meta" id="videoMeta">Upload video atau pilih dari playlist</div>
+</div>
+
+<!-- ===== HIDDEN FILE INPUT ===== -->
+<input type="file" id="fileInput" accept="video/*" multiple style="display:none;" />
+
+<script>
+// ================================================================
+// A.H.Mtube — VIDEO PLAYER DENGAN PLAYLIST
+// ================================================================
+
+// ===== DOM REFS =====
+const video = document.getElementById('videoPlayer');
+const videoWrapper = document.getElementById('videoWrapper');
+const videoPlaceholder = document.getElementById('videoPlaceholder');
+const videoTitle = document.getElementById('videoTitle');
+const videoMeta = document.getElementById('videoMeta');
+const playBtn = document.getElementById('playBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const progressBar = document.getElementById('progressBar');
+const progressWrap = document.getElementById('progressWrap');
+const timeLabel = document.getElementById('timeLabel');
+const speedSelect = document.getElementById('speedSelect');
+const volumeSlider = document.getElementById('volumeSlider');
+const muteBtn = document.getElementById('muteBtn');
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+const fileInput = document.getElementById('fileInput');
+const uploadBtnHeader = document.getElementById('uploadBtnHeader');
+const playlistContainer = document.getElementById('playlistContainer');
+const playlistCount = document.getElementById('playlistCount');
+const clearPlaylistBtn = document.getElementById('clearPlaylistBtn');
+const dropOverlay = document.getElementById('dropOverlay');
+
+// ===== STATE =====
+let playlist = []; // { id, name, url, file }
+let currentIndex = -1;
+let isPlaying = false;
+let isMuted = false;
+let isFullscreen = false;
+
+// ===== FUNGSI =====
+function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
+
+function formatTime(seconds) {
+  if (!seconds || isNaN(seconds)) return '0:00';
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function formatDuration(seconds) {
+  if (!seconds || isNaN(seconds)) return '0:00';
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function updatePlaylistUI() {
+  if (playlist.length === 0) {
+    playlistContainer.innerHTML = `
+      <div class="empty-playlist">
+        <div class="icon">🎬</div>
+        <p>Belum ada video</p>
+        <p style="font-size:0.75rem;margin-top:0.3rem;">Upload atau drag & drop</p>
       </div>
-    </section>
+    `;
+    playlistCount.textContent = '0 video';
+    return;
+  }
 
-    <!-- PLAYLIST -->
-    <aside class="playlist">
-      <div class="playlist-header">
-        <h3>Playlist</h3>
-        <div class="right">
-          <span class="playlist-count" id="playlistCount">0 video</span>
-          <button class="clear-btn" id="clearPlaylistBtn">Kosongkan</button>
+  let html = '';
+  playlist.forEach((item, index) => {
+    const isActive = (index === currentIndex);
+    html += `
+      <div class="pl-item ${isActive ? 'active' : ''}" data-index="${index}">
+        <div class="thumb">
+          ${item.url ? `<video src="${item.url}" muted></video>` : '🎬'}
         </div>
-      </div>
-
-      <div class="playlist-scroll" id="playlistContainer">
-        <div class="empty-playlist">
-          <div class="icon">🎬</div>
-          <p>Belum ada video</p>
-          <p class="hint">Upload atau drag & drop</p>
+        <div class="pl-info">
+          <div class="pl-name">${item.name}</div>
+          <div class="pl-dur">${item.duration ? formatDuration(item.duration) : '⏳ loading...'}</div>
         </div>
+        <button class="pl-remove" data-index="${index}" title="Hapus video">✕</button>
       </div>
-    </aside>
+    `;
+  });
+  playlistContainer.innerHTML = html;
+  playlistCount.textContent = `${playlist.length} video`;
 
-  </main>
-
-  <!-- HIDDEN FILE INPUT -->
-  <input type="file" id="fileInput" accept="video/*" multiple style="display:none;" />
-
-  <script>
-    // ================================================================
-    // A.H.Mtube — Video Player + Playlist
-    // ================================================================
-
-    // DOM
-    const video            = document.getElementById('videoPlayer');
-    const videoWrapper     = document.getElementById('videoWrapper');
-    const videoPlaceholder = document.getElementById('videoPlaceholder');
-    const videoTitle       = document.getElementById('videoTitle');
-    const videoMeta        = document.getElementById('videoMeta');
-    const playBtn          = document.getElementById('playBtn');
-    const prevBtn          = document.getElementById('prevBtn');
-    const nextBtn          = document.getElementById('nextBtn');
-    const progressBar      = document.getElementById('progressBar');
-    const progressWrap     = document.getElementById('progressWrap');
-    const timeLabel        = document.getElementById('timeLabel');
-    const speedSelect      = document.getElementById('speedSelect');
-    const volumeSlider     = document.getElementById('volumeSlider');
-    const muteBtn          = document.getElementById('muteBtn');
-    const fullscreenBtn    = document.getElementById('fullscreenBtn');
-    const fileInput        = document.getElementById('fileInput');
-    const uploadBtn        = document.getElementById('uploadBtn');
-    const playlistContainer= document.getElementById('playlistContainer');
-    const playlistCount    = document.getElementById('playlistCount');
-    const clearPlaylistBtn = document.getElementById('clearPlaylistBtn');
-    const dropOverlay      = document.getElementById('dropOverlay');
-
-    // STATE
-    let playlist     = [];
-    let currentIndex = -1;
-    let isPlaying    = false;
-    let isMuted      = false;
-
-    // HELPERS
-    function generateId() {
-      return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-    }
-
-    function formatTime(seconds) {
-      if (!seconds || isNaN(seconds)) return '0:00';
-      const m = Math.floor(seconds / 60);
-      const s = Math.floor(seconds % 60);
-      return `${m}:${s.toString().padStart(2, '0')}`;
-    }
-
-    function setStatus(msg) {
-      videoMeta.textContent = msg;
-    }
-
-    // PLAYLIST UI
-    function updatePlaylistUI() {
-      if (playlist.length === 0) {
-        playlistContainer.innerHTML = `
-          <div class="empty-playlist">
-            <div class="icon">🎬</div>
-            <p>Belum ada video</p>
-            <p class="hint">Upload atau drag & drop</p>
-          </div>
-        `;
-        playlistCount.textContent = '0 video';
-        return;
-      }
-
-      let html = '';
-      playlist.forEach((item, index) => {
-        const isActive = index === currentIndex;
-        html += `
-          <div class="pl-item ${isActive ? 'active' : ''}" data-index="${index}">
-            <div class="pl-thumb">
-              ${item.url ? `<video src="${item.url}" muted></video>` : '🎬'}
-            </div>
-            <div class="pl-info">
-              <div class="pl-name">${item.name}</div>
-              <div class="pl-dur">${item.duration ? formatTime(item.duration) : 'loading...'}</div>
-            </div>
-            <button class="pl-remove" data-index="${index}" title="Hapus">✕</button>
-          </div>
-        `;
-      });
-
-      playlistContainer.innerHTML = html;
-      playlistCount.textContent = `${playlist.length} video`;
-
-      // Click item
-      document.querySelectorAll('.pl-item').forEach(el => {
-        el.addEventListener('click', (e) => {
-          if (e.target.closest('.pl-remove')) return;
-          playVideoAtIndex(parseInt(el.dataset.index));
-        });
-      });
-
-      // Remove button
-      document.querySelectorAll('.pl-remove').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          removeFromPlaylist(parseInt(btn.dataset.index));
-        });
-      });
-    }
-
-    // CORE PLAYER
-    function loadVideo(index) {
-      if (index < 0 || index >= playlist.length) return;
-      const item = playlist[index];
-      if (!item.url) return;
-
-      video.pause();
-      video.src = item.url;
-      video.load();
-
-      videoTitle.textContent = item.name;
-      videoMeta.textContent = `${item.file?.size ? (item.file.size / 1024 / 1024).toFixed(1) : '?'} MB • #${index + 1}`;
-      videoPlaceholder.style.display = 'none';
-
-      currentIndex = index;
-      updatePlaylistUI();
-
-      video.onloadedmetadata = () => {
-        playlist[index].duration = video.duration;
-        updatePlaylistUI();
-        timeLabel.textContent = `0:00 / ${formatTime(video.duration)}`;
-        video.play().catch(() => {});
-        isPlaying = true;
-        playBtn.textContent = '⏸️';
-      };
-    }
-
-    function playVideoAtIndex(index) {
-      if (index < 0 || index >= playlist.length) return;
-      if (currentIndex === index && video.src) {
-        togglePlay();
-        return;
-      }
-      loadVideo(index);
-    }
-
-    function togglePlay() {
-      if (!video.src || playlist.length === 0) {
-        setStatus('Upload video terlebih dahulu');
-        return;
-      }
-      if (isPlaying) {
-        video.pause();
-        playBtn.textContent = '▶️';
-        isPlaying = false;
-      } else {
-        video.play().catch(() => {});
-        playBtn.textContent = '⏸️';
-        isPlaying = true;
-      }
-    }
-
-    function nextVideo() {
-      if (playlist.length === 0) return;
-      const nextIdx = (currentIndex + 1) % playlist.length;
-      if (nextIdx === currentIndex && playlist.length === 1) {
-        video.currentTime = 0;
-        return;
-      }
-      loadVideo(nextIdx);
-    }
-
-    function prevVideo() {
-      if (playlist.length === 0) return;
-      if (video.currentTime > 3) {
-        video.currentTime = 0;
-        return;
-      }
-      const prevIdx = (currentIndex - 1 + playlist.length) % playlist.length;
-      loadVideo(prevIdx);
-    }
-
-    // PLAYLIST MANAGEMENT
-    function addToPlaylist(files) {
-      let added = 0;
-      for (const file of files) {
-        if (!file.type.startsWith('video/')) continue;
-        const url = URL.createObjectURL(file);
-        playlist.push({
-          id: generateId(),
-          name: file.name,
-          url,
-          file,
-          duration: null
-        });
-        added++;
-      }
-
-      if (added === 0) {
-        setStatus('Tidak ada file video yang valid');
-        return;
-      }
-
-      setStatus(`${added} video ditambahkan ke playlist`);
-      updatePlaylistUI();
-
-      if (currentIndex === -1 && playlist.length > 0) {
-        loadVideo(0);
-      }
-    }
-
-    function removeFromPlaylist(index) {
-      if (index < 0 || index >= playlist.length) return;
-
-      const item = playlist[index];
-      if (item.url) URL.revokeObjectURL(item.url);
-      playlist.splice(index, 1);
-
-      if (playlist.length === 0) {
-        video.pause();
-        video.src = '';
-        videoPlaceholder.style.display = 'flex';
-        videoTitle.textContent = 'Belum ada video diputar';
-        videoMeta.textContent = 'Upload video atau pilih dari playlist';
-        currentIndex = -1;
-        isPlaying = false;
-        playBtn.textContent = '▶️';
-        progressBar.style.width = '0%';
-        timeLabel.textContent = '0:00 / 0:00';
-        updatePlaylistUI();
-        setStatus('Semua video dihapus');
-        return;
-      }
-
-      if (index < currentIndex) {
-        currentIndex--;
-      } else if (index === currentIndex) {
-        if (currentIndex >= playlist.length) currentIndex = playlist.length - 1;
-        loadVideo(currentIndex);
-      }
-
-      updatePlaylistUI();
-    }
-
-    function clearPlaylist() {
-      playlist.forEach(item => {
-        if (item.url) URL.revokeObjectURL(item.url);
-      });
-      playlist = [];
-      video.pause();
-      video.src = '';
-      videoPlaceholder.style.display = 'flex';
-      videoTitle.textContent = 'Belum ada video diputar';
-      videoMeta.textContent = 'Upload video atau pilih dari playlist';
-      currentIndex = -1;
-      isPlaying = false;
-      playBtn.textContent = '▶️';
-      progressBar.style.width = '0%';
-      timeLabel.textContent = '0:00 / 0:00';
-      updatePlaylistUI();
-      setStatus('Playlist dikosongkan');
-    }
-
-    // EVENT LISTENERS
-    uploadBtn.addEventListener('click', () => fileInput.click());
-
-    fileInput.addEventListener('change', function () {
-      if (this.files.length > 0) addToPlaylist(this.files);
-      this.value = '';
+  // Event listener untuk klik item (play)
+  document.querySelectorAll('.pl-item').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (e.target.closest('.pl-remove')) return;
+      const idx = parseInt(el.dataset.index);
+      playVideoAtIndex(idx);
     });
+  });
 
-    playBtn.addEventListener('click', togglePlay);
-    video.addEventListener('click', togglePlay);
-    nextBtn.addEventListener('click', nextVideo);
-    prevBtn.addEventListener('click', prevVideo);
-
-    video.addEventListener('timeupdate', () => {
-      if (video.duration) {
-        const pct = (video.currentTime / video.duration) * 100;
-        progressBar.style.width = pct + '%';
-        timeLabel.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-      }
+  // Event listener untuk tombol hapus
+  document.querySelectorAll('.pl-remove').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(btn.dataset.index);
+      removeFromPlaylist(idx);
     });
+  });
+}
 
-    progressWrap.addEventListener('click', function (e) {
-      if (!video.duration) return;
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const pct = Math.min(1, Math.max(0, x / rect.width));
-      video.currentTime = pct * video.duration;
-    });
+function loadVideo(index) {
+  if (index < 0 || index >= playlist.length) return;
+  const item = playlist[index];
+  if (!item.url) return;
 
-    speedSelect.addEventListener('change', function () {
-      video.playbackRate = parseFloat(this.value);
-    });
+  // Hentikan video sebelumnya
+  video.pause();
+  video.src = item.url;
+  video.load();
 
-    volumeSlider.addEventListener('input', function () {
-      video.volume = parseFloat(this.value);
-      if (isMuted) {
-        isMuted = false;
-        video.muted = false;
-        muteBtn.textContent = '🔊';
-      }
-    });
+  videoTitle.textContent = item.name;
+  videoMeta.textContent = `${item.file?.size ? (item.file.size / 1024 / 1024).toFixed(1) : '?'} MB • Playlist #${index + 1}`;
+  videoPlaceholder.style.display = 'none';
+  video.style.display = 'block';
 
-    muteBtn.addEventListener('click', function () {
-      isMuted = !isMuted;
-      video.muted = isMuted;
-      muteBtn.textContent = isMuted ? '🔇' : '🔊';
-    });
+  currentIndex = index;
+  updatePlaylistUI();
 
-    fullscreenBtn.addEventListener('click', function () {
-      if (!document.fullscreenElement) {
-        videoWrapper.requestFullscreen?.() || videoWrapper.webkitRequestFullscreen?.();
-      } else {
-        document.exitFullscreen?.() || document.webkitExitFullscreen?.();
-      }
-    });
-
-    video.addEventListener('ended', () => {
-      isPlaying = false;
-      playBtn.textContent = '▶️';
-      if (playlist.length > 1) {
-        setTimeout(nextVideo, 700);
-      }
-    });
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
-      if (e.key === ' ') { e.preventDefault(); togglePlay(); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); video.currentTime += 5; }
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); video.currentTime -= 5; }
-      if (e.key === 'ArrowUp')    { e.preventDefault(); video.volume = Math.min(1, video.volume + 0.05); volumeSlider.value = video.volume; }
-      if (e.key === 'ArrowDown')  { e.preventDefault(); video.volume = Math.max(0, video.volume - 0.05); volumeSlider.value = video.volume; }
-      if (e.key === 'f' || e.key === 'F') fullscreenBtn.click();
-    });
-
-    // Drag & Drop
-    let dragCounter = 0;
-
-    document.addEventListener('dragover', (e) => e.preventDefault());
-    document.addEventListener('drop', (e) => e.preventDefault());
-
-    document.addEventListener('dragenter', (e) => {
-      e.preventDefault();
-      dragCounter++;
-      if (dragCounter === 1) dropOverlay.classList.add('show');
-    });
-
-    document.addEventListener('dragleave', (e) => {
-      e.preventDefault();
-      dragCounter--;
-      if (dragCounter === 0) dropOverlay.classList.remove('show');
-    });
-
-    document.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dragCounter = 0;
-      dropOverlay.classList.remove('show');
-      if (e.dataTransfer.files.length > 0) {
-        addToPlaylist(e.dataTransfer.files);
-      }
-    });
-
-    clearPlaylistBtn.addEventListener('click', () => {
-      if (playlist.length === 0) return;
-      if (confirm('Hapus semua video dari playlist?')) clearPlaylist();
-    });
-
-    // INIT
+  // Setelah metadata loaded
+  video.onloadedmetadata = function() {
+    playlist[index].duration = video.duration;
     updatePlaylistUI();
-    console.log('A.H.Mtube siap. Upload atau drag & drop video.');
-  </script>
+    timeLabel.textContent = `0:00 / ${formatDuration(video.duration)}`;
+    // Auto play
+    video.play().catch(e => {});
+    isPlaying = true;
+    playBtn.textContent = '⏸️';
+  };
+}
+
+function playVideoAtIndex(index) {
+  if (index < 0 || index >= playlist.length) return;
+  if (currentIndex === index && video.src) {
+    // Toggle play
+    togglePlay();
+    return;
+  }
+  loadVideo(index);
+}
+
+function togglePlay() {
+  if (!video.src || playlist.length === 0) {
+    statusText('⚠️ Upload video terlebih dahulu!');
+    return;
+  }
+  if (isPlaying) {
+    video.pause();
+    playBtn.textContent = '▶️';
+    isPlaying = false;
+  } else {
+    video.play().catch(e => {});
+    playBtn.textContent = '⏸️';
+    isPlaying = true;
+  }
+}
+
+function nextVideo() {
+  if (playlist.length === 0) return;
+  const nextIdx = (currentIndex + 1) % playlist.length;
+  if (nextIdx === currentIndex && playlist.length === 1) {
+    video.currentTime = 0;
+    return;
+  }
+  loadVideo(nextIdx);
+}
+
+function prevVideo() {
+  if (playlist.length === 0) return;
+  if (video.currentTime > 3) {
+    video.currentTime = 0;
+    return;
+  }
+  const prevIdx = (currentIndex - 1 + playlist.length) % playlist.length;
+  loadVideo(prevIdx);
+}
+
+function addToPlaylist(files) {
+  let added = 0;
+  for (const file of files) {
+    if (!file.type.startsWith('video/')) continue;
+    const url = URL.createObjectURL(file);
+    playlist.push({
+      id: generateId(),
+      name: file.name,
+      url: url,
+      file: file,
+      duration: null
+    });
+    added++;
+  }
+  if (added === 0) {
+    statusText('⚠️ Tidak ada file video yang valid');
+    return;
+  }
+  statusText(`✅ ${added} video ditambahkan ke playlist`);
+  updatePlaylistUI();
+  // Jika belum ada video yang diputar, mainkan yang pertama
+  if (currentIndex === -1 && playlist.length > 0) {
+    loadVideo(0);
+  }
+}
+
+function removeFromPlaylist(index) {
+  if (index < 0 || index >= playlist.length) return;
+  const item = playlist[index];
+  if (item.url) URL.revokeObjectURL(item.url);
+  playlist.splice(index, 1);
+  if (playlist.length === 0) {
+    video.pause();
+    video.src = '';
+    video.style.display = 'none';
+    videoPlaceholder.style.display = 'flex';
+    videoTitle.textContent = 'Belum ada video diputar';
+    videoMeta.textContent = 'Upload video atau pilih dari playlist';
+    currentIndex = -1;
+    isPlaying = false;
+    playBtn.textContent = '▶️';
+    progressBar.style.width = '0%';
+    timeLabel.textContent = '0:00 / 0:00';
+    updatePlaylistUI();
+    statusText('🗑️ Semua video dihapus');
+    return;
+  }
+  if (index < currentIndex) {
+    currentIndex--;
+  } else if (index === currentIndex) {
+    // Video yang sedang diputar dihapus
+    if (currentIndex >= playlist.length) currentIndex = playlist.length - 1;
+    loadVideo(currentIndex);
+  }
+  updatePlaylistUI();
+}
+
+function clearPlaylist() {
+  playlist.forEach(item => { if (item.url) URL.revokeObjectURL(item.url); });
+  playlist = [];
+  video.pause();
+  video.src = '';
+  video.style.display = 'none';
+  videoPlaceholder.style.display = 'flex';
+  videoTitle.textContent = 'Belum ada video diputar';
+  videoMeta.textContent = 'Upload video atau pilih dari playlist';
+  currentIndex = -1;
+  isPlaying = false;
+  playBtn.textContent = '▶️';
+  progressBar.style.width = '0%';
+  timeLabel.textContent = '0:00 / 0:00';
+  updatePlaylistUI();
+  statusText('🗑️ Playlist dikosongkan');
+}
+
+function statusText(msg) {
+  const meta = document.getElementById('videoMeta');
+  if (meta) meta.textContent = msg;
+}
+
+// ===== EVENT LISTENERS =====
+
+// Upload
+uploadBtnHeader.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', function(e) {
+  const files = e.target.files;
+  if (files.length > 0) addToPlaylist(files);
+  this.value = '';
+});
+
+// Play/Pause
+playBtn.addEventListener('click', togglePlay);
+video.addEventListener('click', togglePlay);
+
+// Next/Prev
+nextBtn.addEventListener('click', nextVideo);
+prevBtn.addEventListener('click', prevVideo);
+
+// Progress
+video.addEventListener('timeupdate', () => {
+  if (video.duration) {
+    const pct = (video.currentTime / video.duration) * 100;
+    progressBar.style.width = pct + '%';
+    timeLabel.textContent = `${formatTime(video.currentTime)} / ${formatDuration(video.duration)}`;
+  }
+});
+
+progressWrap.addEventListener('click', function(e) {
+  if (!video.duration) return;
+  const rect = this.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const pct = Math.min(1, Math.max(0, x / rect.width));
+  video.currentTime = pct * video.duration;
+});
+
+// Speed
+speedSelect.addEventListener('change', function() {
+  video.playbackRate = parseFloat(this.value);
+});
+
+// Volume
+volumeSlider.addEventListener('input', function() {
+  video.volume = parseFloat(this.value);
+  if (isMuted) { isMuted = false; video.muted = false; muteBtn.textContent = '🔊'; }
+});
+muteBtn.addEventListener('click', function() {
+  isMuted = !isMuted;
+  video.muted = isMuted;
+  muteBtn.textContent = isMuted ? '🔇' : '🔊';
+});
+
+// Fullscreen
+fullscreenBtn.addEventListener('click', function() {
+  if (!document.fullscreenElement) {
+    videoWrapper.requestFullscreen?.() || videoWrapper.webkitRequestFullscreen?.();
+  } else {
+    document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+  }
+});
+
+// Auto next when video ends
+video.addEventListener('ended', () => {
+  isPlaying = false;
+  playBtn.textContent = '▶️';
+  if (playlist.length > 1) {
+    setTimeout(nextVideo, 800);
+  }
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+  if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); video.currentTime += 5; }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); video.currentTime -= 5; }
+  if (e.key === 'ArrowUp') { e.preventDefault(); video.volume = Math.min(1, video.volume + 0.05); volumeSlider.value = video.volume; }
+  if (e.key === 'ArrowDown') { e.preventDefault(); video.volume = Math.max(0, video.volume - 0.05); volumeSlider.value = video.volume; }
+  if (e.key === 'f' || e.key === 'F') { fullscreenBtn.click(); }
+});
+
+// ===== DRAG & DROP =====
+let dragCounter = 0;
+
+document.addEventListener('dragover', (e) => { e.preventDefault(); });
+document.addEventListener('drop', (e) => { e.preventDefault(); });
+
+document.addEventListener('dragenter', (e) => {
+  e.preventDefault();
+  dragCounter++;
+  if (dragCounter === 1) dropOverlay.classList.add('show');
+});
+document.addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  dragCounter--;
+  if (dragCounter === 0) dropOverlay.classList.remove('show');
+});
+document.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dragCounter = 0;
+  dropOverlay.classList.remove('show');
+  const files = e.dataTransfer.files;
+  if (files.length > 0) addToPlaylist(files);
+});
+
+// ===== CLEAR PLAYLIST =====
+clearPlaylistBtn.addEventListener('click', () => {
+  if (playlist.length === 0) return;
+  if (confirm('Hapus semua video dari playlist?')) clearPlaylist();
+});
+
+// ===== INIT =====
+updatePlaylistUI();
+console.log('🎬 A.H.Mtube siap! Upload video atau drag & drop.');
+</script>
 </body>
 </html>
